@@ -6,11 +6,18 @@
  */
 
 import Resource from '@/api/resource';
+import request from '@/utils/request';
 
 export default class SizeResource extends Resource {
   constructor() {
     super('/v1/sizes');
   }
 
+  getSize() {
+    return request({
+      url: '/v1/sizes/get-sizes',
+      method: 'get',
+    });
+  }
   // {{$API_NOT_DELETE_THIS_LINE$}}
 }

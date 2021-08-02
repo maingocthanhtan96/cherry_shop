@@ -108,6 +108,19 @@
                     </template>
                   </template>
                 </el-table-column>
+            <el-table-column data-generator="size.name" prop="size.name" :label="$t('route.size')" align="left" header-align="center">
+                  <template slot-scope="{ row }">
+                    <template v-for="(item) in row.sizes">
+                      <el-tag
+                        :key="'size.name_' + item.id"
+                        class="tw-mr-2"
+                        size="medium"
+                      >
+                        {{ item.name }}
+                      </el-tag>
+                    </template>
+                  </template>
+                </el-table-column>
             <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column data-generator="updated_at" prop="updated_at" :label="$t('date.updated_at')" sortable="custom" align="center" header-align="center">
                 <template slot-scope="{ row }">

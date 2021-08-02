@@ -39,7 +39,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/colors/get-colors', 'ColorController@getColor');
             Route::apiResource('colors', 'ColorController');
     /*<==> Size Route - 2021-08-02 21:55:43 <==>*/
-    Route::apiResource('sizes', 'SizeController');
+    Route::get('/sizes/get-sizes', 'SizeController@getSize');
+            Route::apiResource('sizes', 'SizeController');
     /*<==> ProductPayment Route - 2021-08-02 21:58:19 <==>*/
     Route::apiResource('product-payments', 'ProductPaymentController');
     /*<==> ProductReject Route - 2021-08-02 22:00:29 <==>*/

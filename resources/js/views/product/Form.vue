@@ -139,7 +139,29 @@
               />
             </el-select>
           </el-form-item>
-          <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
+          <el-form-item
+            data-generator="size_id"
+            :label="$t('route.size')"
+            prop="size_id"
+            :error="errors.size_id && errors.size_id[0]"
+            >
+	            <el-select
+	              v-model="form.size_id"
+	              name="size_id"
+	              multiple
+	              filterable
+	              :placeholder="$t('route.size')"
+	              class="tw-w-full"
+              >
+	              <el-option
+	                v-for="(item, index) in sizeList"
+	                :key="'size_' + index"
+	                :label="item.name"
+	                :value="item.id"
+                />
+	            </el-select>
+            </el-form-item>
+            <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Product' }" custom>
               <a :href="href" class="el-button el-button--info is-plain" @click="navigate">{{ $t('button.cancel') }}</a>
@@ -165,9 +187,11 @@
 import GlobalForm from '@/plugins/mixins/global-form';
 import ProductResource from '@/api/v1/product';
 import ColorResource from '@/api/v1/color';
+import SizeResource from '@/api/v1/size';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productResource = new ProductResource();
+const sizeResource = new SizeResource();
 const colorResource = new ColorResource();
 
 export default {
@@ -178,7 +202,7 @@ export default {
   data() {
     return {
       form: {
-        id: '',
+          id: '',
         code: '',
         name: '',
         image: '',
@@ -190,12 +214,14 @@ export default {
         discount: '',
         status: 1,
         color_id: '',
-      }, // {{$$}}
+        size_id: '',
+ }, // {{$$}}
       loading: {
         form: false,
         button: false,
       },
       colorList: [],
+      sizeList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -229,7 +255,11 @@ export default {
         data: { data: color },
       } = await colorResource.getColor();
       this.colorList = color;
-      // {{$CREATED_NOT_DELETE_THIS_LINE$}}
+      const {
+        data: { data: size },
+      } = await sizeResource.getSize();
+      this.sizeList = size;
+// {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {
           data: { data: product },

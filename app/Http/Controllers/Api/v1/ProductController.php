@@ -49,7 +49,7 @@ class ProductController extends Controller
 			$queryService = new QueryService(new Product);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['colors'];
+            $queryService->withRelationship = ['colors','sizes'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -82,6 +82,10 @@ class ProductController extends Controller
             if($colorId) {
                 $product->colors()->attach($colorId);
             }
+            $sizeId = $request->get('size_id', []);
+            if($sizeId) {
+                $product->sizes()->attach($sizeId);
+            }
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product, Response::HTTP_CREATED);
@@ -100,6 +104,7 @@ class ProductController extends Controller
 	{
 		try {
 		    $product->color_id = \Arr::pluck($product->colors()->get(), 'pivot.color_id');
+            $product->size_id = \Arr::pluck($product->sizes()->get(), 'pivot.size_id');
             //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product);
@@ -124,6 +129,10 @@ class ProductController extends Controller
             if($colorId) {
                 $product->colors()->sync($colorId);
             }
+            $sizeId = $request->get('size_id', []);
+            if($sizeId) {
+                $product->sizes()->sync($sizeId);
+            }
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product);
@@ -142,6 +151,7 @@ class ProductController extends Controller
     {
 	    try {
 	        $product->colors()->detach();
+            $product->sizes()->detach();
             //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
 			$product->delete();
 

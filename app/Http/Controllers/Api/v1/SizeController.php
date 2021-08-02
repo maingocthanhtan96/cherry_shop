@@ -49,7 +49,7 @@ class SizeController extends Controller
 			$queryService = new QueryService(new Size);
             $queryService->select = [];
             $queryService->columnSearch = ['name'];
-            $queryService->withRelationship = [];
+            $queryService->withRelationship = ['products'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -78,7 +78,11 @@ class SizeController extends Controller
 		    $size = new Size();
 		    $size->fill($request->all());
             $size->save();
-			//{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
+			$productId = $request->get('product_id', []);
+            if($productId) {
+                $size->products()->attach($productId);
+            }
+            //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($size, Response::HTTP_CREATED);
 		} catch (\Exception $e) {
@@ -95,7 +99,8 @@ class SizeController extends Controller
 	public function show(Size $size): JsonResponse
 	{
 		try {
-		    //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
+		    $size->product_id = \Arr::pluck($size->products()->get(), 'pivot.product_id');
+            //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($size);
 		} catch (\Exception $e) {
@@ -115,6 +120,10 @@ class SizeController extends Controller
 		try {
 		    $size->fill($request->all());
             $size->save();
+            $productId = $request->get('product_id', []);
+            if($productId) {
+                $size->products()->sync($productId);
+            }
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($size);
@@ -132,13 +141,29 @@ class SizeController extends Controller
     public function destroy(Size $size): JsonResponse
     {
 	    try {
-	        //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
+	        $size->products()->detach();
+            //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
 			$size->delete();
 
 		    return $this->jsonMessage(trans('messages.delete'));
 	    } catch (\Exception $e) {
 	    	return $this->jsonError($e);
 	    }
+    }
+
+    /**
+     * get all data from Size
+     * @return JsonResponse
+     */
+    public function getSize(): JsonResponse
+    {
+        try {
+            $sizes = Size::all();
+
+            return $this->jsonData($sizes);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
     }
 
     //{{CONTROLLER_RELATIONSHIP_NOT_DELETE_THIS_LINE}}

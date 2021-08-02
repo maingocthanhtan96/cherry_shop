@@ -53,6 +53,13 @@ return [
         'price' => 'Price',
         'note' => 'Note',
 	],
+    'member' => [
+		'id' => 'ID',
+        'code' => 'Code',
+        'name' => 'Name',
+        'sns_link' => 'Sns link',
+        'is_block' => 'Is block',
+	],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Hiển thị {from} đến {to} trong số {count} dữ liệu|{count} dữ liệu|Một dữ liệu',

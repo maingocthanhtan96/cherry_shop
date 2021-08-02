@@ -40,6 +40,12 @@ return [
 	'product_reject_create' => 'Tạo ProductReject',
 	'product_reject_edit' => 'Sửa ProductReject',
 	// END - product_reject
+    // START - member
+	'member' => 'Member',
+	'member_list' => 'Member',
+	'member_create' => 'Tạo Member',
+	'member_edit' => 'Sửa Member',
+	// END - member
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

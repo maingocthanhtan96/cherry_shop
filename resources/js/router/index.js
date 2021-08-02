@@ -11,6 +11,7 @@ import color from './modules/color';
 import size from './modules/size';
 import productPayment from './modules/product-payment';
 import productReject from './modules/product-reject';
+import member from './modules/member';
 // {{$IMPORT_ROUTE_NOT_DELETE_THIS_LINE$}}
 
 /**
@@ -92,6 +93,7 @@ export const asyncRouterMap = [
       size,
       productPayment,
       productReject,
+      member,
       // {{$ROUTE_ASYNC_NOT_DELETE_THIS_LINE$}},
   administrator,
   { path: '*', redirect: '/404', hidden: true },

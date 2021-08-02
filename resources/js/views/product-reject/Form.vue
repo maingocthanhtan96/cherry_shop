@@ -11,35 +11,27 @@
           </template>
         </div>
         <el-form ref="productReject" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
-        <el-form-item
-          data-generator="total"
-          :label="$t('table.product_reject.total')"
-          prop="total"
-          :error="errors.total && errors.total[0]"
-          >
-						<el-input-number
-						  v-model="form.total"
-						  name="total"
-						  :placeholder="$t('table.product_reject.total')"
-            />
-					</el-form-item>
           <el-form-item
-          data-generator="price"
-          :label="$t('table.product_reject.price')"
-          prop="price"
-          :error="errors.price && errors.price[0]"
+            data-generator="total"
+            :label="$t('table.product_reject.total')"
+            prop="total"
+            :error="errors.total && errors.total[0]"
           >
-						<el-input-number
-						  v-model="form.price"
-						  name="price"
-						  :placeholder="$t('table.product_reject.price')"
-            />
-					</el-form-item>
+            <el-input-number v-model="form.total" name="total" :placeholder="$t('table.product_reject.total')" />
+          </el-form-item>
           <el-form-item
-          data-generator="note"
-          :label="$t('table.product_reject.note')"
-          prop="note"
-          :error="errors.note && errors.note[0]"
+            data-generator="price"
+            :label="$t('table.product_reject.price')"
+            prop="price"
+            :error="errors.price && errors.price[0]"
+          >
+            <el-input-number v-model="form.price" name="price" :placeholder="$t('table.product_reject.price')" />
+          </el-form-item>
+          <el-form-item
+            data-generator="note"
+            :label="$t('table.product_reject.note')"
+            prop="note"
+            :error="errors.note && errors.note[0]"
           >
             <el-input
               v-model="form.note"

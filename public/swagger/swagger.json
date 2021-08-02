@@ -447,6 +447,257 @@
                 ]
             }
         },
+        "/members": {
+            "get": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "List Member",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ascending",
+                        "in": "query",
+                        "description": "0: asc, 1: desc",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "description": "column order by",
+                        "schema": {
+                            "type": "string",
+                            "default": "updated_at"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Create Member",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Simeon Carter"
+                                    },
+                                    "name": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NONE",
+                                        "example": "Melvina Graham"
+                                    },
+                                    "sns_link": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Dr. Andres Botsford"
+                                    },
+                                    "is_block": {
+                                        "description": "",
+                                        "type": "BOOLEAN",
+                                        "default": "0",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
+        "/members/{id}": {
+            "get": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Edit Member",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Update Member",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Simeon Carter"
+                                    },
+                                    "name": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NONE",
+                                        "example": "Melvina Graham"
+                                    },
+                                    "sns_link": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Dr. Andres Botsford"
+                                    },
+                                    "is_block": {
+                                        "description": "",
+                                        "type": "BOOLEAN",
+                                        "default": "0",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Delete Member",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
         "/products": {
             "get": {
                 "tags": [
@@ -1824,6 +2075,55 @@
                         "description": "",
                         "type": "VARCHAR",
                         "default": "NONE"
+                    },
+                    "created_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "updated_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "deleted_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    }
+                },
+                "type": "object"
+            },
+            "Member": {
+                "title": "Member",
+                "required": [
+                    "id",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "AUTO_INCREMENT",
+                        "type": "BIGINT"
+                    },
+                    "code": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NULL"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NONE"
+                    },
+                    "sns_link": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NULL"
+                    },
+                    "is_block": {
+                        "description": "",
+                        "type": "BOOLEAN",
+                        "default": "0"
                     },
                     "created_at": {
                         "description": "",

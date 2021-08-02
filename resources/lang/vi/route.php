@@ -4,6 +4,12 @@ return [
     'user' => 'Nhân viên',
     'user_create' => 'Tạo Nhân viên',
     'user_edit' => 'Sửa Nhân viên',
+    // START - category
+	'category' => 'Category',
+	'category_list' => 'Category',
+	'category_create' => 'Tạo Category',
+	'category_edit' => 'Sửa Category',
+	// END - category
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

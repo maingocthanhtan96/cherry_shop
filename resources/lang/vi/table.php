@@ -33,6 +33,10 @@ return [
         'discount' => 'Discount',
         'status' => 'Status',
 	],
+    'color' => [
+		'id' => 'ID',
+        'name' => 'Name',
+	],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Hiển thị {from} đến {to} trong số {count} dữ liệu|{count} dữ liệu|Một dữ liệu',

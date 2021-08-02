@@ -16,6 +16,12 @@ return [
 	'product_create' => 'Tạo Product',
 	'product_edit' => 'Sửa Product',
 	// END - product
+    // START - color
+	'color' => 'Color',
+	'color_list' => 'Color',
+	'color_create' => 'Tạo Color',
+	'color_edit' => 'Sửa Color',
+	// END - color
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

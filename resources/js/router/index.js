@@ -6,6 +6,7 @@ Vue.use(VueRouter);
 import dashboard from './modules/dashboard';
 import administrator from './modules/administrator';
 import category from './modules/category';
+import product from './modules/product';
 // {{$IMPORT_ROUTE_NOT_DELETE_THIS_LINE$}}
 
 /**
@@ -82,6 +83,7 @@ export const constantRouterMap = [
 
 export const asyncRouterMap = [
   category,
+      product,
       // {{$ROUTE_ASYNC_NOT_DELETE_THIS_LINE$}},
   administrator,
   { path: '*', redirect: '/404', hidden: true },

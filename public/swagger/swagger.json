@@ -232,6 +232,331 @@
                 ]
             }
         },
+        "/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "List Product",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ascending",
+                        "in": "query",
+                        "description": "0: asc, 1: desc",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "description": "column order by",
+                        "schema": {
+                            "type": "string",
+                            "default": "updated_at"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Create Product",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "code",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NONE",
+                                        "example": "Christopher Skiles"
+                                    },
+                                    "name": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NONE",
+                                        "example": "Kathlyn Green"
+                                    },
+                                    "image": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Dovie Wunsch"
+                                    },
+                                    "description": {
+                                        "description": "",
+                                        "type": "TEXT",
+                                        "default": "NULL",
+                                        "example": "Exercitationem laborum nobis rem ad esse commodi corporis. Eaque tempora dolores harum. Accusamus ut quod officia fuga. Quasi et aut dolor veritatis esse vel voluptatum. Nihil tempora et fugiat veritatis ullam."
+                                    },
+                                    "stock_in": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "6414"
+                                    },
+                                    "stock_out": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "2789"
+                                    },
+                                    "inventory": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "5639"
+                                    },
+                                    "price": {
+                                        "description": "",
+                                        "type": "FLOAT",
+                                        "default": "NULL",
+                                        "example": "7022.09"
+                                    },
+                                    "discount": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "6449"
+                                    },
+                                    "status": {
+                                        "description": "",
+                                        "type": "BOOLEAN",
+                                        "default": "1",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Edit Product",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update Product",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "code",
+                                    "name"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NONE",
+                                        "example": "Christopher Skiles"
+                                    },
+                                    "name": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NONE",
+                                        "example": "Kathlyn Green"
+                                    },
+                                    "image": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Dovie Wunsch"
+                                    },
+                                    "description": {
+                                        "description": "",
+                                        "type": "TEXT",
+                                        "default": "NULL",
+                                        "example": "Exercitationem laborum nobis rem ad esse commodi corporis. Eaque tempora dolores harum. Accusamus ut quod officia fuga. Quasi et aut dolor veritatis esse vel voluptatum. Nihil tempora et fugiat veritatis ullam."
+                                    },
+                                    "stock_in": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "6414"
+                                    },
+                                    "stock_out": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "2789"
+                                    },
+                                    "inventory": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "5639"
+                                    },
+                                    "price": {
+                                        "description": "",
+                                        "type": "FLOAT",
+                                        "default": "NULL",
+                                        "example": "7022.09"
+                                    },
+                                    "discount": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "6449"
+                                    },
+                                    "status": {
+                                        "description": "",
+                                        "type": "BOOLEAN",
+                                        "default": "1",
+                                        "example": "0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete Product",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
         "/login": {
             "post": {
                 "tags": [
@@ -561,6 +886,86 @@
                         "description": "",
                         "type": "VARCHAR",
                         "default": "NULL"
+                    },
+                    "created_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "updated_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "deleted_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    }
+                },
+                "type": "object"
+            },
+            "Product": {
+                "title": "Product",
+                "required": [
+                    "id",
+                    "code",
+                    "name"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "AUTO_INCREMENT",
+                        "type": "BIGINT"
+                    },
+                    "code": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NONE"
+                    },
+                    "name": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NONE"
+                    },
+                    "image": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NULL"
+                    },
+                    "description": {
+                        "description": "",
+                        "type": "TEXT",
+                        "default": "NULL"
+                    },
+                    "stock_in": {
+                        "description": "",
+                        "type": "INT",
+                        "default": "NULL"
+                    },
+                    "stock_out": {
+                        "description": "",
+                        "type": "INT",
+                        "default": "NULL"
+                    },
+                    "inventory": {
+                        "description": "",
+                        "type": "INT",
+                        "default": "NULL"
+                    },
+                    "price": {
+                        "description": "",
+                        "type": "FLOAT",
+                        "default": "NULL"
+                    },
+                    "discount": {
+                        "description": "",
+                        "type": "INT",
+                        "default": "NULL"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "BOOLEAN",
+                        "default": "1"
                     },
                     "created_at": {
                         "description": "",

@@ -10,6 +10,12 @@ return [
 	'category_create' => 'Tạo Category',
 	'category_edit' => 'Sửa Category',
 	// END - category
+    // START - product
+	'product' => 'Product',
+	'product_list' => 'Product',
+	'product_create' => 'Tạo Product',
+	'product_edit' => 'Sửa Product',
+	// END - product
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

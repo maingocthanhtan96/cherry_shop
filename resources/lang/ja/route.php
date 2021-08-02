@@ -10,6 +10,12 @@ return [
 	'category_create' => 'Create Category',
 	'category_edit' => 'Edit Category',
 	// END - category
+    // START - product
+	'product' => 'Product',
+	'product_list' => 'Product',
+	'product_create' => 'Create Product',
+	'product_edit' => 'Edit Product',
+	// END - product
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

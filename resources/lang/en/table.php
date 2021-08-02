@@ -20,6 +20,19 @@ return [
 		'id' => 'ID',
         'name' => 'Name',
 	],
+    'product' => [
+		'id' => 'ID',
+        'code' => 'Code',
+        'name' => 'Name',
+        'image' => 'Image',
+        'description' => 'Description',
+        'stock_in' => 'Stock in',
+        'stock_out' => 'Stock out',
+        'inventory' => 'Inventory',
+        'price' => 'Price',
+        'discount' => 'Discount',
+        'status' => 'Status',
+	],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Showing {from} to {to} of {count} records|{count} records|One record',

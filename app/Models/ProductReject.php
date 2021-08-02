@@ -17,12 +17,21 @@ class ProductReject extends BaseModel
     protected $table = 'product_rejects';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
     protected $fillable = [
-    	'total',
+        'total',
         'price',
         'note',
+        'product_id',
     ];
 
     
 
-	//{{RELATIONS_NOT_DELETE_THIS_LINE}}
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function product(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

@@ -19,6 +19,7 @@ class ProductRejectTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $products = \App\Models\Product::all()->pluck('id')->toArray();
 
         $limit = 100;
 
@@ -27,6 +28,7 @@ class ProductRejectTableSeeder extends Seeder
                 'total' => $faker->numberBetween(1000, 9000),
                 'price' => $faker->randomFloat(2, 1000, 9000),
                 'note' => $faker->paragraph,
+                'product_id' => $faker->randomElement($products),
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
 			]);
 		}

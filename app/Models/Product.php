@@ -58,5 +58,13 @@ class Product extends BaseModel
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function productRejects(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(ProductReject::class, 'product_id', 'id');
+    }
+
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

@@ -53,10 +53,11 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id"},
+ *                  required={"id", "product_id"},
  *                  @OA\Property(property="total", type="INT", default="NULL", example="8750", description=""),
      *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="6598.34", description=""),
      *                  @OA\Property(property="note", type="TEXT", default="NULL", example="Recusandae molestiae qui provident nemo enim. Sint sapiente perspiciatis fuga voluptas earum. Laboriosam voluptatibus nam hic est eaque adipisci. Quo enim qui quos aut sunt.", description=""),
+ *                  @OA\Property(property="product_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -87,10 +88,11 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id"},
+ *                  required={"id", "product_id"},
  *                  @OA\Property(property="total", type="INT", default="NULL", example="8750", description=""),
      *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="6598.34", description=""),
      *                  @OA\Property(property="note", type="TEXT", default="NULL", example="Recusandae molestiae qui provident nemo enim. Sint sapiente perspiciatis fuga voluptas earum. Laboriosam voluptatibus nam hic est eaque adipisci. Quo enim qui quos aut sunt.", description=""),
+ *                  @OA\Property(property="product_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -116,13 +118,13 @@
  * @OA\Schema(
  *     type="object",
  *     title="ProductReject",
- *     required={"id"},
+ *     required={"id", "product_id"},
  * )
  */
 class ProductReject
 {
     /**
-     * @OA\Property(property="id", type="BIGINT", description="AUTO_INCREMENT")
+     * @OA\Property(property="id", "product_id", type="BIGINT", description="AUTO_INCREMENT")
      */
 
     /**
@@ -135,6 +137,11 @@ class ProductReject
 
     /**
      * <###> @OA\Property(property="note", type="TEXT", default="NULL", description="")
+     */
+
+    /**
+     * @OA\Property(property="product_id", default="NONE", description="hasMany")
+     * @var Product
      */
 
     //{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}

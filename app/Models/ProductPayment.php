@@ -22,6 +22,7 @@ class ProductPayment extends BaseModel
         'note',
         'product_id',
         'size_id',
+        'color_id',
     ];
 
     /**
@@ -38,6 +39,14 @@ class ProductPayment extends BaseModel
     public function size(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Size::class, 'size_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function color(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Color::class, 'color_id', 'id');
     }
 
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}

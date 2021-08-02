@@ -83,6 +83,27 @@
               />
             </el-select>
           </el-form-item>
+            <el-form-item
+          data-generator="color_id"
+          :label="$t('route.color')"
+          prop="color_id"
+          :error="errors.color_id && errors.color_id[0]"
+          >
+            <el-select
+              v-model="form.color_id"
+              name="color_id"
+              filterable
+              :placeholder="$t('route.color')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in colorList"
+                :key="'color_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
             <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'ProductPayment' }" custom>
@@ -120,9 +141,11 @@ import GlobalForm from '@/plugins/mixins/global-form';
 import ProductPaymentResource from '@/api/v1/product-payment';
 import ProductResource from '@/api/v1/product';
 import SizeResource from '@/api/v1/size';
+import ColorResource from '@/api/v1/color';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productPaymentResource = new ProductPaymentResource();
+const colorResource = new ColorResource();
 const sizeResource = new SizeResource();
 const productResource = new ProductResource();
 
@@ -140,6 +163,7 @@ export default {
         note: '',
         product_id: '',
         size_id: '',
+        color_id: '',
  }, // {{$$}}
       loading: {
         form: false,
@@ -147,6 +171,7 @@ export default {
       },
       productList: [],
       sizeList: [],
+      colorList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -162,6 +187,9 @@ export default {
           },
         ],
         size_id: [
+          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
+        ],
+        color_id: [
           { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
@@ -180,6 +208,10 @@ export default {
         data: { data: size },
       } = await sizeResource.getSize();
       this.sizeList = size;
+const {
+        data: { data: color },
+      } = await colorResource.getColor();
+      this.colorList = color;
 // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

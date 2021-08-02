@@ -49,7 +49,7 @@ class ProductPaymentController extends Controller
             $queryService = new QueryService(new ProductPayment());
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['product','size'];
+            $queryService->withRelationship = ['product','size','color'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;

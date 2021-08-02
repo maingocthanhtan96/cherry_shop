@@ -1114,7 +1114,8 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "product_id"
+                                    "product_id",
+                                    "size_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1136,6 +1137,12 @@
                                         "example": "Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto."
                                     },
                                     "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "size_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -1210,7 +1217,8 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "product_id"
+                                    "product_id",
+                                    "size_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1232,6 +1240,12 @@
                                         "example": "Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto."
                                     },
                                     "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "size_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -2273,7 +2287,8 @@
                 "title": "ProductPayment",
                 "required": [
                     "id",
-                    "product_id"
+                    "product_id",
+                    "size_id"
                 ],
                 "properties": {
                     "total": {
@@ -2293,6 +2308,9 @@
                     },
                     "product_id": {
                         "$ref": "#/components/schemas/Product"
+                    },
+                    "size_id": {
+                        "$ref": "#/components/schemas/Size"
                     },
                     "created_at": {
                         "description": "",

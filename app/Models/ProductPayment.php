@@ -16,7 +16,13 @@ class ProductPayment extends BaseModel
     //Declare table name
     protected $table = 'product_payments';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
-    protected $fillable = ['total', 'price', 'note', 'product_id'];
+    protected $fillable = [
+        'total',
+        'price',
+        'note',
+        'product_id',
+        'size_id',
+    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo
@@ -24,6 +30,14 @@ class ProductPayment extends BaseModel
     public function product(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function size(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Size::class, 'size_id', 'id');
     }
 
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}

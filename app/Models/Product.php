@@ -19,7 +19,7 @@ class Product extends BaseModel
     protected $table = 'products';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
     protected $fillable = [
-    	'code',
+        'code',
         'name',
         'image',
         'description',
@@ -29,6 +29,7 @@ class Product extends BaseModel
         'price',
         'discount',
         'status',
+        'category_id',
     ];
 
     
@@ -47,6 +48,14 @@ class Product extends BaseModel
     public function sizes(): \Illuminate\Database\Eloquent\Relations\belongsToMany
     {
         return $this->belongsToMany(Size::class, 'ref_product_size', 'product_id', 'size_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function category(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}

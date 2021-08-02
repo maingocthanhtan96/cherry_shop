@@ -121,6 +121,11 @@
                     </template>
                   </template>
                 </el-table-column>
+            <el-table-column data-generator="category_id" prop="category_id" :label="$t('route.category')" align="left" header-align="center">
+                <template v-if="row.category" slot-scope="{ row }">
+                  {{ row.category.name }}
+                </template>
+              </el-table-column>
             <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column data-generator="updated_at" prop="updated_at" :label="$t('date.updated_at')" sortable="custom" align="center" header-align="center">
                 <template slot-scope="{ row }">

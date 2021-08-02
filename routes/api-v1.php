@@ -31,7 +31,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     /*<==> Category Route - 2021-08-02 21:49:15 <==>*/
-    Route::apiResource('categories', 'CategoryController');
+    Route::get('/categories/get-categories', 'CategoryController@getCategory');
+            Route::apiResource('categories', 'CategoryController');
     /*<==> Product Route - 2021-08-02 21:53:12 <==>*/
     Route::get('/products/get-products', 'ProductController@getProduct');
             Route::apiResource('products', 'ProductController');

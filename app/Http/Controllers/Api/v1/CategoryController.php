@@ -141,5 +141,20 @@ class CategoryController extends Controller
 	    }
     }
 
+    /**
+     * get all data from Category
+     * @return JsonResponse
+     */
+    public function getCategory(): JsonResponse
+    {
+        try {
+            $categories = Category::all();
+
+            return $this->jsonData($categories);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
     //{{CONTROLLER_RELATIONSHIP_NOT_DELETE_THIS_LINE}}
 }

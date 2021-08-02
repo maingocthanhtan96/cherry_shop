@@ -53,7 +53,7 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id", "code", "name"},
+ *                  required={"id", "code", "name", "category_id"},
  *                  @OA\Property(property="code", type="VARCHAR", default="NONE", example="Christopher Skiles", description=""),
      *                  @OA\Property(property="name", type="VARCHAR", default="NONE", example="Kathlyn Green", description=""),
      *                  @OA\Property(property="image", type="VARCHAR", default="NULL", example="Dovie Wunsch", description=""),
@@ -64,6 +64,7 @@
      *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="7022.09", description=""),
      *                  @OA\Property(property="discount", type="INT", default="NULL", example="6449", description=""),
      *                  @OA\Property(property="status", type="BOOLEAN", default="1", example="0", description=""),
+ *                  @OA\Property(property="category_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -94,7 +95,7 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id", "code", "name"},
+ *                  required={"id", "code", "name", "category_id"},
  *                  @OA\Property(property="code", type="VARCHAR", default="NONE", example="Christopher Skiles", description=""),
      *                  @OA\Property(property="name", type="VARCHAR", default="NONE", example="Kathlyn Green", description=""),
      *                  @OA\Property(property="image", type="VARCHAR", default="NULL", example="Dovie Wunsch", description=""),
@@ -105,6 +106,7 @@
      *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="7022.09", description=""),
      *                  @OA\Property(property="discount", type="INT", default="NULL", example="6449", description=""),
      *                  @OA\Property(property="status", type="BOOLEAN", default="1", example="0", description=""),
+ *                  @OA\Property(property="category_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -130,7 +132,7 @@
  * @OA\Schema(
  *     type="object",
  *     title="Product",
- *     required={"id", "code", "name"},
+ *     required={"id", "code", "name", "category_id"},
  * )
  */
 class Product
@@ -177,6 +179,11 @@ class Product
 
     /**
      * <###> @OA\Property(property="status", type="BOOLEAN", default="1", description="")
+     */
+
+    /**
+     * @OA\Property(property="category_id", default="NONE", description="hasMany")
+     * @var Category
      */
 
     //{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}

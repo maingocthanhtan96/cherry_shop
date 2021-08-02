@@ -19,6 +19,7 @@ class ProductTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $categories = \App\Models\Category::all()->pluck('id')->toArray();
         $users = \App\Models\User::all()->pluck('id')->toArray();
 
         $limit = 100;
@@ -37,6 +38,7 @@ class ProductTableSeeder extends Seeder
                 'status' => $faker->numberBetween(0, 1),
                 'created_by' => $faker->randomElement($users),
                 'updated_by' => $faker->randomElement($users),
+                'category_id' => $faker->randomElement($categories),
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
 			]);
 		}

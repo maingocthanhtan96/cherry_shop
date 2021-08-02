@@ -22,5 +22,13 @@ class Category extends BaseModel
 
     
 
-	//{{RELATIONS_NOT_DELETE_THIS_LINE}}
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function products(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+
+    //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

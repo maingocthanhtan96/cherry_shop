@@ -776,7 +776,8 @@
                                 "required": [
                                     "id",
                                     "code",
-                                    "name"
+                                    "name",
+                                    "category_id"
                                 ],
                                 "properties": {
                                     "code": {
@@ -838,6 +839,12 @@
                                         "type": "BOOLEAN",
                                         "default": "1",
                                         "example": "0"
+                                    },
+                                    "category_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -909,7 +916,8 @@
                                 "required": [
                                     "id",
                                     "code",
-                                    "name"
+                                    "name",
+                                    "category_id"
                                 ],
                                 "properties": {
                                     "code": {
@@ -971,6 +979,12 @@
                                         "type": "BOOLEAN",
                                         "default": "1",
                                         "example": "0"
+                                    },
+                                    "category_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -2148,7 +2162,8 @@
                 "required": [
                     "id",
                     "code",
-                    "name"
+                    "name",
+                    "category_id"
                 ],
                 "properties": {
                     "id": {
@@ -2204,6 +2219,9 @@
                         "description": "",
                         "type": "BOOLEAN",
                         "default": "1"
+                    },
+                    "category_id": {
+                        "$ref": "#/components/schemas/Category"
                     },
                     "created_at": {
                         "description": "",

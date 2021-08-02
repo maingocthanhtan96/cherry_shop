@@ -161,6 +161,27 @@
                 />
 	            </el-select>
             </el-form-item>
+            <el-form-item
+          data-generator="category_id"
+          :label="$t('route.category')"
+          prop="category_id"
+          :error="errors.category_id && errors.category_id[0]"
+          >
+            <el-select
+              v-model="form.category_id"
+              name="category_id"
+              filterable
+              :placeholder="$t('route.category')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in categoryList"
+                :key="'category_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
             <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Product' }" custom>
@@ -188,9 +209,11 @@ import GlobalForm from '@/plugins/mixins/global-form';
 import ProductResource from '@/api/v1/product';
 import ColorResource from '@/api/v1/color';
 import SizeResource from '@/api/v1/size';
+import CategoryResource from '@/api/v1/category';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productResource = new ProductResource();
+const categoryResource = new CategoryResource();
 const sizeResource = new SizeResource();
 const colorResource = new ColorResource();
 
@@ -215,6 +238,7 @@ export default {
         status: 1,
         color_id: '',
         size_id: '',
+        category_id: '',
  }, // {{$$}}
       loading: {
         form: false,
@@ -222,6 +246,7 @@ export default {
       },
       colorList: [],
       sizeList: [],
+      categoryList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -243,6 +268,9 @@ export default {
             trigger: ['change', 'blur'],
           },
         ],
+        category_id: [
+          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product') }), trigger: ['change', 'blur'] },
+        ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
       };
     },
@@ -259,6 +287,10 @@ export default {
         data: { data: size },
       } = await sizeResource.getSize();
       this.sizeList = size;
+const {
+        data: { data: category },
+      } = await categoryResource.getCategory();
+      this.categoryList = category;
 // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

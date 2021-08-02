@@ -117,6 +117,28 @@
               <el-switch v-model="form.status" name="status" :active-value="1" :inactive-value="0" />
             </el-tooltip>
           </el-form-item>
+          <el-form-item
+            data-generator="color_id"
+            :label="$t('route.color')"
+            prop="color_id"
+            :error="errors.color_id && errors.color_id[0]"
+          >
+            <el-select
+              v-model="form.color_id"
+              name="color_id"
+              multiple
+              filterable
+              :placeholder="$t('route.color')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in colorList"
+                :key="'color_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Product' }" custom>
@@ -142,9 +164,11 @@
 <script>
 import GlobalForm from '@/plugins/mixins/global-form';
 import ProductResource from '@/api/v1/product';
+import ColorResource from '@/api/v1/color';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productResource = new ProductResource();
+const colorResource = new ColorResource();
 
 export default {
   components: {
@@ -165,11 +189,13 @@ export default {
         price: '',
         discount: '',
         status: 1,
+        color_id: '',
       }, // {{$$}}
       loading: {
         form: false,
         button: false,
       },
+      colorList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -199,6 +225,10 @@ export default {
     try {
       this.loading.form = true;
       const { id } = this.$route.params;
+      const {
+        data: { data: color },
+      } = await colorResource.getColor();
+      this.colorList = color;
       // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

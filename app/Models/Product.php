@@ -33,5 +33,13 @@ class Product extends BaseModel
 
     
 
-	//{{RELATIONS_NOT_DELETE_THIS_LINE}}
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     **/
+    public function colors(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    {
+        return $this->belongsToMany(Color::class, 'ref_product_color', 'product_id', 'color_id');
+    }
+
+    //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

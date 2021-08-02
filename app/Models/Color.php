@@ -22,5 +22,13 @@ class Color extends BaseModel
 
     
 
-	//{{RELATIONS_NOT_DELETE_THIS_LINE}}
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     **/
+    public function products(): \Illuminate\Database\Eloquent\Relations\belongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'ref_product_color', 'color_id', 'product_id');
+    }
+
+    //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

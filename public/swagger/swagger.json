@@ -2304,6 +2304,38 @@
                 },
                 "type": "object"
             },
+            "RefProductColor": {
+                "title": "RefProductColor",
+                "description": "belongsToMany",
+                "required": [
+                    "id",
+                    "color_id",
+                    "product_id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "AUTO_INCREMENT",
+                        "type": "BIGINT"
+                    },
+                    "color_id": {
+                        "$ref": "#/components/schemas/Color"
+                    },
+                    "product_id": {
+                        "$ref": "#/components/schemas/Product"
+                    },
+                    "created_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "updated_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    }
+                },
+                "type": "object"
+            },
             "Role": {
                 "title": "Role",
                 "required": [

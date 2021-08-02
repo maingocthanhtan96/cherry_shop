@@ -33,9 +33,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     /*<==> Category Route - 2021-08-02 21:49:15 <==>*/
     Route::apiResource('categories', 'CategoryController');
     /*<==> Product Route - 2021-08-02 21:53:12 <==>*/
-    Route::apiResource('products', 'ProductController');
+    Route::get('/products/get-products', 'ProductController@getProduct');
+            Route::apiResource('products', 'ProductController');
     /*<==> Color Route - 2021-08-02 21:55:13 <==>*/
-    Route::apiResource('colors', 'ColorController');
+    Route::get('/colors/get-colors', 'ColorController@getColor');
+            Route::apiResource('colors', 'ColorController');
     /*<==> Size Route - 2021-08-02 21:55:43 <==>*/
     Route::apiResource('sizes', 'SizeController');
     /*<==> ProductPayment Route - 2021-08-02 21:58:19 <==>*/

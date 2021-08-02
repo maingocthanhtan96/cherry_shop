@@ -50,7 +50,20 @@
                   {{ row.name }}
                 </template>
               </el-table-column>
-              <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
+              <el-table-column data-generator="product.name" prop="product.name" :label="$t('route.product')" align="left" header-align="center">
+                  <template slot-scope="{ row }">
+                    <template v-for="(item) in row.products">
+                      <el-tag
+                        :key="'product.name_' + item.id"
+                        class="tw-mr-2"
+                        size="medium"
+                      >
+                        {{ item.name }}
+                      </el-tag>
+                    </template>
+                  </template>
+                </el-table-column>
+            <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column data-generator="updated_at" prop="updated_at" :label="$t('date.updated_at')" sortable="custom" align="center" header-align="center">
                 <template slot-scope="{ row }">
                   {{ row.updated_at | parseTime('{y}-{m}-{d} {h}:{i}') }}

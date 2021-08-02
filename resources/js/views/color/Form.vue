@@ -11,11 +11,11 @@
           </template>
         </div>
         <el-form ref="color" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
-        <el-form-item
-          data-generator="name"
-          :label="$t('table.color.name')"
-          prop="name"
-          :error="errors.name && errors.name[0]"
+          <el-form-item
+            data-generator="name"
+            :label="$t('table.color.name')"
+            prop="name"
+            :error="errors.name && errors.name[0]"
           >
             <el-input
               v-model="form.name"
@@ -25,28 +25,40 @@
               show-word-limit
             />
           </el-form-item>
+          <el-form-item
+            data-generator="product_id"
+            :label="$t('route.product')"
+            prop="product_id"
+            :error="errors.product_id && errors.product_id[0]"
+          >
+            <el-select
+              v-model="form.product_id"
+              name="product_id"
+              multiple
+              filterable
+              :placeholder="$t('route.product')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in productList"
+                :key="'product_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Color' }" custom>
               <a :href="href" class="el-button el-button--info is-plain" @click="navigate">{{ $t('button.cancel') }}</a>
             </router-link>
             <template v-if="$route.params.id">
-              <el-button
-                :loading="loading.button"
-                type="primary"
-                icon="el-icon-edit"
-                @click="() => update('color')"
-              >
+              <el-button :loading="loading.button" type="primary" icon="el-icon-edit" @click="() => update('color')">
                 {{ $t('button.update') }}
               </el-button>
             </template>
             <template v-else>
-              <el-button
-                :loading="loading.button"
-                type="success"
-                icon="el-icon-plus"
-                @click="() => store('color')"
-              >
+              <el-button :loading="loading.button" type="success" icon="el-icon-plus" @click="() => store('color')">
                 {{ $t('button.create') }}
               </el-button>
             </template>
@@ -60,9 +72,11 @@
 <script>
 import GlobalForm from '@/plugins/mixins/global-form';
 import ColorResource from '@/api/v1/color';
+import ProductResource from '@/api/v1/product';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const colorResource = new ColorResource();
+const productResource = new ProductResource();
 
 export default {
   components: {
@@ -74,11 +88,13 @@ export default {
       form: {
         id: '',
         name: '',
+        product_id: '',
       }, // {{$$}}
       loading: {
         form: false,
         button: false,
       },
+      productList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -87,7 +103,11 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('validation.required', { attribute: this.$t('table.color.name') }), trigger: ['change', 'blur'] },
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('table.color.name') }),
+            trigger: ['change', 'blur'],
+          },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
       };
@@ -97,6 +117,10 @@ export default {
     try {
       this.loading.form = true;
       const { id } = this.$route.params;
+      const {
+        data: { data: product },
+      } = await productResource.getProduct();
+      this.productList = product;
       // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

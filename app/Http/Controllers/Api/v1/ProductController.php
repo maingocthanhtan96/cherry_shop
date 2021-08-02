@@ -49,7 +49,7 @@ class ProductController extends Controller
 			$queryService = new QueryService(new Product);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = [];
+            $queryService->withRelationship = ['colors'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -78,7 +78,11 @@ class ProductController extends Controller
 		    $product = new Product();
 		    $product->fill($request->all());
             $product->save();
-			//{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
+			$colorId = $request->get('color_id', []);
+            if($colorId) {
+                $product->colors()->attach($colorId);
+            }
+            //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product, Response::HTTP_CREATED);
 		} catch (\Exception $e) {
@@ -95,7 +99,8 @@ class ProductController extends Controller
 	public function show(Product $product): JsonResponse
 	{
 		try {
-		    //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
+		    $product->color_id = \Arr::pluck($product->colors()->get(), 'pivot.color_id');
+            //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product);
 		} catch (\Exception $e) {
@@ -115,6 +120,10 @@ class ProductController extends Controller
 		try {
 		    $product->fill($request->all());
             $product->save();
+            $colorId = $request->get('color_id', []);
+            if($colorId) {
+                $product->colors()->sync($colorId);
+            }
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product);
@@ -132,13 +141,29 @@ class ProductController extends Controller
     public function destroy(Product $product): JsonResponse
     {
 	    try {
-	        //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
+	        $product->colors()->detach();
+            //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
 			$product->delete();
 
 		    return $this->jsonMessage(trans('messages.delete'));
 	    } catch (\Exception $e) {
 	    	return $this->jsonError($e);
 	    }
+    }
+
+    /**
+     * get all data from Product
+     * @return JsonResponse
+     */
+    public function getProduct(): JsonResponse
+    {
+        try {
+            $products = Product::all();
+
+            return $this->jsonData($products);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
     }
 
     //{{CONTROLLER_RELATIONSHIP_NOT_DELETE_THIS_LINE}}

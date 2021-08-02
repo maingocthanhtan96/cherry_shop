@@ -95,7 +95,20 @@
                   <el-tag>{{ row.status === 0 ? 'false' : 'true' }}</el-tag>
                 </template>
               </el-table-column>
-              <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
+              <el-table-column data-generator="color.name" prop="color.name" :label="$t('route.color')" align="left" header-align="center">
+                  <template slot-scope="{ row }">
+                    <template v-for="(item) in row.colors">
+                      <el-tag
+                        :key="'color.name_' + item.id"
+                        class="tw-mr-2"
+                        size="medium"
+                      >
+                        {{ item.name }}
+                      </el-tag>
+                    </template>
+                  </template>
+                </el-table-column>
+            <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column data-generator="updated_at" prop="updated_at" :label="$t('date.updated_at')" sortable="custom" align="center" header-align="center">
                 <template slot-scope="{ row }">
                   {{ row.updated_at | parseTime('{y}-{m}-{d} {h}:{i}') }}

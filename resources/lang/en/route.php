@@ -34,6 +34,12 @@ return [
 	'product_payment_create' => 'Create ProductPayment',
 	'product_payment_edit' => 'Edit ProductPayment',
 	// END - product_payment
+    // START - product_reject
+	'product_reject' => 'ProductReject',
+	'product_reject_list' => 'ProductReject',
+	'product_reject_create' => 'Create ProductReject',
+	'product_reject_edit' => 'Edit ProductReject',
+	// END - product_reject
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

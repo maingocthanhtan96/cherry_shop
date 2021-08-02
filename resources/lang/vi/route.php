@@ -34,6 +34,12 @@ return [
 	'product_payment_create' => 'Tạo ProductPayment',
 	'product_payment_edit' => 'Sửa ProductPayment',
 	// END - product_payment
+    // START - product_reject
+	'product_reject' => 'ProductReject',
+	'product_reject_list' => 'ProductReject',
+	'product_reject_create' => 'Tạo ProductReject',
+	'product_reject_edit' => 'Sửa ProductReject',
+	// END - product_reject
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

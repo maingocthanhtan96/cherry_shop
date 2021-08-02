@@ -1009,6 +1009,243 @@
                 ]
             }
         },
+        "/product-rejects": {
+            "get": {
+                "tags": [
+                    "ProductReject"
+                ],
+                "summary": "List ProductReject",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ascending",
+                        "in": "query",
+                        "description": "0: asc, 1: desc",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "description": "column order by",
+                        "schema": {
+                            "type": "string",
+                            "default": "updated_at"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "ProductReject"
+                ],
+                "summary": "Create ProductReject",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "total": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "8750"
+                                    },
+                                    "price": {
+                                        "description": "",
+                                        "type": "FLOAT",
+                                        "default": "NULL",
+                                        "example": "6598.34"
+                                    },
+                                    "note": {
+                                        "description": "",
+                                        "type": "TEXT",
+                                        "default": "NULL",
+                                        "example": "Recusandae molestiae qui provident nemo enim. Sint sapiente perspiciatis fuga voluptas earum. Laboriosam voluptatibus nam hic est eaque adipisci. Quo enim qui quos aut sunt."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
+        "/product-rejects/{id}": {
+            "get": {
+                "tags": [
+                    "ProductReject"
+                ],
+                "summary": "Edit ProductReject",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "ProductReject"
+                ],
+                "summary": "Update ProductReject",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "total": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "8750"
+                                    },
+                                    "price": {
+                                        "description": "",
+                                        "type": "FLOAT",
+                                        "default": "NULL",
+                                        "example": "6598.34"
+                                    },
+                                    "note": {
+                                        "description": "",
+                                        "type": "TEXT",
+                                        "default": "NULL",
+                                        "example": "Recusandae molestiae qui provident nemo enim. Sint sapiente perspiciatis fuga voluptas earum. Laboriosam voluptatibus nam hic est eaque adipisci. Quo enim qui quos aut sunt."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ProductReject"
+                ],
+                "summary": "Delete ProductReject",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
         "/sizes": {
             "get": {
                 "tags": [
@@ -1717,6 +1954,49 @@
                         "default": "NULL"
                     },
                     "updated_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductReject": {
+                "title": "ProductReject",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "AUTO_INCREMENT",
+                        "type": "BIGINT"
+                    },
+                    "total": {
+                        "description": "",
+                        "type": "INT",
+                        "default": "NULL"
+                    },
+                    "price": {
+                        "description": "",
+                        "type": "FLOAT",
+                        "default": "NULL"
+                    },
+                    "note": {
+                        "description": "",
+                        "type": "TEXT",
+                        "default": "NULL"
+                    },
+                    "created_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "updated_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "deleted_at": {
                         "description": "",
                         "type": "TIMESTAMP",
                         "default": "NULL"

@@ -47,6 +47,12 @@ return [
         'price' => 'Price',
         'note' => 'Note',
 	],
+    'product_reject' => [
+		'id' => 'ID',
+        'total' => 'Total',
+        'price' => 'Price',
+        'note' => 'Note',
+	],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Hiển thị {from} đến {to} trong số {count} dữ liệu|{count} dữ liệu|Một dữ liệu',

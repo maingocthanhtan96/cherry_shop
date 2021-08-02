@@ -40,6 +40,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('sizes', 'SizeController');
     /*<==> ProductPayment Route - 2021-08-02 21:58:19 <==>*/
     Route::apiResource('product-payments', 'ProductPaymentController');
+    /*<==> ProductReject Route - 2021-08-02 22:00:29 <==>*/
+    Route::apiResource('product-rejects', 'ProductRejectController');
     //{{ROUTE_USER_NOT_DELETE_THIS_LINE}}
 });
 

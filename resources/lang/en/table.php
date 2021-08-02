@@ -37,6 +37,10 @@ return [
 		'id' => 'ID',
         'name' => 'Name',
 	],
+    'size' => [
+		'id' => 'ID',
+        'name' => 'Name',
+	],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Showing {from} to {to} of {count} records|{count} records|One record',

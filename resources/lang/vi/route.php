@@ -22,6 +22,12 @@ return [
 	'color_create' => 'Tạo Color',
 	'color_edit' => 'Sửa Color',
 	// END - color
+    // START - size
+	'size' => 'Size',
+	'size_list' => 'Size',
+	'size_create' => 'Tạo Size',
+	'size_edit' => 'Sửa Size',
+	// END - size
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

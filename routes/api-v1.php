@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('products', 'ProductController');
     /*<==> Color Route - 2021-08-02 21:55:13 <==>*/
     Route::apiResource('colors', 'ColorController');
+    /*<==> Size Route - 2021-08-02 21:55:43 <==>*/
+    Route::apiResource('sizes', 'SizeController');
     //{{ROUTE_USER_NOT_DELETE_THIS_LINE}}
 });
 

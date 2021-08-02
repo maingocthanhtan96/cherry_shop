@@ -22,6 +22,12 @@ return [
 	'color_create' => 'Create Color',
 	'color_edit' => 'Edit Color',
 	// END - color
+    // START - size
+	'size' => 'Size',
+	'size_list' => 'Size',
+	'size_create' => 'Create Size',
+	'size_edit' => 'Edit Size',
+	// END - size
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

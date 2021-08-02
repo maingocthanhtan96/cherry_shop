@@ -19,19 +19,25 @@ class ProductPaymentTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
-        $users = \App\Models\User::all()->pluck('id')->toArray();
+        $products = \App\Models\Product::all()
+            ->pluck('id')
+            ->toArray();
+        $users = \App\Models\User::all()
+            ->pluck('id')
+            ->toArray();
 
         $limit = 100;
 
-        for ($i = 0; $i < $limit; $i++){
-        	\App\Models\ProductPayment::create([
+        for ($i = 0; $i < $limit; $i++) {
+            \App\Models\ProductPayment::create([
                 'total' => $faker->numberBetween(1000, 9000),
                 'price' => $faker->randomFloat(2, 1000, 9000),
                 'note' => $faker->paragraph,
                 'created_by' => $faker->randomElement($users),
                 'updated_by' => $faker->randomElement($users),
+                'product_id' => $faker->randomElement($products),
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
-			]);
-		}
+            ]);
+        }
     }
 }

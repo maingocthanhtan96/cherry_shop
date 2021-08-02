@@ -12,29 +12,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends BaseModel
 {
-	use UserSignatureTrait;
+    use UserSignatureTrait;
     use SoftDeletes;
 
     //Declare table name
     protected $table = 'products';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
-    protected $fillable = [
-        'code',
-        'name',
-        'image',
-        'description',
-        'stock_in',
-        'stock_out',
-        'inventory',
-        'price',
-        'discount',
-        'status',
-        'category_id',
-    ];
+    protected $fillable = ['code', 'name', 'image', 'description', 'stock_in', 'stock_out', 'inventory', 'price', 'discount', 'status', 'category_id'];
 
-    
-
-	/**
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      **/
     public function colors(): \Illuminate\Database\Eloquent\Relations\belongsToMany
@@ -64,6 +50,14 @@ class Product extends BaseModel
     public function productRejects(): \Illuminate\Database\Eloquent\Relations\hasMany
     {
         return $this->hasMany(ProductReject::class, 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function productPayments(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(ProductPayment::class, 'product_id', 'id');
     }
 
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}

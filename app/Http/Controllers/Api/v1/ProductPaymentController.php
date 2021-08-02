@@ -31,25 +31,25 @@ class ProductPaymentController extends Controller
         $this->middleware('permission:' . \ACL::PERMISSION_DELETE, ['only' => ['destroy']]);
     }
 
-	/**
-	 * lists
-	 * @param Request $request
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function index(Request $request): JsonResponse
-	{
-		try {
-			$limit = $request->get('limit', 25);
-			$ascending = (int)$request->get('ascending', 0);
-			$orderBy = $request->get('orderBy', '');
-			$search = $request->get('search', '');
-			$betweenDate = $request->get('updated_at', []);
+    /**
+     * lists
+     * @param Request $request
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function index(Request $request): JsonResponse
+    {
+        try {
+            $limit = $request->get('limit', 25);
+            $ascending = (int) $request->get('ascending', 0);
+            $orderBy = $request->get('orderBy', '');
+            $search = $request->get('search', '');
+            $betweenDate = $request->get('updated_at', []);
 
-			$queryService = new QueryService(new ProductPayment);
+            $queryService = new QueryService(new ProductPayment());
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = [];
+            $queryService->withRelationship = ['product'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -60,85 +60,85 @@ class ProductPaymentController extends Controller
             $query = $query->paginate($limit);
             $productPayment = $query->toArray();
 
-			return $this->jsonTable($productPayment);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonTable($productPayment);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * create
-	 * @param StoreProductPaymentRequest $request
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function store(StoreProductPaymentRequest $request): JsonResponse
-	{
-		try {
-		    $productPayment = new ProductPayment();
-		    $productPayment->fill($request->all());
+    /**
+     * create
+     * @param StoreProductPaymentRequest $request
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function store(StoreProductPaymentRequest $request): JsonResponse
+    {
+        try {
+            $productPayment = new ProductPayment();
+            $productPayment->fill($request->all());
             $productPayment->save();
-			//{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
+            //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($productPayment, Response::HTTP_CREATED);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($productPayment, Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * get once by id
-	 * @param ProductPayment $productPayment
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function show(ProductPayment $productPayment): JsonResponse
-	{
-		try {
-		    //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
+    /**
+     * get once by id
+     * @param ProductPayment $productPayment
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function show(ProductPayment $productPayment): JsonResponse
+    {
+        try {
+            //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($productPayment);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($productPayment);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * update once by id
-	 * @param StoreProductPaymentRequest $request
-	 * @param ProductPayment $productPayment
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function update(StoreProductPaymentRequest $request, ProductPayment $productPayment): JsonResponse
-	{
-		try {
-		    $productPayment->fill($request->all());
+    /**
+     * update once by id
+     * @param StoreProductPaymentRequest $request
+     * @param ProductPayment $productPayment
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function update(StoreProductPaymentRequest $request, ProductPayment $productPayment): JsonResponse
+    {
+        try {
+            $productPayment->fill($request->all());
             $productPayment->save();
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($productPayment);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($productPayment);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * delete once by id
-	 * @param ProductPayment $productPayment
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
+    /**
+     * delete once by id
+     * @param ProductPayment $productPayment
+     * @return JsonResponse
+     * @author tanmnt
+     */
     public function destroy(ProductPayment $productPayment): JsonResponse
     {
-	    try {
-	        //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
-			$productPayment->delete();
+        try {
+            //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
+            $productPayment->delete();
 
-		    return $this->jsonMessage(trans('messages.delete'));
-	    } catch (\Exception $e) {
-	    	return $this->jsonError($e);
-	    }
+            return $this->jsonMessage(trans('messages.delete'));
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
     }
 
     //{{CONTROLLER_RELATIONSHIP_NOT_DELETE_THIS_LINE}}

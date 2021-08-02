@@ -9,22 +9,22 @@ namespace App\Models;
 
 use App\Traits\UserSignatureTrait;
 
-
 class ProductPayment extends BaseModel
 {
-	use UserSignatureTrait;
-    
+    use UserSignatureTrait;
 
     //Declare table name
     protected $table = 'product_payments';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
-    protected $fillable = [
-    	'total',
-        'price',
-        'note',
-    ];
+    protected $fillable = ['total', 'price', 'note', 'product_id'];
 
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function product(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
 
-	//{{RELATIONS_NOT_DELETE_THIS_LINE}}
+    //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

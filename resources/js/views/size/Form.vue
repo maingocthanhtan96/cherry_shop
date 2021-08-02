@@ -11,11 +11,11 @@
           </template>
         </div>
         <el-form ref="size" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
-        <el-form-item
-          data-generator="name"
-          :label="$t('table.size.name')"
-          prop="name"
-          :error="errors.name && errors.name[0]"
+          <el-form-item
+            data-generator="name"
+            :label="$t('table.size.name')"
+            prop="name"
+            :error="errors.name && errors.name[0]"
           >
             <el-input
               v-model="form.name"
@@ -30,45 +30,35 @@
             :label="$t('route.product')"
             prop="product_id"
             :error="errors.product_id && errors.product_id[0]"
+          >
+            <el-select
+              v-model="form.product_id"
+              name="product_id"
+              multiple
+              filterable
+              :placeholder="$t('route.product')"
+              class="tw-w-full"
             >
-	            <el-select
-	              v-model="form.product_id"
-	              name="product_id"
-	              multiple
-	              filterable
-	              :placeholder="$t('route.product')"
-	              class="tw-w-full"
-              >
-	              <el-option
-	                v-for="(item, index) in productList"
-	                :key="'product_' + index"
-	                :label="item.name"
-	                :value="item.id"
-                />
-	            </el-select>
-            </el-form-item>
-            <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
+              <el-option
+                v-for="(item, index) in productList"
+                :key="'product_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Size' }" custom>
               <a :href="href" class="el-button el-button--info is-plain" @click="navigate">{{ $t('button.cancel') }}</a>
             </router-link>
             <template v-if="$route.params.id">
-              <el-button
-                :loading="loading.button"
-                type="primary"
-                icon="el-icon-edit"
-                @click="() => update('size')"
-              >
+              <el-button :loading="loading.button" type="primary" icon="el-icon-edit" @click="() => update('size')">
                 {{ $t('button.update') }}
               </el-button>
             </template>
             <template v-else>
-              <el-button
-                :loading="loading.button"
-                type="success"
-                icon="el-icon-plus"
-                @click="() => store('size')"
-              >
+              <el-button :loading="loading.button" type="success" icon="el-icon-plus" @click="() => store('size')">
                 {{ $t('button.create') }}
               </el-button>
             </template>
@@ -96,10 +86,10 @@ export default {
   data() {
     return {
       form: {
-          id: '',
+        id: '',
         name: '',
         product_id: '',
- }, // {{$$}}
+      }, // {{$$}}
       loading: {
         form: false,
         button: false,
@@ -113,7 +103,11 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('validation.required', { attribute: this.$t('table.size.name') }), trigger: ['change', 'blur'] },
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('table.size.name') }),
+            trigger: ['change', 'blur'],
+          },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
       };
@@ -127,7 +121,7 @@ export default {
         data: { data: product },
       } = await productResource.getProduct();
       this.productList = product;
-// {{$CREATED_NOT_DELETE_THIS_LINE$}}
+      // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {
           data: { data: size },

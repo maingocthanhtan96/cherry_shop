@@ -53,10 +53,11 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id"},
+ *                  required={"id", "product_id"},
  *                  @OA\Property(property="total", type="INT", default="0", example="4932", description=""),
-     *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="7688.09", description=""),
-     *                  @OA\Property(property="note", type="TEXT", default="NULL", example="Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto.", description=""),
+ *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="7688.09", description=""),
+ *                  @OA\Property(property="note", type="TEXT", default="NULL", example="Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto.", description=""),
+ *                  @OA\Property(property="product_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -87,10 +88,11 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id"},
+ *                  required={"id", "product_id"},
  *                  @OA\Property(property="total", type="INT", default="0", example="4932", description=""),
-     *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="7688.09", description=""),
-     *                  @OA\Property(property="note", type="TEXT", default="NULL", example="Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto.", description=""),
+ *                  @OA\Property(property="price", type="FLOAT", default="NULL", example="7688.09", description=""),
+ *                  @OA\Property(property="note", type="TEXT", default="NULL", example="Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto.", description=""),
+ *                  @OA\Property(property="product_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -116,36 +118,32 @@
  * @OA\Schema(
  *     type="object",
  *     title="ProductPayment",
- *     required={"id"},
+ *     required={"id", "product_id"},
  * )
  */
 class ProductPayment
 {
     /**
-     * @OA\Property(property="id", type="BIGINT", description="AUTO_INCREMENT")
-     */
-
-    /**
-     * <###> @OA\Property(property="total", type="INT", default="0", description="")
-     */
-
-    /**
-     * <###> @OA\Property(property="price", type="FLOAT", default="NULL", description="")
-     */
-
-    /**
-     * <###> @OA\Property(property="note", type="TEXT", default="NULL", description="")
-     */
-
-    //{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}
-
-    /**
-     * @OA\Property(property="created_at", type="TIMESTAMP", default="NULL", description="")
-     */
-
-    /**
-     * @OA\Property(property="updated_at", type="TIMESTAMP", default="NULL", description="")
-     */
-
-    
+ * @OA\Property(property="id", "product_id", type="BIGINT", description="AUTO_INCREMENT")
+ */
+/**
+ * <###> @OA\Property(property="total", type="INT", default="0", description="")
+ */
+/**
+ * <###> @OA\Property(property="price", type="FLOAT", default="NULL", description="")
+ */
+/**
+ * <###> @OA\Property(property="note", type="TEXT", default="NULL", description="")
+ */
+/**
+ * @OA\Property(property="product_id", default="NONE", description="hasMany")
+ * @var Product
+ */
+//{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}
+/**
+ * @OA\Property(property="created_at", type="TIMESTAMP", default="NULL", description="")
+ */
+/**
+ * @OA\Property(property="updated_at", type="TIMESTAMP", default="NULL", description="")
+ */
 }

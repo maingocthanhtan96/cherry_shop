@@ -1113,7 +1113,8 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "id",
+                                    "product_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1133,6 +1134,12 @@
                                         "type": "TEXT",
                                         "default": "NULL",
                                         "example": "Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto."
+                                    },
+                                    "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -1202,7 +1209,8 @@
                         "multipart/form-data": {
                             "schema": {
                                 "required": [
-                                    "id"
+                                    "id",
+                                    "product_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1222,6 +1230,12 @@
                                         "type": "TEXT",
                                         "default": "NULL",
                                         "example": "Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto."
+                                    },
+                                    "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -2258,13 +2272,10 @@
             "ProductPayment": {
                 "title": "ProductPayment",
                 "required": [
-                    "id"
+                    "id",
+                    "product_id"
                 ],
                 "properties": {
-                    "id": {
-                        "description": "AUTO_INCREMENT",
-                        "type": "BIGINT"
-                    },
                     "total": {
                         "description": "",
                         "type": "INT",
@@ -2279,6 +2290,9 @@
                         "description": "",
                         "type": "TEXT",
                         "default": "NULL"
+                    },
+                    "product_id": {
+                        "$ref": "#/components/schemas/Product"
                     },
                     "created_at": {
                         "description": "",

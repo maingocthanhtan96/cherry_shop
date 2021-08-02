@@ -772,6 +772,243 @@
                 ]
             }
         },
+        "/product-payments": {
+            "get": {
+                "tags": [
+                    "ProductPayment"
+                ],
+                "summary": "List ProductPayment",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "ascending",
+                        "in": "query",
+                        "description": "0: asc, 1: desc",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "orderBy",
+                        "in": "query",
+                        "description": "column order by",
+                        "schema": {
+                            "type": "string",
+                            "default": "updated_at"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "ProductPayment"
+                ],
+                "summary": "Create ProductPayment",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "total": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "0",
+                                        "example": "4932"
+                                    },
+                                    "price": {
+                                        "description": "",
+                                        "type": "FLOAT",
+                                        "default": "NULL",
+                                        "example": "7688.09"
+                                    },
+                                    "note": {
+                                        "description": "",
+                                        "type": "TEXT",
+                                        "default": "NULL",
+                                        "example": "Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
+        "/product-payments/{id}": {
+            "get": {
+                "tags": [
+                    "ProductPayment"
+                ],
+                "summary": "Edit ProductPayment",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "ProductPayment"
+                ],
+                "summary": "Update ProductPayment",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "id"
+                                ],
+                                "properties": {
+                                    "total": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "0",
+                                        "example": "4932"
+                                    },
+                                    "price": {
+                                        "description": "",
+                                        "type": "FLOAT",
+                                        "default": "NULL",
+                                        "example": "7688.09"
+                                    },
+                                    "note": {
+                                        "description": "",
+                                        "type": "TEXT",
+                                        "default": "NULL",
+                                        "example": "Ratione est ipsum perferendis saepe saepe maxime enim quod. Architecto voluptas officiis rerum pariatur. Commodi numquam dolore ut officiis repudiandae architecto."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "ProductPayment"
+                ],
+                "summary": "Delete ProductPayment",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/OK"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/Error"
+                    }
+                },
+                "security": [
+                    {
+                        "authApi": []
+                    }
+                ]
+            }
+        },
         "/sizes": {
             "get": {
                 "tags": [
@@ -1442,6 +1679,44 @@
                         "default": "NULL"
                     },
                     "deleted_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    }
+                },
+                "type": "object"
+            },
+            "ProductPayment": {
+                "title": "ProductPayment",
+                "required": [
+                    "id"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "AUTO_INCREMENT",
+                        "type": "BIGINT"
+                    },
+                    "total": {
+                        "description": "",
+                        "type": "INT",
+                        "default": "0"
+                    },
+                    "price": {
+                        "description": "",
+                        "type": "FLOAT",
+                        "default": "NULL"
+                    },
+                    "note": {
+                        "description": "",
+                        "type": "TEXT",
+                        "default": "NULL"
+                    },
+                    "created_at": {
+                        "description": "",
+                        "type": "TIMESTAMP",
+                        "default": "NULL"
+                    },
+                    "updated_at": {
                         "description": "",
                         "type": "TIMESTAMP",
                         "default": "NULL"

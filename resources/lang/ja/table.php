@@ -41,6 +41,12 @@ return [
 		'id' => 'ID',
         'name' => 'Name',
 	],
+    'product_payment' => [
+		'id' => 'ID',
+        'total' => 'Total',
+        'price' => 'Price',
+        'note' => 'Note',
+	],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Showing {from} to {to} of {count} records|{count} records|One record',

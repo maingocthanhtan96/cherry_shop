@@ -28,6 +28,12 @@ return [
 	'size_create' => 'Tạo Size',
 	'size_edit' => 'Sửa Size',
 	// END - size
+    // START - product_payment
+	'product_payment' => 'ProductPayment',
+	'product_payment_list' => 'ProductPayment',
+	'product_payment_create' => 'Tạo ProductPayment',
+	'product_payment_edit' => 'Sửa ProductPayment',
+	// END - product_payment
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

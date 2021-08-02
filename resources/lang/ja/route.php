@@ -28,6 +28,12 @@ return [
 	'size_create' => 'Create Size',
 	'size_edit' => 'Edit Size',
 	// END - size
+    // START - product_payment
+	'product_payment' => 'ProductPayment',
+	'product_payment_list' => 'ProductPayment',
+	'product_payment_create' => 'Create ProductPayment',
+	'product_payment_edit' => 'Edit ProductPayment',
+	// END - product_payment
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

@@ -9,6 +9,7 @@ import category from './modules/category';
 import product from './modules/product';
 import color from './modules/color';
 import size from './modules/size';
+import productPayment from './modules/product-payment';
 // {{$IMPORT_ROUTE_NOT_DELETE_THIS_LINE$}}
 
 /**
@@ -88,6 +89,7 @@ export const asyncRouterMap = [
       product,
       color,
       size,
+      productPayment,
       // {{$ROUTE_ASYNC_NOT_DELETE_THIS_LINE$}},
   administrator,
   { path: '*', redirect: '/404', hidden: true },

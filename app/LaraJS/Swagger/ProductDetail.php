@@ -53,9 +53,10 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id", "price", "amount"},
+ *                  required={"id", "price", "amount", "product_id"},
  *                  @OA\Property(property="price", type="VARCHAR", default="NONE", example="Lavonne Grant IV", description=""),
      *                  @OA\Property(property="amount", type="INT", default="NONE", example="8767", description=""),
+ *                  @OA\Property(property="product_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -86,9 +87,10 @@
  *          @OA\MediaType(
  *              mediaType="multipart/form-data",
  *              @OA\Schema (
- *                  required={"id", "price", "amount"},
+ *                  required={"id", "price", "amount", "product_id"},
  *                  @OA\Property(property="price", type="VARCHAR", default="NONE", example="Lavonne Grant IV", description=""),
      *                  @OA\Property(property="amount", type="INT", default="NONE", example="8767", description=""),
+ *                  @OA\Property(property="product_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -114,7 +116,7 @@
  * @OA\Schema(
  *     type="object",
  *     title="ProductDetail",
- *     required={"id", "price", "amount"},
+ *     required={"id", "price", "amount", "product_id"},
  * )
  */
 class ProductDetail
@@ -129,6 +131,11 @@ class ProductDetail
 
     /**
      * <###> @OA\Property(property="amount", type="INT", default="NONE", description="")
+     */
+
+    /**
+     * @OA\Property(property="product_id", default="NONE", description="hasMany")
+     * @var Product
      */
 
     //{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}

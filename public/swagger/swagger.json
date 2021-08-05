@@ -1115,7 +1115,8 @@
                                 "required": [
                                     "id",
                                     "price",
-                                    "amount"
+                                    "amount",
+                                    "product_id"
                                 ],
                                 "properties": {
                                     "price": {
@@ -1129,6 +1130,12 @@
                                         "type": "INT",
                                         "default": "NONE",
                                         "example": "8767"
+                                    },
+                                    "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -1200,7 +1207,8 @@
                                 "required": [
                                     "id",
                                     "price",
-                                    "amount"
+                                    "amount",
+                                    "product_id"
                                 ],
                                 "properties": {
                                     "price": {
@@ -1214,6 +1222,12 @@
                                         "type": "INT",
                                         "default": "NONE",
                                         "example": "8767"
+                                    },
+                                    "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -2545,7 +2559,8 @@
                 "required": [
                     "id",
                     "price",
-                    "amount"
+                    "amount",
+                    "product_id"
                 ],
                 "properties": {
                     "id": {
@@ -2561,6 +2576,9 @@
                         "description": "",
                         "type": "INT",
                         "default": "NONE"
+                    },
+                    "product_id": {
+                        "$ref": "#/components/schemas/Product"
                     },
                     "created_at": {
                         "description": "",

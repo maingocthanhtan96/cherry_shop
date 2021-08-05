@@ -49,6 +49,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     /*<==> Member Route - 2021-08-02 22:02:10 <==>*/
     Route::get('/members/get-members', 'MemberController@getMember');
             Route::apiResource('members', 'MemberController');
+    /*<==> ProductDetail Route - 2021-08-05 21:05:22 <==>*/
+    Route::apiResource('product-details', 'ProductDetailController');
     //{{ROUTE_USER_NOT_DELETE_THIS_LINE}}
 });
 

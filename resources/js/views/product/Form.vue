@@ -130,9 +130,7 @@
             </el-col>
           </el-row>
           <el-row :gutter="10">
-            <el-col>
-
-            </el-col>
+            <el-col></el-col>
           </el-row>
           <el-row :gutter="10">
             <el-col :span="8">

@@ -46,6 +46,12 @@ return [
 	'member_create' => 'Create Member',
 	'member_edit' => 'Edit Member',
 	// END - member
+    // START - product_detail
+	'product_detail' => 'ProductDetail',
+	'product_detail_list' => 'ProductDetail',
+	'product_detail_create' => 'Create ProductDetail',
+	'product_detail_edit' => 'Edit ProductDetail',
+	// END - product_detail
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

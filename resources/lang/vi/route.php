@@ -46,6 +46,12 @@ return [
 	'member_create' => 'Tạo Member',
 	'member_edit' => 'Sửa Member',
 	// END - member
+    // START - product_detail
+	'product_detail' => 'ProductDetail',
+	'product_detail_list' => 'ProductDetail',
+	'product_detail_create' => 'Tạo ProductDetail',
+	'product_detail_edit' => 'Sửa ProductDetail',
+	// END - product_detail
     //{{LANG_ROUTE_NOT_DELETE_THIS_LINE}}
     'generator' => 'Generator',
     'generator_create' => 'Generator Create',

@@ -54,6 +54,27 @@
               />
             </el-select>
           </el-form-item>
+            <el-form-item
+          data-generator="size_id"
+          :label="$t('route.size')"
+          prop="size_id"
+          :error="errors.size_id && errors.size_id[0]"
+          >
+            <el-select
+              v-model="form.size_id"
+              name="size_id"
+              filterable
+              :placeholder="$t('route.size')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in sizeList"
+                :key="'size_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
             <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'ProductDetail' }" custom>
@@ -90,9 +111,11 @@
 import GlobalForm from '@/plugins/mixins/global-form';
 import ProductDetailResource from '@/api/v1/product-detail';
 import ProductResource from '@/api/v1/product';
+import SizeResource from '@/api/v1/size';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productDetailResource = new ProductDetailResource();
+const sizeResource = new SizeResource();
 const productResource = new ProductResource();
 
 export default {
@@ -107,12 +130,14 @@ export default {
         price: '',
         amount: '',
         product_id: '',
+        size_id: '',
  }, // {{$$}}
       loading: {
         form: false,
         button: false,
       },
       productList: [],
+      sizeList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -137,6 +162,9 @@ export default {
         product_id: [
           { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_detail') }), trigger: ['change', 'blur'] },
         ],
+        size_id: [
+          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_detail') }), trigger: ['change', 'blur'] },
+        ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
       };
     },
@@ -149,6 +177,10 @@ export default {
         data: { data: product },
       } = await productResource.getProduct();
       this.productList = product;
+const {
+        data: { data: size },
+      } = await sizeResource.getSize();
+      this.sizeList = size;
 // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

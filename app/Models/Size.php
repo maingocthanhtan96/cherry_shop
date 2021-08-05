@@ -38,5 +38,13 @@ class Size extends BaseModel
         return $this->hasMany(ProductPayment::class, 'size_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function productDetails(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(ProductDetail::class, 'size_id', 'id');
+    }
+
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

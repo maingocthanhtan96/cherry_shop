@@ -20,6 +20,7 @@ class ProductDetail extends BaseModel
         'price',
         'amount',
         'product_id',
+        'size_id',
     ];
 
     
@@ -30,6 +31,14 @@ class ProductDetail extends BaseModel
     public function product(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function size(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(Size::class, 'size_id', 'id');
     }
 
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}

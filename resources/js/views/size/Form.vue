@@ -25,28 +25,6 @@
               show-word-limit
             />
           </el-form-item>
-          <el-form-item
-            data-generator="product_id"
-            :label="$t('route.product')"
-            prop="product_id"
-            :error="errors.product_id && errors.product_id[0]"
-          >
-            <el-select
-              v-model="form.product_id"
-              name="product_id"
-              multiple
-              filterable
-              :placeholder="$t('route.product')"
-              class="tw-w-full"
-            >
-              <el-option
-                v-for="(item, index) in productList"
-                :key="'product_' + index"
-                :label="item.name"
-                :value="item.id"
-              />
-            </el-select>
-          </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Size' }" custom>

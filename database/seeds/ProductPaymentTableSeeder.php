@@ -19,6 +19,7 @@ class ProductPaymentTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $members = \App\Models\Member::all()->pluck('id')->toArray();
         $colors = \App\Models\Color::all()->pluck('id')->toArray();
         $sizes = \App\Models\Size::all()->pluck('id')->toArray();
         $products = \App\Models\Product::all()
@@ -40,6 +41,7 @@ class ProductPaymentTableSeeder extends Seeder
                 'product_id' => $faker->randomElement($products),
                 'size_id' => $faker->randomElement($sizes),
                 'color_id' => $faker->randomElement($colors),
+                'member_id' => $faker->randomElement($members),
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
             ]);
         }

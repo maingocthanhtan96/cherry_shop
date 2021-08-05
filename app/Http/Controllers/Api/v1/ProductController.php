@@ -49,7 +49,7 @@ class ProductController extends Controller
 			$queryService = new QueryService(new Product);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['colors','sizes','category'];
+            $queryService->withRelationship = ['category'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -75,8 +75,16 @@ class ProductController extends Controller
 	public function store(StoreProductRequest $request): JsonResponse
 	{
 		try {
+		    $requestAll = $request->all();
+            $requestAll['stock_out'] = 0;
+            $requestAll['inventory'] = 0;
 		    $product = new Product();
-		    $product->fill($request->all());
+		    $product->fill($requestAll);
+            if ($request->hasFile('image')) {
+                $disk = \Storage::disk();
+                $fileName = $disk->putFile(Product::FOLDER_UPLOAD, $request->file('image'));
+                $product->image = $disk->url($fileName);
+            }
             $product->save();
 			$colorId = $request->get('color_id', []);
             if($colorId) {
@@ -124,6 +132,15 @@ class ProductController extends Controller
 	{
 		try {
 		    $product->fill($request->all());
+            if ($request->hasFile('image')) {
+                $disk = \Storage::disk();
+                $fileName = $disk->putFile(Product::FOLDER_UPLOAD, $request->file('image'));
+                $urlImage = parse_url($product->image, PHP_URL_PATH);
+                if ($disk->exists($urlImage)) {
+                    $disk->delete($urlImage);
+                }
+                $product->image = $disk->url($fileName);
+            }
             $product->save();
             $colorId = $request->get('color_id', []);
             if($colorId) {
@@ -150,6 +167,11 @@ class ProductController extends Controller
     public function destroy(Product $product): JsonResponse
     {
 	    try {
+	        $disk = \Storage::disk();
+            $urlImage = parse_url($product->image, PHP_URL_PATH);
+            if ($disk->exists($urlImage)) {
+                $disk->delete($urlImage);
+            }
 	        $product->colors()->detach();
             $product->sizes()->detach();
             //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}

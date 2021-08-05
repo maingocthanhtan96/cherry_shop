@@ -6,11 +6,18 @@
  */
 
 import Resource from '@/api/resource';
+import request from '@/utils/request';
 
 export default class MemberResource extends Resource {
   constructor() {
     super('/v1/members');
   }
 
+  getMember() {
+    return request({
+      url: '/v1/members/get-members',
+      method: 'get',
+    });
+  }
   // {{$API_NOT_DELETE_THIS_LINE$}}
 }

@@ -78,10 +78,6 @@ class ColorController extends Controller
 		    $color = new Color();
 		    $color->fill($request->all());
             $color->save();
-			$productId = $request->get('product_id', []);
-            if($productId) {
-                $color->products()->attach($productId);
-            }
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($color, Response::HTTP_CREATED);
@@ -99,7 +95,6 @@ class ColorController extends Controller
 	public function show(Color $color): JsonResponse
 	{
 		try {
-		    $color->product_id = \Arr::pluck($color->products()->get(), 'pivot.product_id');
             //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($color);
@@ -141,7 +136,6 @@ class ColorController extends Controller
     public function destroy(Color $color): JsonResponse
     {
 	    try {
-	        $color->products()->detach();
             //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
 			$color->delete();
 

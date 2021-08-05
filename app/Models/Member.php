@@ -25,5 +25,13 @@ class Member extends BaseModel
 
     
 
-	//{{RELATIONS_NOT_DELETE_THIS_LINE}}
+	/**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function productPayments(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(ProductPayment::class, 'member_id', 'id');
+    }
+
+    //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

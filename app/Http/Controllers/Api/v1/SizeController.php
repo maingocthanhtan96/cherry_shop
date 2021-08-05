@@ -78,10 +78,6 @@ class SizeController extends Controller
 		    $size = new Size();
 		    $size->fill($request->all());
             $size->save();
-			$productId = $request->get('product_id', []);
-            if($productId) {
-                $size->products()->attach($productId);
-            }
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($size, Response::HTTP_CREATED);
@@ -99,7 +95,6 @@ class SizeController extends Controller
 	public function show(Size $size): JsonResponse
 	{
 		try {
-		    $size->product_id = \Arr::pluck($size->products()->get(), 'pivot.product_id');
             //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($size);
@@ -120,10 +115,6 @@ class SizeController extends Controller
 		try {
 		    $size->fill($request->all());
             $size->save();
-            $productId = $request->get('product_id', []);
-            if($productId) {
-                $size->products()->sync($productId);
-            }
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($size);
@@ -141,7 +132,6 @@ class SizeController extends Controller
     public function destroy(Size $size): JsonResponse
     {
 	    try {
-	        $size->products()->detach();
             //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
 			$size->delete();
 

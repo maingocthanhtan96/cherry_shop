@@ -13,6 +13,14 @@ export default class ProductResource extends Resource {
     super('/v1/products');
   }
 
+  update(id, resource) {
+    return request({
+      url: this.uri + '/' + id,
+      method: 'post',
+      data: resource,
+    });
+  }
+
   getProduct() {
     return request({
       url: '/v1/products/get-products',

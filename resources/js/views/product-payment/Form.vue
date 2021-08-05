@@ -104,6 +104,27 @@
               />
             </el-select>
           </el-form-item>
+            <el-form-item
+          data-generator="member_id"
+          :label="$t('route.member')"
+          prop="member_id"
+          :error="errors.member_id && errors.member_id[0]"
+          >
+            <el-select
+              v-model="form.member_id"
+              name="member_id"
+              filterable
+              :placeholder="$t('route.member')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in memberList"
+                :key="'member_' + index"
+                :label="item.name"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
             <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'ProductPayment' }" custom>
@@ -142,9 +163,11 @@ import ProductPaymentResource from '@/api/v1/product-payment';
 import ProductResource from '@/api/v1/product';
 import SizeResource from '@/api/v1/size';
 import ColorResource from '@/api/v1/color';
+import MemberResource from '@/api/v1/member';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productPaymentResource = new ProductPaymentResource();
+const memberResource = new MemberResource();
 const colorResource = new ColorResource();
 const sizeResource = new SizeResource();
 const productResource = new ProductResource();
@@ -164,6 +187,7 @@ export default {
         product_id: '',
         size_id: '',
         color_id: '',
+        member_id: '',
  }, // {{$$}}
       loading: {
         form: false,
@@ -172,6 +196,7 @@ export default {
       productList: [],
       sizeList: [],
       colorList: [],
+      memberList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -190,6 +215,9 @@ export default {
           { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
         ],
         color_id: [
+          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
+        ],
+        member_id: [
           { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
@@ -212,6 +240,10 @@ const {
         data: { data: color },
       } = await colorResource.getColor();
       this.colorList = color;
+const {
+        data: { data: member },
+      } = await memberResource.getMember();
+      this.memberList = member;
 // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

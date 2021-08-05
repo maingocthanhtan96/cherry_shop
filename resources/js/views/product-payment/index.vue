@@ -110,6 +110,11 @@
                   {{ row.color.name }}
                 </template>
               </el-table-column>
+            <el-table-column data-generator="member_id" prop="member_id" :label="$t('route.member')" align="left" header-align="center">
+                <template v-if="row.member" slot-scope="{ row }">
+                  {{ row.member.name }}
+                </template>
+              </el-table-column>
             <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column
                 data-generator="updated_at"

@@ -141,5 +141,20 @@ class MemberController extends Controller
 	    }
     }
 
+    /**
+     * get all data from Member
+     * @return JsonResponse
+     */
+    public function getMember(): JsonResponse
+    {
+        try {
+            $members = Member::all();
+
+            return $this->jsonData($members);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
     //{{CONTROLLER_RELATIONSHIP_NOT_DELETE_THIS_LINE}}
 }

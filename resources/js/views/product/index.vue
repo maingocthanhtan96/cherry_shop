@@ -40,6 +40,17 @@
               highlight-current-row
               @sort-change="sortChange"
             >
+              <el-table-column type="expand">
+                <template slot-scope="{ row }">
+                  <div v-for="detail in row.product_details" :key="detail.id">
+                    <p>{{ $t('route.size') }}: {{ detail.color && detail.color.name }}</p>
+                    <p>{{ $t('route.color') }}: {{ detail.size && detail.color.name }}</p>
+                    <p>{{ $t('table.product_detail.amount') }}: {{ detail.amount }}</p>
+                    <p>{{ $t('table.product_detail.price') }}: {{ detail.price | currency }}</p>
+                    <hr />
+                  </div>
+                </template>
+              </el-table-column>
               <el-table-column
                 data-generator="code"
                 prop="code"
@@ -118,17 +129,6 @@
                 </template>
               </el-table-column>
               <el-table-column
-                data-generator="price"
-                prop="price"
-                :label="$t('table.product.price')"
-                align="center"
-                header-align="center"
-              >
-                <template slot-scope="{ row }">
-                  {{ row.price | currency }}
-                </template>
-              </el-table-column>
-              <el-table-column
                 data-generator="discount"
                 prop="discount"
                 :label="$t('table.product.discount')"
@@ -137,36 +137,6 @@
               >
                 <template slot-scope="{ row }">
                   {{ row.discount }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                data-generator="color.name"
-                prop="color.name"
-                :label="$t('route.color')"
-                align="left"
-                header-align="center"
-              >
-                <template slot-scope="{ row }">
-                  <template v-for="item in row.colors">
-                    <el-tag :key="'color.name_' + item.id" class="tw-mr-2" size="medium">
-                      {{ item.name }}
-                    </el-tag>
-                  </template>
-                </template>
-              </el-table-column>
-              <el-table-column
-                data-generator="size.name"
-                prop="size.name"
-                :label="$t('route.size')"
-                align="left"
-                header-align="center"
-              >
-                <template slot-scope="{ row }">
-                  <template v-for="item in row.sizes">
-                    <el-tag :key="'size.name_' + item.id" class="tw-mr-2" size="medium">
-                      {{ item.name }}
-                    </el-tag>
-                  </template>
                 </template>
               </el-table-column>
               <el-table-column
@@ -195,6 +165,9 @@
               </el-table-column>
               <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
                 <template slot-scope="{ row }">
+                  <router-link v-permission="['edit']" :to="{ name: 'ProductSold', params: { id: row.id } }">
+                    <svg-icon icon-class="sold-out" class="tw-mr-2 tw-inline" />
+                  </router-link>
                   <router-link v-permission="['edit']" :to="{ name: 'ProductEdit', params: { id: row.id } }">
                     <i class="el-icon-edit el-link el-link--primary tw-mr-2" />
                   </router-link>
@@ -228,7 +201,10 @@ export default {
   components: { Pagination },
   filters: {
     currency(string) {
-      return string.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+      return Number(string).toLocaleString('it-IT', {
+        style: 'currency',
+        currency: 'VND',
+      });
     },
   },
   mixins: [DateRangePicker],

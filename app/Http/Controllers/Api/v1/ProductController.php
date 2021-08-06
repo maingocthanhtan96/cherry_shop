@@ -10,6 +10,7 @@
 namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Product;
+use App\Models\ProductDetail;
 use App\Services\QueryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -49,7 +50,7 @@ class ProductController extends Controller
 			$queryService = new QueryService(new Product);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['category'];
+            $queryService->withRelationship = ['category', 'productDetails.size', 'productDetails.color'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -86,6 +87,11 @@ class ProductController extends Controller
                 $product->image = $disk->url($fileName);
             }
             $product->save();
+            $productDetails = json_decode($requestAll['product_details'], true) ?? [];
+            foreach ($productDetails as $key => $detail) {
+                $productDetails[$key]['product_id'] = $product->id;
+            }
+            ProductDetail::upsert($productDetails, ['color_id', 'size_id', 'product_id'], ['amount', 'price']);
 			$colorId = $request->get('color_id', []);
             if($colorId) {
                 $product->colors()->attach($colorId);
@@ -111,8 +117,7 @@ class ProductController extends Controller
 	public function show(Product $product): JsonResponse
 	{
 		try {
-		    $product->color_id = \Arr::pluck($product->colors()->get(), 'pivot.color_id');
-            $product->size_id = \Arr::pluck($product->sizes()->get(), 'pivot.size_id');
+		    $product->load('productDetails');
             //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product);
@@ -142,6 +147,12 @@ class ProductController extends Controller
                 $product->image = $disk->url($fileName);
             }
             $product->save();
+            $productDetails = json_decode($request->get('product_details'), true) ?? [];
+            foreach ($productDetails as $key => $detail) {
+                unset($productDetails[$key]['created_at']);
+                $productDetails[$key]['updated_at'] = now();
+            }
+            ProductDetail::upsert($productDetails, ['color_id', 'size_id', 'product_id'], ['amount', 'price']);
             $colorId = $request->get('color_id', []);
             if($colorId) {
                 $product->colors()->sync($colorId);

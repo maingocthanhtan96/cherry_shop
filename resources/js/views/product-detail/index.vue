@@ -65,6 +65,11 @@
                   {{ row.size.name }}
                 </template>
               </el-table-column>
+            <el-table-column data-generator="color_id" prop="color_id" :label="$t('route.color')" align="left" header-align="center">
+                <template v-if="row.color" slot-scope="{ row }">
+                  {{ row.color.name }}
+                </template>
+              </el-table-column>
             <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column data-generator="updated_at" prop="updated_at" :label="$t('date.updated_at')" sortable="custom" align="center" header-align="center">
                 <template slot-scope="{ row }">

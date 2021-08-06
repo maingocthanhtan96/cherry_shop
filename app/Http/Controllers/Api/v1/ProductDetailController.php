@@ -49,7 +49,7 @@ class ProductDetailController extends Controller
 			$queryService = new QueryService(new ProductDetail);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['product','size'];
+            $queryService->withRelationship = ['product','size','color'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;

@@ -11,11 +11,11 @@
           </template>
         </div>
         <el-form ref="member" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
-        <el-form-item
-          data-generator="code"
-          :label="$t('table.member.code')"
-          prop="code"
-          :error="errors.code && errors.code[0]"
+          <el-form-item
+            data-generator="code"
+            :label="$t('table.member.code')"
+            prop="code"
+            :error="errors.code && errors.code[0]"
           >
             <el-input
               v-model="form.code"
@@ -26,10 +26,10 @@
             />
           </el-form-item>
           <el-form-item
-          data-generator="name"
-          :label="$t('table.member.name')"
-          prop="name"
-          :error="errors.name && errors.name[0]"
+            data-generator="name"
+            :label="$t('table.member.name')"
+            prop="name"
+            :error="errors.name && errors.name[0]"
           >
             <el-input
               v-model="form.name"
@@ -40,10 +40,10 @@
             />
           </el-form-item>
           <el-form-item
-          data-generator="sns_link"
-          :label="$t('table.member.sns_link')"
-          prop="sns_link"
-          :error="errors.sns_link && errors.sns_link[0]"
+            data-generator="sns_link"
+            :label="$t('table.member.sns_link')"
+            prop="sns_link"
+            :error="errors.sns_link && errors.sns_link[0]"
           >
             <el-input
               v-model="form.sns_link"
@@ -54,22 +54,14 @@
             />
           </el-form-item>
           <el-form-item
-          data-generator="is_block"
-          :label="$t('table.member.is_block')"
-          prop="is_block"
-          :error="errors.is_block && errors.is_block[0]"
+            data-generator="is_block"
+            :label="$t('table.member.is_block')"
+            prop="is_block"
+            :error="errors.is_block && errors.is_block[0]"
           >
-           <el-tooltip
-             :content="form.is_block === 0 ? 'OFF' : 'ON'"
-             placement="top"
-           >
-             <el-switch
-               v-model="form.is_block"
-               name="is_block"
-               :active-value="1"
-               :inactive-value="0"
-             />
-           </el-tooltip>
+            <el-tooltip :content="form.is_block === 0 ? 'OFF' : 'ON'" placement="top">
+              <el-switch v-model="form.is_block" name="is_block" :active-value="1" :inactive-value="0" />
+            </el-tooltip>
           </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
@@ -77,22 +69,12 @@
               <a :href="href" class="el-button el-button--info is-plain" @click="navigate">{{ $t('button.cancel') }}</a>
             </router-link>
             <template v-if="$route.params.id">
-              <el-button
-                :loading="loading.button"
-                type="primary"
-                icon="el-icon-edit"
-                @click="() => update('member')"
-              >
+              <el-button :loading="loading.button" type="primary" icon="el-icon-edit" @click="() => update('member')">
                 {{ $t('button.update') }}
               </el-button>
             </template>
             <template v-else>
-              <el-button
-                :loading="loading.button"
-                type="success"
-                icon="el-icon-plus"
-                @click="() => store('member')"
-              >
+              <el-button :loading="loading.button" type="success" icon="el-icon-plus" @click="() => store('member')">
                 {{ $t('button.create') }}
               </el-button>
             </template>
@@ -136,7 +118,11 @@ export default {
     rules() {
       return {
         name: [
-          { required: true, message: this.$t('validation.required', { attribute: this.$t('table.member.name') }), trigger: ['change', 'blur'] },
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('table.member.name') }),
+            trigger: ['change', 'blur'],
+          },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
       };

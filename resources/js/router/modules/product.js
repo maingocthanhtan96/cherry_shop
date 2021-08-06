@@ -56,6 +56,24 @@ const product = {
         };
       },
     },
+    {
+      path: 'sold/:id(\\d+)',
+      name: 'ProductSold',
+      hidden: true,
+      component: () => import('@/views/product/Sold'),
+      meta: {
+        activeMenu: '/products',
+        title: 'product_sold',
+        permissions: ['edit'],
+        icon: 'edit',
+      },
+      props: route => {
+        return {
+          ...route,
+          props: true,
+        };
+      },
+    },
   ],
 };
 

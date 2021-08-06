@@ -1117,7 +1117,8 @@
                                     "price",
                                     "amount",
                                     "product_id",
-                                    "size_id"
+                                    "size_id",
+                                    "color_id"
                                 ],
                                 "properties": {
                                     "price": {
@@ -1139,6 +1140,12 @@
                                         "example": "1"
                                     },
                                     "size_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "color_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -1216,7 +1223,8 @@
                                     "price",
                                     "amount",
                                     "product_id",
-                                    "size_id"
+                                    "size_id",
+                                    "color_id"
                                 ],
                                 "properties": {
                                     "price": {
@@ -1238,6 +1246,12 @@
                                         "example": "1"
                                     },
                                     "size_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "color_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -2575,7 +2589,8 @@
                     "price",
                     "amount",
                     "product_id",
-                    "size_id"
+                    "size_id",
+                    "color_id"
                 ],
                 "properties": {
                     "id": {
@@ -2597,6 +2612,9 @@
                     },
                     "size_id": {
                         "$ref": "#/components/schemas/Size"
+                    },
+                    "color_id": {
+                        "$ref": "#/components/schemas/Color"
                     },
                     "created_at": {
                         "description": "",

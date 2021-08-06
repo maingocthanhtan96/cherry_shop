@@ -97,24 +97,6 @@
             </el-col>
             <el-col :span="8">
               <el-form-item
-                data-generator="price"
-                :label="$t('table.product.price')"
-                prop="price"
-                :error="errors.price && errors.price[0]"
-              >
-                <div class="el-input el-input--medium">
-                  <money
-                    v-model="form.price"
-                    v-bind="money"
-                    name="price"
-                    :placeholder="$t('table.product.price')"
-                    class="el-input__inner"
-                  />
-                </div>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item
                 data-generator="discount"
                 :label="$t('table.product.discount')"
                 prop="discount"
@@ -126,59 +108,6 @@
                   :placeholder="$t('table.product.discount')"
                   class="tw-w-full"
                 />
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col></el-col>
-          </el-row>
-          <el-row :gutter="10">
-            <el-col :span="8">
-              <el-form-item
-                data-generator="color_id"
-                :label="$t('route.color')"
-                prop="color_id"
-                :error="errors.color_id && errors.color_id[0]"
-              >
-                <el-select
-                  v-model="form.color_id"
-                  name="color_id"
-                  multiple
-                  filterable
-                  :placeholder="$t('route.color')"
-                  class="tw-w-full"
-                >
-                  <el-option
-                    v-for="(item, index) in colorList"
-                    :key="'color_' + index"
-                    :label="item.name"
-                    :value="item.id"
-                  />
-                </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item
-                data-generator="size_id"
-                :label="$t('route.size')"
-                prop="size_id"
-                :error="errors.size_id && errors.size_id[0]"
-              >
-                <el-select
-                  v-model="form.size_id"
-                  name="size_id"
-                  multiple
-                  filterable
-                  :placeholder="$t('route.size')"
-                  class="tw-w-full"
-                >
-                  <el-option
-                    v-for="(item, index) in sizeList"
-                    :key="'size_' + index"
-                    :label="item.name"
-                    :value="item.id"
-                  />
-                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -205,6 +134,99 @@
               </el-form-item>
             </el-col>
           </el-row>
+          <el-row
+            v-for="(detail, indexDetail) in form.product_details"
+            :key="indexDetail"
+            class="product-detail__list"
+            :gutter="10"
+          >
+            <el-col :span="6">
+              <el-form-item
+                data-generator="size_id"
+                :label="$t('route.size')"
+                prop="size_id"
+                :error="errors.size_id && errors.size_id[0]"
+              >
+                <el-select
+                  v-model="detail.size_id"
+                  name="size_id"
+                  filterable
+                  :placeholder="$t('route.size')"
+                  class="tw-w-full"
+                >
+                  <el-option
+                    v-for="(item, index) in sizeList"
+                    :key="'size_' + index"
+                    :label="item.name"
+                    :value="item.id"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item
+                data-generator="color_id"
+                :label="$t('route.color')"
+                prop="color_id"
+                :error="errors.color_id && errors.color_id[0]"
+              >
+                <el-select
+                  v-model="detail.color_id"
+                  name="color_id"
+                  filterable
+                  :placeholder="$t('route.color')"
+                  class="tw-w-full"
+                >
+                  <el-option
+                    v-for="(item, index) in colorList"
+                    :key="'color_' + index"
+                    :label="item.name"
+                    :value="item.id"
+                  />
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item
+                data-generator="amount"
+                :label="$t('table.product_detail.amount')"
+                prop="amount"
+                :error="errors.amount && errors.amount[0]"
+              >
+                <el-input-number
+                  v-model="detail.amount"
+                  name="amount"
+                  class="tw-w-full"
+                  :placeholder="$t('table.product_detail.amount')"
+                />
+              </el-form-item>
+            </el-col>
+            <el-col :span="6">
+              <el-form-item
+                data-generator="price"
+                :label="$t('table.product_detail.price')"
+                :error="errors.price && errors.price[0]"
+              >
+                <div class="el-input el-input--medium">
+                  <money
+                    v-model="detail.price"
+                    v-bind="money"
+                    name="price"
+                    :placeholder="$t('table.product.price')"
+                    class="el-input__inner"
+                  />
+                </div>
+              </el-form-item>
+            </el-col>
+            <el-button
+              v-show="form.product_details.length > 1"
+              type="danger"
+              class="product-detail__delete"
+              icon="el-icon-delete"
+              @click="onRemoveProductDetail(indexDetail)"
+            ></el-button>
+          </el-row>
+          <el-button icon="el-icon-plus" type="primary" @click="onAddProductDetail">Add product detail</el-button>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Product' }" custom>
@@ -259,12 +281,17 @@ export default {
         stock_in: undefined,
         stock_out: '',
         inventory: '',
-        price: undefined,
         discount: 0,
         status: 1,
-        color_id: '',
-        size_id: '',
         category_id: '',
+        product_details: [
+          {
+            size_id: '',
+            color_id: '',
+            price: '',
+            amount: 0,
+          },
+        ],
       }, // {{$$}}
       loading: {
         form: false,
@@ -363,6 +390,17 @@ export default {
     }
   },
   methods: {
+    onRemoveProductDetail(index) {
+      this.form.product_details.splice(index, 1);
+    },
+    onAddProductDetail() {
+      this.form.product_details.push({
+        size_id: '',
+        color_id: '',
+        price: '',
+        amount: 0,
+      });
+    },
     onUploadImage(file) {
       this.formTmp.image.push({ url: file.url });
       this.formData.set('image', file.raw);
@@ -374,6 +412,10 @@ export default {
     appendToFormData() {
       Object.keys(this.form).forEach(key => {
         if (key === 'image') {
+          return;
+        }
+        if (key === 'product_details') {
+          this.formData.set('product_details', JSON.stringify(this.form.product_details));
           return;
         }
         this.formData.set(key, this.form[key]);
@@ -446,6 +488,18 @@ export default {
   .hidden {
     .el-upload--picture-card {
       display: none;
+    }
+  }
+  .product-detail__list {
+    position: relative;
+    .product-detail__delete {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: none;
+    }
+    &:hover > .product-detail__delete {
+      display: block;
     }
   }
 }

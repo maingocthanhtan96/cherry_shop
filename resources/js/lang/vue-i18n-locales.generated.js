@@ -79,6 +79,7 @@ export default {
             'product_list': 'Product',
             'product_create': 'Create Product',
             'product_edit': 'Edit Product',
+            'product_sold': 'Product Sold',
             'color': 'Color',
             'color_list': 'Color',
             'color_create': 'Create Color',

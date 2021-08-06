@@ -19,6 +19,7 @@ class ProductDetailTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        $colors = \App\Models\Color::all()->pluck('id')->toArray();
         $sizes = \App\Models\Size::all()->pluck('id')->toArray();
         $products = \App\Models\Product::all()->pluck('id')->toArray();
 
@@ -30,6 +31,7 @@ class ProductDetailTableSeeder extends Seeder
                 'amount' => $faker->numberBetween(1000, 9000),
                 'product_id' => $faker->randomElement($products),
                 'size_id' => $faker->randomElement($sizes),
+                'color_id' => $faker->randomElement($colors),
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
 			]);
 		}

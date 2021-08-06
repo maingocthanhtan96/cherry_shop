@@ -20,7 +20,7 @@ class Product extends BaseModel
     //Declare table name
     protected $table = 'products';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
-    protected $fillable = ['code', 'name', 'image', 'description', 'stock_in', 'stock_out', 'inventory', 'price', 'discount', 'status', 'category_id'];
+    protected $fillable = ['code', 'name', 'image', 'description', 'stock_in', 'stock_out', 'inventory', 'discount', 'status', 'category_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo

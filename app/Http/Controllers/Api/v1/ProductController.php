@@ -9,6 +9,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Color;
+use App\Models\Member;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Size;
@@ -206,11 +208,13 @@ class ProductController extends Controller
             $sizesId = array_unique(\Arr::pluck($productDetails, 'size_id'));
             $colorsId = array_unique(\Arr::pluck($productDetails, 'color_id'));
             $sizes = Size::find($sizesId);
-            $colors = Size::find($colorsId);
+            $colors = Color::find($colorsId);
+            $members = Member::latest('amount')->limit(Member::ORDER_AMOUNT)->get();
 
             return $this->jsonData([
                 'sizes' => $sizes,
                 'colors' => $colors,
+                'members' => $members,
             ]);
         } catch (\Exception $e) {
             return $this->jsonError($e);

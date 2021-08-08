@@ -556,6 +556,12 @@
                                         "type": "VARCHAR",
                                         "default": "NULL",
                                         "example": "Dr. Lela Kirlin"
+                                    },
+                                    "amount": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "4593"
                                     }
                                 },
                                 "type": "object"
@@ -658,6 +664,12 @@
                                         "type": "VARCHAR",
                                         "default": "NULL",
                                         "example": "Dr. Lela Kirlin"
+                                    },
+                                    "amount": {
+                                        "description": "",
+                                        "type": "INT",
+                                        "default": "NULL",
+                                        "example": "4593"
                                     }
                                 },
                                 "type": "object"
@@ -2495,6 +2507,11 @@
                     "phone": {
                         "description": "",
                         "type": "VARCHAR",
+                        "default": "NULL"
+                    },
+                    "amount": {
+                        "description": "",
+                        "type": "INT",
                         "default": "NULL"
                     },
                     "created_at": {

@@ -70,6 +70,11 @@
                   {{ row.phone }}
                 </template>
               </el-table-column>
+            <el-table-column data-generator="amount" prop="amount" :label="$t('table.member.amount')" align="center" header-align="center">
+                <template slot-scope="{ row }">
+                  {{ row.amount }}
+                </template>
+              </el-table-column>
             <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column data-generator="updated_at" prop="updated_at" :label="$t('date.updated_at')" sortable="custom" align="center" header-align="center">
                 <template slot-scope="{ row }">

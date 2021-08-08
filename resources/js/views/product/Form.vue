@@ -423,7 +423,6 @@ export default {
     },
     store(product) {
       this.$refs[product].validate((valid, errors) => {
-        console.log(errors, 'errors');
         if (this.scrollToError(valid, errors)) {
           return;
         }

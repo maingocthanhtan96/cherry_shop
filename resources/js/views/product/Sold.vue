@@ -97,17 +97,17 @@
             </el-col>
             <el-col :span="6">
               <el-form-item
-                data-generator="amount"
-                :label="$t('table.product_detail.amount')"
-                prop="amount"
-                :error="errors.amount && errors.amount[0]"
+                data-generator="total"
+                :label="$t('table.product_payment.total')"
+                prop="total"
+                :error="errors.total && errors.total[0]"
               >
                 <el-input-number
-                  v-model="form.amount"
+                  v-model="form.total"
                   :min="1"
-                  name="amount"
+                  name="total"
                   class="tw-w-full"
-                  :placeholder="$t('table.product_detail.amount')"
+                  :placeholder="$t('table.product_payment.total')"
                 />
               </el-form-item>
             </el-col>
@@ -211,12 +211,14 @@
 
 <script>
 import ProductResource from '@/api/v1/product';
+import ProductPaymentResource from '@/api/v1/product-payment';
 import MemberResource from '@/api/v1/member';
 import GlobalForm from '@/plugins/mixins/global-form';
 import { validURL } from '../../utils/validate';
 import { VueMaskDirective } from 'v-mask';
 
 const productResource = new ProductResource();
+const productPaymentResource = new ProductPaymentResource();
 const memberResource = new MemberResource();
 
 export default {
@@ -232,11 +234,11 @@ export default {
         member: false,
       },
       form: {
+        product_id: this.$route.params.id,
         color_id: '',
         size_id: '',
         member_id: '',
-        amount: 1,
-        total: 0,
+        total: 1,
         note: '',
       },
       memberForm: {
@@ -274,10 +276,10 @@ export default {
             trigger: ['change', 'blur'],
           },
         ],
-        amount: [
+        total: [
           {
             required: true,
-            message: this.$t('validation.required', { attribute: this.$t('table.product_detail.amount') }),
+            message: this.$t('validation.required', { attribute: this.$t('table.product_payment.total') }),
             trigger: ['change', 'blur'],
           },
         ],
@@ -320,6 +322,7 @@ export default {
       } = await productResource.detail(this.$route.params.id);
       this.colorList = productDetails.colors;
       this.sizeList = productDetails.sizes;
+      this.memberList = productDetails.members;
       this.loading.form = false;
     } catch (e) {
       this.loading.form = false;
@@ -339,8 +342,30 @@ export default {
       this.loading.member = false;
     },
     store(productDetail) {
-      this.$refs[productDetail].validate(async (valid, errors) => {
-
+      this.$refs[productDetail].validate((valid, errors) => {
+        if (this.scrollToError(valid, errors)) {
+          return;
+        }
+        this.$confirm(this.$t('common.popup.create'), {
+          confirmButtonText: this.$t('button.create'),
+          cancelButtonText: this.$t('button.cancel'),
+          type: 'warning',
+          center: true,
+        }).then(async () => {
+          try {
+            this.loading.button = true;
+            await productPaymentResource.store(this.form);
+            this.$message({
+              showClose: true,
+              message: this.$t('messages.create'),
+              type: 'success',
+            });
+            this.loading.button = false;
+            // await this.$router.push({ name: 'Product' });
+          } catch (e) {
+            this.loading.button = false;
+          }
+        });
       });
     },
     storeMember(member) {

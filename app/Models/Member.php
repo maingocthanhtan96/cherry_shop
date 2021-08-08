@@ -14,6 +14,7 @@ class Member extends BaseModel
 	use SoftDeletes;
 
 	const PREFIX_CODE = 'Member_'; // Member_01
+    const ORDER_AMOUNT = 10;
 
     //Declare table name
     protected $table = 'members';
@@ -24,6 +25,7 @@ class Member extends BaseModel
         'sns_link',
         'is_block',
         'phone',
+        'amount',
     ];
 
 

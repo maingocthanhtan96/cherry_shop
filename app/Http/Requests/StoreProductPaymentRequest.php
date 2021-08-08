@@ -9,6 +9,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\ProductDetail;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductPaymentRequest extends FormRequest
@@ -31,8 +32,16 @@ class StoreProductPaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'total' => 'nullable|numeric',
-            'price' => 'nullable|numeric',
+            'total' => [
+                'nullable',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    $productDetail = ProductDetail::productDetail($this->request);
+                    if ($productDetail && $productDetail->amount < $value) {
+                        $fail(trans('validation.max.numeric', ['max' => $productDetail->amount]));
+                    }
+                },
+            ],
             'note' => 'nullable|string',
             //{{REQUEST_RULES_NOT_DELETE_THIS_LINE}}
         ];

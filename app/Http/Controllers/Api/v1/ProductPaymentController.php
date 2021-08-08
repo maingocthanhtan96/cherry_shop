@@ -9,6 +9,7 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\ProductDetail;
 use App\Models\ProductPayment;
 use App\Services\QueryService;
 use Illuminate\Http\Request;
@@ -49,7 +50,7 @@ class ProductPaymentController extends Controller
             $queryService = new QueryService(new ProductPayment());
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['product','size','color','member'];
+            $queryService->withRelationship = ['product', 'size', 'color', 'member'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;
@@ -74,10 +75,26 @@ class ProductPaymentController extends Controller
      */
     public function store(StoreProductPaymentRequest $request): JsonResponse
     {
+        $productDetail = ProductDetail::productDetail($request);
+        $this->validate($request, [
+            'total' => [
+                'nullable',
+                'numeric',
+                function ($attribute, $value, $fail) use($productDetail) {
+                    if ($productDetail->amount < $value) {
+                        $fail(trans('validation.max.numeric', ['max' => $productDetail->amount]));
+                    }
+                },
+            ],
+            'note' => 'nullable|string',
+        ]);
         try {
+            $requestAll = $request->all();
+            $requestAll['price'] = $productDetail->price * $requestAll['total'];
             $productPayment = new ProductPayment();
-            $productPayment->fill($request->all());
+            $productPayment->fill($requestAll);
             $productPayment->save();
+            $productDetail->decrement('amount');
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
             return $this->jsonData($productPayment, Response::HTTP_CREATED);

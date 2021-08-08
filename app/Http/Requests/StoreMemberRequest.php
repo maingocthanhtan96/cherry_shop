@@ -36,6 +36,7 @@ class StoreMemberRequest extends FormRequest
             'sns_link' => 'nullable|string|max:191',
             'is_block' => 'nullable|boolean',
             'phone' => 'nullable|string|max:191',
+            'amount' => 'nullable|numeric',
             //{{REQUEST_RULES_NOT_DELETE_THIS_LINE}}
         ];
     }

@@ -11,8 +11,7 @@ namespace App\Models;
 
 class ProductDetail extends BaseModel
 {
-	
-
+    const OUT_STOCK = 0;
     //Declare table name
     protected $table = 'product_details';
     //{{TIMESTAMPS_NOT_DELETE_THIS_LINE}}
@@ -24,7 +23,14 @@ class ProductDetail extends BaseModel
         'color_id',
     ];
 
-    
+    public static function productDetail($request)
+    {
+        return ProductDetail::where('product_id', $request->get('product_id'))
+            ->where('color_id', $request->get('color_id'))
+            ->where('size_id', $request->get('size_id'))
+            ->where('amount', '>', self::OUT_STOCK)
+            ->first();
+    }
 
 	/**
      * @return \Illuminate\Database\Eloquent\Relations\belongsTo

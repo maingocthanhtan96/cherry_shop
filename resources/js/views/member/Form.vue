@@ -77,6 +77,14 @@
               show-word-limit
             />
           </el-form-item>
+          <el-form-item
+            data-generator="amount"
+            :label="$t('table.member.amount')"
+            prop="amount"
+            :error="errors.amount && errors.amount[0]"
+          >
+            <el-input-number v-model="form.amount" name="amount" :placeholder="$t('table.member.amount')" />
+          </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Member' }" custom>
@@ -120,6 +128,7 @@ export default {
         sns_link: '',
         is_block: 0,
         phone: '',
+        amount: '',
       }, // {{$$}}
       loading: {
         form: false,

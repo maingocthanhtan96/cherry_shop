@@ -53,13 +53,14 @@ return [
         'price' => 'Price',
         'note' => 'Note',
 	],
-     'member' => [
+      'member' => [
         'id' => 'ID',
         'code' => 'Code',
         'name' => 'Name',
         'sns_link' => 'Sns link',
         'is_block' => 'Is block',
         'phone' => 'Phone',
+        'amount' => 'Amount',
 	],
     'product_detail' => [
 		'id' => 'ID',

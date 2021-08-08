@@ -63,6 +63,20 @@
               <el-switch v-model="form.is_block" name="is_block" :active-value="1" :inactive-value="0" />
             </el-tooltip>
           </el-form-item>
+          <el-form-item
+            data-generator="phone"
+            :label="$t('table.member.phone')"
+            prop="phone"
+            :error="errors.phone && errors.phone[0]"
+          >
+            <el-input
+              v-model="form.phone"
+              name="phone"
+              :placeholder="$t('table.member.phone')"
+              maxlength="191"
+              show-word-limit
+            />
+          </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Member' }" custom>
@@ -105,6 +119,7 @@ export default {
         name: '',
         sns_link: '',
         is_block: 0,
+        phone: '',
       }, // {{$$}}
       loading: {
         form: false,

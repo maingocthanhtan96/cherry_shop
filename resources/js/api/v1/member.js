@@ -19,5 +19,15 @@ export default class MemberResource extends Resource {
       method: 'get',
     });
   }
+
+  search(search) {
+    return request({
+      url: '/v1/members/search',
+      method: 'get',
+      params: {
+        search,
+      },
+    });
+  }
   // {{$API_NOT_DELETE_THIS_LINE$}}
 }

@@ -21,6 +21,13 @@ export default class ProductResource extends Resource {
     });
   }
 
+  detail(id) {
+    return request({
+      url: this.uri + `/${id}/detail`,
+      method: 'get',
+    });
+  }
+
   getProduct() {
     return request({
       url: '/v1/products/get-products',

@@ -31,22 +31,22 @@ class MemberController extends Controller
         $this->middleware('permission:' . \ACL::PERMISSION_DELETE, ['only' => ['destroy']]);
     }
 
-	/**
-	 * lists
-	 * @param Request $request
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function index(Request $request): JsonResponse
-	{
-		try {
-			$limit = $request->get('limit', 25);
-			$ascending = (int)$request->get('ascending', 0);
-			$orderBy = $request->get('orderBy', '');
-			$search = $request->get('search', '');
-			$betweenDate = $request->get('updated_at', []);
+    /**
+     * lists
+     * @param Request $request
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function index(Request $request): JsonResponse
+    {
+        try {
+            $limit = $request->get('limit', 25);
+            $ascending = (int) $request->get('ascending', 0);
+            $orderBy = $request->get('orderBy', '');
+            $search = $request->get('search', '');
+            $betweenDate = $request->get('updated_at', []);
 
-			$queryService = new QueryService(new Member);
+            $queryService = new QueryService(new Member());
             $queryService->select = [];
             $queryService->columnSearch = ['name'];
             $queryService->withRelationship = [];
@@ -60,85 +60,87 @@ class MemberController extends Controller
             $query = $query->paginate($limit);
             $member = $query->toArray();
 
-			return $this->jsonTable($member);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonTable($member);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * create
-	 * @param StoreMemberRequest $request
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function store(StoreMemberRequest $request): JsonResponse
-	{
-		try {
-		    $member = new Member();
-		    $member->fill($request->all());
+    /**
+     * create
+     * @param StoreMemberRequest $request
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function store(StoreMemberRequest $request): JsonResponse
+    {
+        try {
+            $member = new Member();
+            $member->fill($request->all());
             $member->save();
-			//{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
+            $member->code = Member::PREFIX_CODE . str_pad($member->id, 2, '0', STR_PAD_LEFT);
+            $member->save();
+            //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($member, Response::HTTP_CREATED);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($member, Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * get once by id
-	 * @param Member $member
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function show(Member $member): JsonResponse
-	{
-		try {
-		    //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
+    /**
+     * get once by id
+     * @param Member $member
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function show(Member $member): JsonResponse
+    {
+        try {
+            //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($member);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($member);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * update once by id
-	 * @param StoreMemberRequest $request
-	 * @param Member $member
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function update(StoreMemberRequest $request, Member $member): JsonResponse
-	{
-		try {
-		    $member->fill($request->all());
+    /**
+     * update once by id
+     * @param StoreMemberRequest $request
+     * @param Member $member
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function update(StoreMemberRequest $request, Member $member): JsonResponse
+    {
+        try {
+            $member->fill($request->all());
             $member->save();
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($member);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($member);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * delete once by id
-	 * @param Member $member
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
+    /**
+     * delete once by id
+     * @param Member $member
+     * @return JsonResponse
+     * @author tanmnt
+     */
     public function destroy(Member $member): JsonResponse
     {
-	    try {
-	        //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
-			$member->delete();
+        try {
+            //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
+            $member->delete();
 
-		    return $this->jsonMessage(trans('messages.delete'));
-	    } catch (\Exception $e) {
-	    	return $this->jsonError($e);
-	    }
+            return $this->jsonMessage(trans('messages.delete'));
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
     }
 
     /**
@@ -151,6 +153,24 @@ class MemberController extends Controller
             $members = Member::all();
 
             return $this->jsonData($members);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function search(Request $request): JsonResponse
+    {
+        try {
+            $search = $request->get('search');
+            $member = Member::where('name', 'LIKE', "%$search%")
+                ->orWhere('code', 'LIKE', $search)
+                ->get();
+
+            return $this->jsonData($member);
         } catch (\Exception $e) {
             return $this->jsonError($e);
         }

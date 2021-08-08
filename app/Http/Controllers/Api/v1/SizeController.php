@@ -49,7 +49,7 @@ class SizeController extends Controller
 			$queryService = new QueryService(new Size);
             $queryService->select = [];
             $queryService->columnSearch = ['name'];
-            $queryService->withRelationship = ['products'];
+            $queryService->withRelationship = [];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;

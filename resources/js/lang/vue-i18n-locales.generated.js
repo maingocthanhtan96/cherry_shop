@@ -326,6 +326,7 @@ export default {
                 'name': 'Name',
                 'sns_link': 'Sns link',
                 'is_block': 'Is block',
+                'phone': 'Phone',
             },
             'product_detail': {
                 'id': 'ID',
@@ -707,6 +708,7 @@ export default {
                 'name': 'Name',
                 'sns_link': 'Sns link',
                 'is_block': 'Is block',
+                'phone': 'Phone',
             },
             'product_detail': {
                 'id': 'ID',
@@ -1080,6 +1082,7 @@ export default {
                 'name': 'Name',
                 'sns_link': 'Sns link',
                 'is_block': 'Is block',
+                'phone': 'Phone',
             },
             'product_detail': {
                 'id': 'ID',

@@ -58,6 +58,7 @@
      *                  @OA\Property(property="name", type="VARCHAR", default="NONE", example="Melvina Graham", description=""),
      *                  @OA\Property(property="sns_link", type="VARCHAR", default="NULL", example="Dr. Andres Botsford", description=""),
      *                  @OA\Property(property="is_block", type="BOOLEAN", default="0", example="0", description=""),
+ *                  @OA\Property(property="phone", type="VARCHAR", default="NULL", example="Dr. Lela Kirlin", description=""),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -93,6 +94,7 @@
      *                  @OA\Property(property="name", type="VARCHAR", default="NONE", example="Melvina Graham", description=""),
      *                  @OA\Property(property="sns_link", type="VARCHAR", default="NULL", example="Dr. Andres Botsford", description=""),
      *                  @OA\Property(property="is_block", type="BOOLEAN", default="0", example="0", description=""),
+ *                  @OA\Property(property="phone", type="VARCHAR", default="NULL", example="Dr. Lela Kirlin", description=""),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -141,6 +143,10 @@ class Member
 
     /**
      * <###> @OA\Property(property="is_block", type="BOOLEAN", default="0", description="")
+     */
+
+    /**
+     * <###> @OA\Property(property="phone", type="VARCHAR", default="NULL", description="")
      */
 
     //{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}

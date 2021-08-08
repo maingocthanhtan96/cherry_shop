@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Size;
 use App\Services\QueryService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -192,6 +193,28 @@ class ProductController extends Controller
 	    } catch (\Exception $e) {
 	    	return $this->jsonError($e);
 	    }
+    }
+
+    /**
+     * @param $product
+     * @return JsonResponse
+     */
+    public function detail($product): JsonResponse
+    {
+        try {
+            $productDetails = ProductDetail::where('product_id', $product)->get()->toArray();
+            $sizesId = array_unique(\Arr::pluck($productDetails, 'size_id'));
+            $colorsId = array_unique(\Arr::pluck($productDetails, 'color_id'));
+            $sizes = Size::find($sizesId);
+            $colors = Size::find($colorsId);
+
+            return $this->jsonData([
+                'sizes' => $sizes,
+                'colors' => $colors,
+            ]);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
     }
 
     /**

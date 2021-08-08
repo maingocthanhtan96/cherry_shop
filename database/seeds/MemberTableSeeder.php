@@ -28,6 +28,7 @@ class MemberTableSeeder extends Seeder
                 'name' => $faker->name,
                 'sns_link' => $faker->name,
                 'is_block' => $faker->numberBetween(0, 1),
+                'phone' => $faker->name,
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
 			]);
 		}

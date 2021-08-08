@@ -32,23 +32,25 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     /*<==> Category Route - 2021-08-02 21:49:15 <==>*/
     Route::get('/categories/get-categories', 'CategoryController@getCategory');
-            Route::apiResource('categories', 'CategoryController');
+    Route::apiResource('categories', 'CategoryController');
     /*<==> Product Route - 2021-08-02 21:53:12 <==>*/
+    Route::get('/products/{product}/detail', 'ProductController@detail');
     Route::get('/products/get-products', 'ProductController@getProduct');
-            Route::apiResource('products', 'ProductController');
+    Route::apiResource('products', 'ProductController');
     /*<==> Color Route - 2021-08-02 21:55:13 <==>*/
     Route::get('/colors/get-colors', 'ColorController@getColor');
-            Route::apiResource('colors', 'ColorController');
+    Route::apiResource('colors', 'ColorController');
     /*<==> Size Route - 2021-08-02 21:55:43 <==>*/
     Route::get('/sizes/get-sizes', 'SizeController@getSize');
-            Route::apiResource('sizes', 'SizeController');
+    Route::apiResource('sizes', 'SizeController');
     /*<==> ProductPayment Route - 2021-08-02 21:58:19 <==>*/
     Route::apiResource('product-payments', 'ProductPaymentController');
     /*<==> ProductReject Route - 2021-08-02 22:00:29 <==>*/
     Route::apiResource('product-rejects', 'ProductRejectController');
     /*<==> Member Route - 2021-08-02 22:02:10 <==>*/
+    Route::get('/members/search', 'MemberController@search');
     Route::get('/members/get-members', 'MemberController@getMember');
-            Route::apiResource('members', 'MemberController');
+    Route::apiResource('members', 'MemberController');
     /*<==> ProductDetail Route - 2021-08-05 21:05:22 <==>*/
     Route::apiResource('product-details', 'ProductDetailController');
     //{{ROUTE_USER_NOT_DELETE_THIS_LINE}}

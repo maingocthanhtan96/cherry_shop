@@ -550,6 +550,12 @@
                                         "type": "BOOLEAN",
                                         "default": "0",
                                         "example": "0"
+                                    },
+                                    "phone": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Dr. Lela Kirlin"
                                     }
                                 },
                                 "type": "object"
@@ -646,6 +652,12 @@
                                         "type": "BOOLEAN",
                                         "default": "0",
                                         "example": "0"
+                                    },
+                                    "phone": {
+                                        "description": "",
+                                        "type": "VARCHAR",
+                                        "default": "NULL",
+                                        "example": "Dr. Lela Kirlin"
                                     }
                                 },
                                 "type": "object"
@@ -2479,6 +2491,11 @@
                         "description": "",
                         "type": "BOOLEAN",
                         "default": "0"
+                    },
+                    "phone": {
+                        "description": "",
+                        "type": "VARCHAR",
+                        "default": "NULL"
                     },
                     "created_at": {
                         "description": "",

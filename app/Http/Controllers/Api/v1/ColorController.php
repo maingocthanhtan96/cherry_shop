@@ -49,7 +49,7 @@ class ColorController extends Controller
 			$queryService = new QueryService(new Color);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['products'];
+            $queryService->withRelationship = [];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;

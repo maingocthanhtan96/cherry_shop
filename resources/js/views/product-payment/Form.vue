@@ -63,10 +63,10 @@
             </el-select>
           </el-form-item>
           <el-form-item
-          data-generator="size_id"
-          :label="$t('route.size')"
-          prop="size_id"
-          :error="errors.size_id && errors.size_id[0]"
+            data-generator="size_id"
+            :label="$t('route.size')"
+            prop="size_id"
+            :error="errors.size_id && errors.size_id[0]"
           >
             <el-select
               v-model="form.size_id"
@@ -75,19 +75,14 @@
               :placeholder="$t('route.size')"
               class="tw-w-full"
             >
-              <el-option
-                v-for="(item, index) in sizeList"
-                :key="'size_' + index"
-                :label="item.name"
-                :value="item.id"
-              />
+              <el-option v-for="(item, index) in sizeList" :key="'size_' + index" :label="item.name" :value="item.id" />
             </el-select>
           </el-form-item>
-            <el-form-item
-          data-generator="color_id"
-          :label="$t('route.color')"
-          prop="color_id"
-          :error="errors.color_id && errors.color_id[0]"
+          <el-form-item
+            data-generator="color_id"
+            :label="$t('route.color')"
+            prop="color_id"
+            :error="errors.color_id && errors.color_id[0]"
           >
             <el-select
               v-model="form.color_id"
@@ -104,11 +99,11 @@
               />
             </el-select>
           </el-form-item>
-            <el-form-item
-          data-generator="member_id"
-          :label="$t('route.member')"
-          prop="member_id"
-          :error="errors.member_id && errors.member_id[0]"
+          <el-form-item
+            data-generator="member_id"
+            :label="$t('route.member')"
+            prop="member_id"
+            :error="errors.member_id && errors.member_id[0]"
           >
             <el-select
               v-model="form.member_id"
@@ -125,7 +120,28 @@
               />
             </el-select>
           </el-form-item>
-            <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
+          <el-form-item
+            data-generator="product_detail_id"
+            :label="$t('route.product_detail')"
+            prop="product_detail_id"
+            :error="errors.product_detail_id && errors.product_detail_id[0]"
+          >
+            <el-select
+              v-model="form.product_detail_id"
+              name="product_detail_id"
+              filterable
+              :placeholder="$t('route.product_detail')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in productDetailList"
+                :key="'productDetail_' + index"
+                :label="item.price"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
+          <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'ProductPayment' }" custom>
               <a :href="href" class="el-button el-button--info is-plain" @click="navigate">{{ $t('button.cancel') }}</a>
@@ -164,9 +180,11 @@ import ProductResource from '@/api/v1/product';
 import SizeResource from '@/api/v1/size';
 import ColorResource from '@/api/v1/color';
 import MemberResource from '@/api/v1/member';
+import ProductDetailResource from '@/api/v1/product-detail';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productPaymentResource = new ProductPaymentResource();
+const productDetailResource = new ProductDetailResource();
 const memberResource = new MemberResource();
 const colorResource = new ColorResource();
 const sizeResource = new SizeResource();
@@ -180,7 +198,7 @@ export default {
   data() {
     return {
       form: {
-          id: '',
+        id: '',
         total: 0,
         price: '',
         note: '',
@@ -188,7 +206,8 @@ export default {
         size_id: '',
         color_id: '',
         member_id: '',
- }, // {{$$}}
+        product_detail_id: '',
+      }, // {{$$}}
       loading: {
         form: false,
         button: false,
@@ -197,6 +216,7 @@ export default {
       sizeList: [],
       colorList: [],
       memberList: [],
+      productDetailList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -212,13 +232,32 @@ export default {
           },
         ],
         size_id: [
-          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }),
+            trigger: ['change', 'blur'],
+          },
         ],
         color_id: [
-          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }),
+            trigger: ['change', 'blur'],
+          },
         ],
         member_id: [
-          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }), trigger: ['change', 'blur'] },
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }),
+            trigger: ['change', 'blur'],
+          },
+        ],
+        product_detail_id: [
+          {
+            required: true,
+            message: this.$t('validation.required', { attribute: this.$t('route.product_payment') }),
+            trigger: ['change', 'blur'],
+          },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
       };
@@ -236,15 +275,19 @@ export default {
         data: { data: size },
       } = await sizeResource.getSize();
       this.sizeList = size;
-const {
+      const {
         data: { data: color },
       } = await colorResource.getColor();
       this.colorList = color;
-const {
+      const {
         data: { data: member },
       } = await memberResource.getMember();
       this.memberList = member;
-// {{$CREATED_NOT_DELETE_THIS_LINE$}}
+      const {
+        data: { data: productDetail },
+      } = await productDetailResource.getProductDetail();
+      this.productDetailList = productDetail;
+      // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {
           data: { data: productPayment },

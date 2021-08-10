@@ -141,5 +141,20 @@ class ProductDetailController extends Controller
 	    }
     }
 
+    /**
+     * get all data from ProductDetail
+     * @return JsonResponse
+     */
+    public function getProductDetail(): JsonResponse
+    {
+        try {
+            $productDetails = ProductDetail::all();
+
+            return $this->jsonData($productDetails);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
     //{{CONTROLLER_RELATIONSHIP_NOT_DELETE_THIS_LINE}}
 }

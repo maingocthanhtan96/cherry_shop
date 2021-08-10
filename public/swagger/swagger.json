@@ -1412,7 +1412,8 @@
                                     "product_id",
                                     "size_id",
                                     "color_id",
-                                    "member_id"
+                                    "member_id",
+                                    "product_detail_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1452,6 +1453,12 @@
                                         "example": "1"
                                     },
                                     "member_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "product_detail_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -1529,7 +1536,8 @@
                                     "product_id",
                                     "size_id",
                                     "color_id",
-                                    "member_id"
+                                    "member_id",
+                                    "product_detail_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1569,6 +1577,12 @@
                                         "example": "1"
                                     },
                                     "member_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "product_detail_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -2670,7 +2684,8 @@
                     "product_id",
                     "size_id",
                     "color_id",
-                    "member_id"
+                    "member_id",
+                    "product_detail_id"
                 ],
                 "properties": {
                     "total": {
@@ -2699,6 +2714,9 @@
                     },
                     "member_id": {
                         "$ref": "#/components/schemas/Member"
+                    },
+                    "product_detail_id": {
+                        "$ref": "#/components/schemas/ProductDetail"
                     },
                     "created_at": {
                         "description": "",

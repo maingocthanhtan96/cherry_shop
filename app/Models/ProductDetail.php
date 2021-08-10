@@ -56,5 +56,13 @@ class ProductDetail extends BaseModel
         return $this->belongsTo(Color::class, 'color_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function productPayments(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(ProductPayment::class, 'product_detail_id', 'id');
+    }
+
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

@@ -42,12 +42,11 @@
             >
               <el-table-column type="expand">
                 <template slot-scope="{ row }">
-                  <div v-for="detail in row.product_details" :key="detail.id">
-                    <p>{{ $t('route.size') }}: {{ detail.color && detail.color.name }}</p>
-                    <p>{{ $t('route.color') }}: {{ detail.size && detail.color.name }}</p>
-                    <p>{{ $t('table.product_detail.amount') }}: {{ detail.amount }}</p>
-                    <p>{{ $t('table.product_detail.price') }}: {{ detail.price | currency }}</p>
-                    <hr />
+                  <div v-for="detail in row.product_details" :key="detail.id" class="product-detail">
+                    <p><b>{{ $t('route.size') }}</b>: {{ detail.color && detail.color.name }}</p>
+                    <p><b>{{ $t('route.color') }}</b>: {{ detail.size && detail.color.name }}</p>
+                    <p><b>{{ $t('table.product_detail.amount') }}</b>: {{ detail.amount }}</p>
+                    <p><b>{{ $t('table.product_detail.price') }}</b>: {{ detail.price | currency }}</p>
                   </div>
                 </template>
               </el-table-column>
@@ -165,7 +164,7 @@
               </el-table-column>
               <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
                 <template slot-scope="{ row }">
-                  <router-link v-permission="['edit']" :to="{ name: 'ProductSold', params: { id: row.id } }">
+                  <router-link v-if="row.inventory !== 0" v-permission="['edit']" :to="{ name: 'ProductSold', params: { id: row.id } }">
                     <svg-icon icon-class="sold-out" class="tw-mr-2 tw-inline" />
                   </router-link>
                   <router-link v-permission="['edit']" :to="{ name: 'ProductEdit', params: { id: row.id } }">
@@ -295,3 +294,11 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.product-detail:not(:last-child) {
+  border-bottom: 1px solid;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+</style>

@@ -79,7 +79,7 @@ class ProductController extends Controller
 	public function store(StoreProductRequest $request): JsonResponse
 	{
 		try {
-		    $requestAll = $request->all();
+            $requestAll = $request->all();
             $requestAll['stock_out'] = 0;
             $requestAll['inventory'] = 0;
 		    $product = new Product();
@@ -139,7 +139,7 @@ class ProductController extends Controller
 	public function update(StoreProductRequest $request, Product $product): JsonResponse
 	{
 		try {
-		    $product->fill($request->all());
+            $product->fill($request->all());
             if ($request->hasFile('image')) {
                 $disk = \Storage::disk();
                 $fileName = $disk->putFile(Product::FOLDER_UPLOAD, $request->file('image'));
@@ -204,7 +204,11 @@ class ProductController extends Controller
     public function detail($product): JsonResponse
     {
         try {
-            $productDetails = ProductDetail::where('product_id', $product)->get()->toArray();
+            // cho nay phai sua lai where amount > 0
+            $productDetails = ProductDetail::where('product_id', $product)
+                ->where('amount', '>', ProductDetail::OUT_STOCK)
+                ->get()
+                ->toArray();
             $sizesId = array_unique(\Arr::pluck($productDetails, 'size_id'));
             $colorsId = array_unique(\Arr::pluck($productDetails, 'color_id'));
             $sizes = Size::find($sizesId);

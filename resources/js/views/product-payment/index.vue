@@ -15,13 +15,8 @@
             </a>
           </router-link>
         </div>
-        <el-row :gutter="20" class="tw-mb-6">
-          <el-col :xs="24" :sm="10" :md="6">
-            <label>{{ $t('table.texts.filter') }}</label>
-            <el-input v-model="table.listQuery.search" :placeholder="$t('table.texts.filterPlaceholder')" />
-          </el-col>
+        <el-row :gutter="20" class="tw-mb-6" type="flex" justify="end">
           <el-col :xs="24" :sm="14" :md="18">
-            <br />
             <el-date-picker
               v-model="table.listQuery.updated_at"
               class="md:tw-float-right"
@@ -31,6 +26,17 @@
               :picker-options="pickerOptions"
               @change="changeDateRangePicker"
             />
+          </el-col>
+        </el-row>
+        <el-row :gutter="10" type="flex" align="center" justify="space-between" class="tw-mb-6">
+          <el-col :xs="24" :sm="10" :md="12">
+            <label>{{ $t('table.texts.filter') }}</label>
+            <el-input v-model="table.listQuery.search" :placeholder="$t('table.texts.filterPlaceholder')" />
+          </el-col>
+          <el-col :xs="24" :sm="12" :md="6" class="excel tw-text-right">
+            <el-button type="success" icon="el-icon-download" :loading="downloadLoading" @click="onExcel">
+              Excel
+            </el-button>
           </el-col>
         </el-row>
         <el-row :gutter="20">
@@ -73,9 +79,10 @@
                 :label="$t('table.product_payment.price')"
                 align="center"
                 header-align="center"
+                min-width="110px"
               >
                 <template slot-scope="{ row }">
-                  {{ row.price }}
+                  {{ row.price | currency }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -100,22 +107,40 @@
                   {{ row.product.name }}
                 </template>
               </el-table-column>
-              <el-table-column data-generator="size_id" prop="size_id" :label="$t('route.size')" align="left" header-align="center">
+              <el-table-column
+                data-generator="size_id"
+                prop="size_id"
+                :label="$t('route.size')"
+                align="left"
+                header-align="center"
+              >
                 <template v-if="row.size" slot-scope="{ row }">
                   {{ row.size.name }}
                 </template>
               </el-table-column>
-            <el-table-column data-generator="color_id" prop="color_id" :label="$t('route.color')" align="left" header-align="center">
+              <el-table-column
+                data-generator="color_id"
+                prop="color_id"
+                :label="$t('route.color')"
+                align="left"
+                header-align="center"
+              >
                 <template v-if="row.color" slot-scope="{ row }">
                   {{ row.color.name }}
                 </template>
               </el-table-column>
-            <el-table-column data-generator="member_id" prop="member_id" :label="$t('route.member')" align="left" header-align="center">
+              <el-table-column
+                data-generator="member_id"
+                prop="member_id"
+                :label="$t('route.member')"
+                align="left"
+                header-align="center"
+              >
                 <template v-if="row.member" slot-scope="{ row }">
                   {{ row.member.name }}
                 </template>
               </el-table-column>
-            <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
+              <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->
               <el-table-column
                 data-generator="updated_at"
                 prop="updated_at"
@@ -128,14 +153,14 @@
                   {{ row.updated_at | parseTime('{y}-{m}-{d} {h}:{i}') }}
                 </template>
               </el-table-column>
-              <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+              <el-table-column :label="$t('table.actions')" align="center">
                 <template slot-scope="{ row }">
-                  <router-link v-permission="['edit']" :to="{ name: 'ProductPaymentEdit', params: { id: row.id } }">
-                    <i class="el-icon-edit el-link el-link--primary tw-mr-2" />
-                  </router-link>
-                  <a v-permission="['delete']" class="cursor-pointer" @click.stop="() => remove(row.id)">
-                    <i class="el-icon-delete el-link el-link--danger" />
-                  </a>
+                  <svg-icon
+                    v-permission="['edit']"
+                    icon-class="rollback"
+                    class="tw-text-2xl tw-m-auto tw-cursor-pointer"
+                    @click="onRollback(row)"
+                  />
                 </template>
               </el-table-column>
             </el-table>
@@ -161,6 +186,14 @@ const productPaymentResource = new ProductPaymentsResource();
 
 export default {
   components: { Pagination },
+  filters: {
+    currency(string) {
+      return Number(string).toLocaleString('it-IT', {
+        style: 'currency',
+        currency: 'VND',
+      });
+    },
+  },
   mixins: [DateRangePicker],
   data() {
     return {
@@ -177,6 +210,12 @@ export default {
         total: 0,
         loading: false,
       },
+      excel: {
+        downloadLoading: false,
+        filename: 'product_payment_',
+        autoWidth: true,
+        bookType: 'xlsx',
+      },
     };
   },
   watch: {
@@ -188,6 +227,85 @@ export default {
     this.getList();
   },
   methods: {
+    onExcel() {
+      this.excel.downloadLoading = true;
+      import('@/vendor/Export2Excel').then(async excel => {
+        const tHeader = [
+          this.$t('table.product_payment.id'),
+          this.$t('table.product_payment.total'),
+          this.$t('table.product_payment.price'),
+          this.$t('route.product'),
+          this.$t('route.size'),
+          this.$t('route.color'),
+          this.$t('route.member'),
+          this.$t('table.product_payment.note'),
+          this.$t('date.updated_at'),
+        ];
+        const filterVal = [
+          'id',
+          'total',
+          'price',
+          'product_name',
+          'size_name',
+          'color_name',
+          'member_name',
+          'note',
+          'updated_at',
+        ];
+        const filterDate = ['updated_at'];
+        const {
+          data: { data: productPayments },
+        } = await productPaymentResource.exportExcel(this.table.listQuery);
+        const data = this.formatJson(filterVal, productPayments, filterDate);
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: this.excel.filename,
+          autoWidth: this.excel.autoWidth,
+          bookType: this.excel.bookType,
+        });
+        this.excel.downloadLoading = false;
+      });
+    },
+    formatJson(filterVal, jsonData, filterDate) {
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          if (filterDate.includes(j) && v[j]) {
+            return this.$options.filters.parseTime(v[j], '{y}-{m}-{d}');
+          } else {
+            return v[j];
+          }
+        })
+      );
+    },
+    onRollback(productPayment) {
+      this.$confirm(
+        this.$t('messages.rollback_confirm', {
+          attribute: this.$t('table.product_payment.id') + '#' + productPayment.id,
+        }),
+        this.$t('messages.warning'),
+        {
+          confirmButtonText: this.$t('button.ok'),
+          cancelButtonClass: this.$t('button.cancel'),
+          type: 'warning',
+          center: true,
+        }
+      ).then(async () => {
+        try {
+          this.table.loading = true;
+          delete productPayment.size;
+          delete productPayment.color;
+          delete productPayment.member;
+          delete productPayment.product;
+          await productPaymentResource.rollback(productPayment);
+          const index = this.table.list.findIndex(value => value.id === productPayment.id);
+          this.table.list.splice(index, 1);
+          this.table.loading = false;
+        } catch (e) {
+          this.table.loading = false;
+        }
+      });
+    },
     async getList() {
       try {
         this.table.loading = true;
@@ -249,3 +367,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.excel {
+  margin: auto 0 0 0;
+}
+</style>

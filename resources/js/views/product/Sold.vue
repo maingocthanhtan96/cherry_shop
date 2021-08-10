@@ -361,7 +361,7 @@ export default {
               type: 'success',
             });
             this.loading.button = false;
-            // await this.$router.push({ name: 'Product' });
+            await this.$router.push({ name: 'Product' });
           } catch (e) {
             this.loading.button = false;
           }

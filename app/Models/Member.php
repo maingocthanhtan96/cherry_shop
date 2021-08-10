@@ -28,8 +28,6 @@ class Member extends BaseModel
         'amount',
     ];
 
-
-
 	/**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      **/

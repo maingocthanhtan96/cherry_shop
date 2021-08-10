@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/sizes/get-sizes', 'SizeController@getSize');
     Route::apiResource('sizes', 'SizeController');
     /*<==> ProductPayment Route - 2021-08-02 21:58:19 <==>*/
+    Route::delete('/product-payments/{product_payment}/rollback', 'ProductPaymentController@rollback');
+    Route::get('/product-payments/export-excel', 'ProductPaymentController@exportExcel');
     Route::apiResource('product-payments', 'ProductPaymentController');
     /*<==> ProductReject Route - 2021-08-02 22:00:29 <==>*/
     Route::apiResource('product-rejects', 'ProductRejectController');
@@ -52,6 +54,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/members/get-members', 'MemberController@getMember');
     Route::apiResource('members', 'MemberController');
     /*<==> ProductDetail Route - 2021-08-05 21:05:22 <==>*/
+    Route::get('/product-details/get-product-details', 'ProductDetailController@getProductDetail');
     Route::apiResource('product-details', 'ProductDetailController');
     //{{ROUTE_USER_NOT_DELETE_THIS_LINE}}
 });

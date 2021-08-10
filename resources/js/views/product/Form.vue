@@ -418,7 +418,7 @@ export default {
           this.formData.set('product_details', JSON.stringify(this.form.product_details));
           return;
         }
-        this.formData.set(key, this.form[key]);
+        this.formData.set(key, this.form[key] || '');
       });
     },
     store(product) {

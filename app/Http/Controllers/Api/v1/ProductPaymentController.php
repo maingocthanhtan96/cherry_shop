@@ -9,6 +9,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
+use App\Models\Member;
+use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ProductPayment;
 use App\Services\QueryService;
@@ -69,13 +71,16 @@ class ProductPaymentController extends Controller
 
     /**
      * create
-     * @param StoreProductPaymentRequest $request
+     * @param Request $request
      * @return JsonResponse
      * @author tanmnt
      */
-    public function store(StoreProductPaymentRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
         $productDetail = ProductDetail::productDetail($request);
+        if (!$productDetail) {
+            return $this->jsonMessage(trans('messages.404'), false, Response::HTTP_NOT_FOUND);
+        }
         $this->validate($request, [
             'total' => [
                 'nullable',
@@ -89,16 +94,28 @@ class ProductPaymentController extends Controller
             'note' => 'nullable|string',
         ]);
         try {
+            \DB::transaction();
             $requestAll = $request->all();
+            $requestAll['product_detail_id'] = $productDetail->id;
             $requestAll['price'] = $productDetail->price * $requestAll['total'];
             $productPayment = new ProductPayment();
             $productPayment->fill($requestAll);
             $productPayment->save();
-            $productDetail->decrement('amount');
+            $productDetail->amount > ProductDetail::OUT_STOCK && $productDetail->decrement('amount', $requestAll['total']);
+            $product = Product::find($request->get('product_id'));
+            if ($product) {
+                $product->stock_out += $requestAll['total'];
+                $product->inventory = $product->stock_in - $product->stock_out;
+                $product->save();
+            }
+            $member = Member::find($requestAll['member_id']);
+            $member && $member->increment('amount', $requestAll['total']);
+            \DB::commit();
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
             return $this->jsonData($productPayment, Response::HTTP_CREATED);
         } catch (\Exception $e) {
+            \DB::rollback();
             return $this->jsonError($e);
         }
     }
@@ -153,6 +170,68 @@ class ProductPaymentController extends Controller
             $productPayment->delete();
 
             return $this->jsonMessage(trans('messages.delete'));
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ProductPayment $productPayment
+     * @return JsonResponse
+     */
+    public function rollback(Request $request, ProductPayment $productPayment): JsonResponse
+    {
+        try {
+            \DB::beginTransaction();
+            $total = $request->get('total');
+            $productDetail = ProductDetail::find($request->get('product_detail_id'));
+            $productDetail && $productDetail->increment('amount', $total);
+            $product = Product::find($request->get('product_id'));
+            if ($product) {
+                $product->stock_out = $product->stock_out > ProductDetail::OUT_STOCK ? $product->stock_out - $total : ProductDetail::OUT_STOCK;
+                $product->inventory = $product->stock_in - $product->stock_out;
+                $product->save();
+            }
+            $member = Member::find($request->get('member_id'));
+            $member && $member->amount > ProductDetail::OUT_STOCK && $member->decrement('amount', $total);
+            $productPayment->delete();
+            \DB::commit();
+
+            return $this->jsonMessage(trans('messages.delete'));
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            return $this->jsonError($e);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function exportExcel(Request $request): JsonResponse
+    {
+        try {
+            set_time_limit(0);
+            $productPayment = \DB::table('product_payments as prop')
+                ->select([
+                    'prop.id',
+                    'prop.total',
+                    'prop.price',
+                    'products.name as product_name',
+                    'sizes.name as size_name',
+                    'colors.name as color_name',
+                    'members.name as member_name',
+                    'prop.note',
+                    'prop.updated_at',
+                ])
+                ->leftJoin('products', 'products.id', 'prop.product_id')
+                ->leftJoin('sizes', 'sizes.id', 'prop.size_id')
+                ->leftJoin('colors', 'colors.id', 'prop.color_id')
+                ->leftJoin('members', 'members.id', 'prop.member_id')
+                ->get();
+
+            return $this->jsonData($productPayment);
         } catch (\Exception $e) {
             return $this->jsonError($e);
         }

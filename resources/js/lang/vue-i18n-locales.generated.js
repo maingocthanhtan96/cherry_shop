@@ -313,6 +313,8 @@ export default {
                 'total': 'Total',
                 'price': 'Price',
                 'note': 'Note',
+                'currency': '$',
+                'total_sold': 'Total sold',
             },
             'product_reject': {
                 'id': 'ID',
@@ -456,6 +458,7 @@ export default {
             'product_list': 'Product',
             'product_create': 'Create Product',
             'product_edit': 'Edit Product',
+            'product_sold': 'Product sold',
             'color': 'Color',
             'color_list': 'Color',
             'color_create': 'Create Color',
@@ -697,6 +700,8 @@ export default {
                 'total': 'Total',
                 'price': 'Price',
                 'note': 'Note',
+                'currency': '¥',
+                'total_sold': 'Total sold',
             },
             'product_reject': {
                 'id': 'ID',
@@ -839,6 +844,7 @@ export default {
             'product_list': 'Product',
             'product_create': 'Tạo Product',
             'product_edit': 'Sửa Product',
+            'product_sold': 'Bán sản phẩm',
             'color': 'Color',
             'color_list': 'Color',
             'color_create': 'Tạo Color',
@@ -1073,6 +1079,8 @@ export default {
                 'total': 'Total',
                 'price': 'Price',
                 'note': 'Note',
+                'currency': 'VNĐ',
+                'total_sold': 'Tổng tiền',
             },
             'product_reject': {
                 'id': 'ID',

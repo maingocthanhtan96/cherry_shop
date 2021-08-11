@@ -30,5 +30,22 @@ export default class ProductPaymentResource extends Resource {
     });
   }
 
+  totalMoney() {
+    return request({
+      method: 'get',
+      url: `${this.uri}/total-money`,
+    });
+  }
+
+  chart(updated_at) {
+    return request({
+      method: 'get',
+      url: `${this.uri}/chart`,
+      params: {
+        updated_at,
+      },
+    });
+  }
+
   // {{$API_NOT_DELETE_THIS_LINE$}}
 }

@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     /*<==> ProductPayment Route - 2021-08-02 21:58:19 <==>*/
     Route::delete('/product-payments/{product_payment}/rollback', 'ProductPaymentController@rollback');
     Route::get('/product-payments/export-excel', 'ProductPaymentController@exportExcel');
+    Route::get('/product-payments/total-money', 'ProductPaymentController@totalMoney');
+    Route::get('/product-payments/chart', 'ProductPaymentController@chart');
     Route::apiResource('product-payments', 'ProductPaymentController');
     /*<==> ProductReject Route - 2021-08-02 22:00:29 <==>*/
     Route::apiResource('product-rejects', 'ProductRejectController');

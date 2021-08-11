@@ -14,6 +14,7 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ProductPayment;
 use App\Services\QueryService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -85,7 +86,7 @@ class ProductPaymentController extends Controller
             'total' => [
                 'nullable',
                 'numeric',
-                function ($attribute, $value, $fail) use($productDetail) {
+                function ($attribute, $value, $fail) use ($productDetail) {
                     if ($productDetail->amount < $value) {
                         $fail(trans('validation.max.numeric', ['max' => $productDetail->amount]));
                     }
@@ -94,7 +95,7 @@ class ProductPaymentController extends Controller
             'note' => 'nullable|string',
         ]);
         try {
-            \DB::transaction();
+            \DB::beginTransaction();
             $requestAll = $request->all();
             $requestAll['product_detail_id'] = $productDetail->id;
             $requestAll['price'] = $productDetail->price * $requestAll['total'];
@@ -232,6 +233,45 @@ class ProductPaymentController extends Controller
                 ->get();
 
             return $this->jsonData($productPayment);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function totalMoney(): JsonResponse
+    {
+        try {
+            $productPayment = \DB::table('product_payments')->sum('price');
+
+            return $this->jsonData($productPayment);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function chart(Request $request): JsonResponse
+    {
+        try {
+            $updatedAt = $request->get('updated_at', []);
+            $productPayments = \DB::table('product_payments')
+                ->select([\DB::raw('SUM(price) as price'), 'updated_at as date'])
+                ->when(!empty($updatedAt), function($q) use ($updatedAt) {
+                    $startDate = Carbon::parse($updatedAt[0])->startOfDay(); // 2021-08-11 00:00:00
+                    $endDate = Carbon::parse($updatedAt[1])->endOfDay(); // 2021-08-11 23:59:59
+                    $q->whereBetween('updated_at', [$startDate, $endDate]);
+                })
+                ->whereNotNull('price')
+                ->groupBy(\DB::raw('Date(updated_at)'))
+                ->get();
+
+            return $this->jsonData($productPayments);
         } catch (\Exception $e) {
             return $this->jsonError($e);
         }

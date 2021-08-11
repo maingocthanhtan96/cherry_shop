@@ -15,6 +15,7 @@ return [
 	'product_list' => 'Product',
 	'product_create' => 'Create Product',
 	'product_edit' => 'Edit Product',
+    'product_sold' => 'Product sold',
 	// END - product
     // START - color
 	'color' => 'Color',

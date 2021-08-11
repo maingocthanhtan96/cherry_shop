@@ -17,11 +17,11 @@ return [
         'description' => 'Miêu tả',
     ],
     'category' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'name' => 'Name',
-	],
+    ],
     'product' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'code' => 'Code',
         'name' => 'Name',
         'image' => 'Image',
@@ -32,28 +32,30 @@ return [
         'price' => 'Price',
         'discount' => 'Discount',
         'status' => 'Status',
-	],
+    ],
     'color' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'name' => 'Name',
-	],
+    ],
     'size' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'name' => 'Name',
-	],
+    ],
     'product_payment' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'total' => 'Total',
         'price' => 'Price',
         'note' => 'Note',
-	],
+        'currency' => 'VNĐ',
+        'total_sold' => 'Tổng tiền',
+    ],
     'product_reject' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'total' => 'Total',
         'price' => 'Price',
         'note' => 'Note',
-	],
-      'member' => [
+    ],
+    'member' => [
         'id' => 'ID',
         'code' => 'Code',
         'name' => 'Name',
@@ -61,12 +63,12 @@ return [
         'is_block' => 'Is block',
         'phone' => 'Phone',
         'amount' => 'Amount',
-	],
+    ],
     'product_detail' => [
-		'id' => 'ID',
+        'id' => 'ID',
         'price' => 'Price',
         'amount' => 'Amount',
-	],
+    ],
     //{{LANG_TABLE_NOT_DELETE_THIS_LINE}}
     'texts' => [
         'count' => 'Hiển thị {from} đến {to} trong số {count} dữ liệu|{count} dữ liệu|Một dữ liệu',

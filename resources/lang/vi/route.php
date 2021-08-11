@@ -15,6 +15,7 @@ return [
 	'product_list' => 'Product',
 	'product_create' => 'Tạo Product',
 	'product_edit' => 'Sửa Product',
+    'product_sold' => 'Bán sản phẩm',
 	// END - product
     // START - color
 	'color' => 'Color',

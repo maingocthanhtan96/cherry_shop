@@ -2,19 +2,19 @@
   <el-row>
     <el-col :span="24">
       <el-card>
-        <div slot="header" class="tw-flex tw-justify-end tw-items-center">
-          <router-link
-            v-slot="{ href, navigate }"
-            v-permission="['create']"
-            :to="{ name: 'ProductPaymentCreate' }"
-            custom
-          >
-            <a :href="href" class="pan-btn blue-btn" @click="navigate">
-              <i class="el-icon-plus mr-2" />
-              {{ $t('button.create') }}
-            </a>
-          </router-link>
-        </div>
+        <el-row :gutter="10" class="panel-group">
+          <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+            <div class="card-panel">
+              <div class="card-panel-icon-wrapper icon-people">
+                <svg-icon icon-class="money" class-name="card-panel-icon" />
+              </div>
+              <div class="card-panel-description">
+                <div class="card-panel-text">{{ $t('table.product_payment.total_sold') }}</div>
+                <count-to :start-val="0" :end-val="totalSold" :duration="2600" class="card-panel-num" />
+              </div>
+            </div>
+          </el-col>
+        </el-row>
         <el-row :gutter="20" class="tw-mb-6" type="flex" justify="end">
           <el-col :xs="24" :sm="14" :md="18">
             <el-date-picker
@@ -28,13 +28,18 @@
             />
           </el-col>
         </el-row>
+        <el-row :gutter="10">
+          <el-col v-loading="chart.loading" :span="24">
+            <line-chart :chart-data="chart.data" />
+          </el-col>
+        </el-row>
         <el-row :gutter="10" type="flex" align="center" justify="space-between" class="tw-mb-6">
           <el-col :xs="24" :sm="10" :md="12">
             <label>{{ $t('table.texts.filter') }}</label>
             <el-input v-model="table.listQuery.search" :placeholder="$t('table.texts.filterPlaceholder')" />
           </el-col>
           <el-col :xs="24" :sm="12" :md="6" class="excel tw-text-right">
-            <el-button type="success" icon="el-icon-download" :loading="downloadLoading" @click="onExcel">
+            <el-button type="success" icon="el-icon-download" :loading="excel.downloadLoading" @click="onExcel">
               Excel
             </el-button>
           </el-col>
@@ -181,11 +186,14 @@
 import DateRangePicker from '@/plugins/mixins/date-range-picker';
 import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
 import { debounce } from '@/utils';
+import countTo from 'vue-count-to';
+import LineChart from './components/LineChart';
+
 import ProductPaymentsResource from '@/api/v1/product-payment';
 const productPaymentResource = new ProductPaymentsResource();
 
 export default {
-  components: { Pagination },
+  components: { Pagination, countTo, LineChart },
   filters: {
     currency(string) {
       return Number(string).toLocaleString('it-IT', {
@@ -204,7 +212,7 @@ export default {
           ascending: 0,
           page: 1,
           orderBy: 'updated_at',
-          updated_at: [],
+          updated_at: [new Date(new Date().getTime() - 3600 * 1000 * 24 * 7), new Date()],
         },
         list: null,
         total: 0,
@@ -216,6 +224,14 @@ export default {
         autoWidth: true,
         bookType: 'xlsx',
       },
+      totalSold: 0,
+      chart: {
+        loading: false,
+        data: {
+          date: [],
+          value: [],
+        },
+      },
     };
   },
   watch: {
@@ -225,6 +241,12 @@ export default {
   },
   created() {
     this.getList();
+    productPaymentResource.totalMoney().then(response => {
+      this.totalSold = response.data.data;
+    });
+  },
+  mounted() {
+    this.getChart();
   },
   methods: {
     onExcel() {
@@ -306,6 +328,18 @@ export default {
         }
       });
     },
+    getChart() {
+      this.chart.loading = true;
+      productPaymentResource
+        .chart(this.table.listQuery.updated_at)
+        .then(response => {
+          const chartData = response.data.data;
+          this.chart.data.date = chartData.map(val => this.$options.filters.parseTime(val.date, '{y}-{m}-{d}'));
+          this.chart.data.value = chartData.map(val => val.price);
+          this.chart.loading = false;
+        })
+        .catch(() => (this.chart.loading = false));
+    },
     async getList() {
       try {
         this.table.loading = true;
@@ -329,6 +363,7 @@ export default {
       } else {
         this.table.listQuery.updated_at = [];
       }
+      this.getChart();
       this.handleFilter();
     },
     sortChange(data) {
@@ -371,5 +406,96 @@ export default {
 <style lang="scss" scoped>
 .excel {
   margin: auto 0 0 0;
+}
+</style>
+
+<style lang="scss" scoped>
+.panel-group {
+  margin-top: 18px;
+
+  .card-panel-col {
+    margin-bottom: 32px;
+  }
+
+  .card-panel {
+    height: 108px;
+    cursor: pointer;
+    font-size: 12px;
+    position: relative;
+    overflow: hidden;
+    color: #666;
+    background: #fff;
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
+
+    &:hover {
+      .card-panel-icon-wrapper {
+        color: #fff;
+      }
+
+      .icon-people {
+        background: #40c9c6;
+      }
+
+      .icon-message {
+        background: #36a3f7;
+      }
+
+      .icon-money {
+        background: #f4516c;
+      }
+
+      .icon-shopping {
+        background: #34bfa3;
+      }
+    }
+
+    .icon-people {
+      color: #40c9c6;
+    }
+
+    .icon-message {
+      color: #36a3f7;
+    }
+
+    .icon-money {
+      color: #f4516c;
+    }
+
+    .icon-shopping {
+      color: #34bfa3;
+    }
+
+    .card-panel-icon-wrapper {
+      float: left;
+      margin: 14px 0 0 14px;
+      padding: 16px;
+      transition: all 0.38s ease-out;
+      border-radius: 6px;
+    }
+
+    .card-panel-icon {
+      float: left;
+      font-size: 48px;
+    }
+
+    .card-panel-description {
+      float: right;
+      font-weight: bold;
+      margin: 26px;
+      margin-left: 0px;
+
+      .card-panel-text {
+        line-height: 18px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+
+      .card-panel-num {
+        font-size: 20px;
+      }
+    }
+  }
 }
 </style>

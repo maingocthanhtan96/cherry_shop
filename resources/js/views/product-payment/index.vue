@@ -295,6 +295,9 @@ export default {
           if (filterDate.includes(j) && v[j]) {
             return this.$options.filters.parseTime(v[j], '{y}-{m}-{d}');
           } else {
+            if (j === 'price') {
+              return this.$options.filters.currency(v[j]);
+            }
             return v[j];
           }
         })

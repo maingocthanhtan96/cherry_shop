@@ -48,7 +48,7 @@ class MemberController extends Controller
 
             $queryService = new QueryService(new Member());
             $queryService->select = [];
-            $queryService->columnSearch = ['name'];
+            $queryService->columnSearch = ['name', 'code', 'phone'];
             $queryService->withRelationship = [];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;

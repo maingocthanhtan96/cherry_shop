@@ -12,20 +12,6 @@
         </div>
         <el-form ref="member" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
           <el-form-item
-            data-generator="code"
-            :label="$t('table.member.code')"
-            prop="code"
-            :error="errors.code && errors.code[0]"
-          >
-            <el-input
-              v-model="form.code"
-              name="code"
-              :placeholder="$t('table.member.code')"
-              maxlength="191"
-              show-word-limit
-            />
-          </el-form-item>
-          <el-form-item
             data-generator="name"
             :label="$t('table.member.name')"
             prop="name"
@@ -71,19 +57,12 @@
           >
             <el-input
               v-model="form.phone"
+              v-mask="'####.###.###'"
               name="phone"
               :placeholder="$t('table.member.phone')"
               maxlength="191"
               show-word-limit
             />
-          </el-form-item>
-          <el-form-item
-            data-generator="amount"
-            :label="$t('table.member.amount')"
-            prop="amount"
-            :error="errors.amount && errors.amount[0]"
-          >
-            <el-input-number v-model="form.amount" name="amount" :placeholder="$t('table.member.amount')" />
           </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
@@ -110,11 +89,16 @@
 <script>
 import GlobalForm from '@/plugins/mixins/global-form';
 import MemberResource from '@/api/v1/member';
+import { validURL } from '@/utils/validate';
+import { VueMaskDirective } from 'v-mask';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const memberResource = new MemberResource();
 
 export default {
+  directives: {
+    mask: VueMaskDirective,
+  },
   components: {
     // {{$IMPORT_COMPONENT_NAME_NOT_DELETE_THIS_LINE$}}
   },
@@ -128,7 +112,7 @@ export default {
         sns_link: '',
         is_block: 0,
         phone: '',
-        amount: '',
+        amount: 0,
       }, // {{$$}}
       loading: {
         form: false,
@@ -145,6 +129,23 @@ export default {
           {
             required: true,
             message: this.$t('validation.required', { attribute: this.$t('table.member.name') }),
+            trigger: ['change', 'blur'],
+          },
+        ],
+        sns_link: [
+          {
+            type: 'string',
+            validator: (rule, value, callback) => {
+              if (!value) {
+                callback();
+                return;
+              }
+              if (validURL(value)) {
+                callback();
+              } else {
+                callback(new Error(this.$t('validation.url', { attribute: this.$t('table.member.sns_link') })));
+              }
+            },
             trigger: ['change', 'blur'],
           },
         ],

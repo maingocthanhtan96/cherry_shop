@@ -164,7 +164,7 @@
               </el-table-column>
               <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
                 <template slot-scope="{ row }">
-                  <router-link v-if="row.inventory !== 0" v-permission="['edit']" :to="{ name: 'ProductSold', params: { id: row.id } }">
+                  <router-link v-if="row.inventory !== row.stock_in" v-permission="['edit']" :to="{ name: 'ProductSold', params: { id: row.id } }">
                     <svg-icon icon-class="sold-out" class="tw-mr-2 tw-inline" />
                   </router-link>
                   <router-link v-permission="['edit']" :to="{ name: 'ProductEdit', params: { id: row.id } }">

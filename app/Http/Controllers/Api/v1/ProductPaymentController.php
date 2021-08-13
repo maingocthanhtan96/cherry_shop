@@ -52,7 +52,7 @@ class ProductPaymentController extends Controller
 
             $queryService = new QueryService(new ProductPayment());
             $queryService->select = [];
-            $queryService->columnSearch = [];
+            $queryService->columnSearch = ['member.name', 'size.name', 'color.name', 'product.name'];
             $queryService->withRelationship = ['product', 'size', 'color', 'member'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
@@ -97,13 +97,14 @@ class ProductPaymentController extends Controller
         try {
             \DB::beginTransaction();
             $requestAll = $request->all();
+            $product = Product::find($request->get('product_id'));
             $requestAll['product_detail_id'] = $productDetail->id;
-            $requestAll['price'] = $productDetail->price * $requestAll['total'];
+            $totalPrice = $productDetail->price * $requestAll['total'];
+            $requestAll['price'] = $totalPrice - ($totalPrice * $product->discount / 100);
             $productPayment = new ProductPayment();
             $productPayment->fill($requestAll);
             $productPayment->save();
             $productDetail->amount > ProductDetail::OUT_STOCK && $productDetail->decrement('amount', $requestAll['total']);
-            $product = Product::find($request->get('product_id'));
             if ($product) {
                 $product->stock_out += $requestAll['total'];
                 $product->inventory = $product->stock_in - $product->stock_out;

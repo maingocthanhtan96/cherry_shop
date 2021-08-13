@@ -214,7 +214,7 @@ import ProductResource from '@/api/v1/product';
 import ProductPaymentResource from '@/api/v1/product-payment';
 import MemberResource from '@/api/v1/member';
 import GlobalForm from '@/plugins/mixins/global-form';
-import { validURL } from '../../utils/validate';
+import { validURL } from '@/utils/validate';
 import { VueMaskDirective } from 'v-mask';
 
 const productResource = new ProductResource();

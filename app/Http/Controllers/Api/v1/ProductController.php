@@ -52,7 +52,7 @@ class ProductController extends Controller
 
 			$queryService = new QueryService(new Product);
             $queryService->select = [];
-            $queryService->columnSearch = [];
+            $queryService->columnSearch = ['name', 'code'];
             $queryService->withRelationship = ['category', 'productDetails.size', 'productDetails.color'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
@@ -82,6 +82,9 @@ class ProductController extends Controller
             $requestAll = $request->all();
             $requestAll['stock_out'] = 0;
             $requestAll['inventory'] = 0;
+            $productDetails = json_decode($requestAll['product_details'], true) ?? [];
+            $stockIn = collect($productDetails)->sum('amount');
+            $requestAll['stock_in'] = $stockIn;
 		    $product = new Product();
 		    $product->fill($requestAll);
             if ($request->hasFile('image')) {
@@ -90,19 +93,11 @@ class ProductController extends Controller
                 $product->image = $disk->url($fileName);
             }
             $product->save();
-            $productDetails = json_decode($requestAll['product_details'], true) ?? [];
             foreach ($productDetails as $key => $detail) {
                 $productDetails[$key]['product_id'] = $product->id;
+                $stockIn += $detail['amount'];
             }
             ProductDetail::upsert($productDetails, ['color_id', 'size_id', 'product_id'], ['amount', 'price']);
-			$colorId = $request->get('color_id', []);
-            if($colorId) {
-                $product->colors()->attach($colorId);
-            }
-            $sizeId = $request->get('size_id', []);
-            if($sizeId) {
-                $product->sizes()->attach($sizeId);
-            }
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
 			return $this->jsonData($product, Response::HTTP_CREATED);
@@ -204,7 +199,6 @@ class ProductController extends Controller
     public function detail($product): JsonResponse
     {
         try {
-            // cho nay phai sua lai where amount > 0
             $productDetails = ProductDetail::where('product_id', $product)
                 ->where('amount', '>', ProductDetail::OUT_STOCK)
                 ->get()

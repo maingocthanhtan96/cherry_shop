@@ -10,6 +10,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {
@@ -30,8 +31,13 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->request->get('id', 0);
         return [
-            'code' => 'required|string|max:191',
+            'code' => [
+                'required',
+                'max:191',
+                Rule::unique('products', 'code')->ignore($id),
+            ],
             'name' => 'required|string|max:191',
             'image' => 'nullable|max:191',
             'description' => 'nullable|string',

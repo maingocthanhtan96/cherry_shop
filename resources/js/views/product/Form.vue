@@ -79,38 +79,23 @@
             />
           </el-form-item>
           <el-row :gutter="10">
-            <el-col :span="8">
-              <el-form-item
-                data-generator="stock_in"
-                :label="$t('table.product.stock_in')"
-                prop="stock_in"
-                :error="errors.stock_in && errors.stock_in[0]"
-              >
-                <el-input-number
-                  v-model="form.stock_in"
-                  class="tw-w-full"
-                  value=""
-                  name="stock_in"
-                  :placeholder="$t('table.product.stock_in')"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
-              <el-form-item
-                data-generator="discount"
-                :label="$t('table.product.discount')"
-                prop="discount"
-                :error="errors.discount && errors.discount[0]"
-              >
-                <el-input-number
-                  v-model="form.discount"
-                  name="discount"
-                  :placeholder="$t('table.product.discount')"
-                  class="tw-w-full"
-                />
-              </el-form-item>
-            </el-col>
-            <el-col :span="8">
+            <!--            <el-col :span="8">-->
+            <!--              <el-form-item-->
+            <!--                data-generator="stock_in"-->
+            <!--                :label="$t('table.product.stock_in')"-->
+            <!--                prop="stock_in"-->
+            <!--                :error="errors.stock_in && errors.stock_in[0]"-->
+            <!--              >-->
+            <!--                <el-input-number-->
+            <!--                  v-model="form.stock_in"-->
+            <!--                  class="tw-w-full"-->
+            <!--                  value=""-->
+            <!--                  name="stock_in"-->
+            <!--                  :placeholder="$t('table.product.stock_in')"-->
+            <!--                />-->
+            <!--              </el-form-item>-->
+            <!--            </el-col>-->
+            <el-col :span="14">
               <el-form-item
                 data-generator="category_id"
                 :label="$t('route.category')"
@@ -133,6 +118,21 @@
                 </el-select>
               </el-form-item>
             </el-col>
+            <el-col :span="8">
+              <el-form-item
+                data-generator="discount"
+                :label="$t('table.product.discount')"
+                prop="discount"
+                :error="errors.discount && errors.discount[0]"
+              >
+                <el-input-number
+                  v-model="form.discount"
+                  name="discount"
+                  :placeholder="$t('table.product.discount')"
+                  class="tw-w-full"
+                />
+              </el-form-item>
+            </el-col>
           </el-row>
           <el-row
             v-for="(detail, indexDetail) in form.product_details"
@@ -144,7 +144,12 @@
               <el-form-item
                 data-generator="size_id"
                 :label="$t('route.size')"
-                prop="size_id"
+                :prop="`product_details.${indexDetail}.size_id`"
+                :rules="{
+                  required: true,
+                  message: $t('validation.required', { attribute: $t('route.size') }),
+                  trigger: 'change',
+                }"
                 :error="errors.size_id && errors.size_id[0]"
               >
                 <el-select
@@ -167,7 +172,12 @@
               <el-form-item
                 data-generator="color_id"
                 :label="$t('route.color')"
-                prop="color_id"
+                :prop="`product_details.${indexDetail}.color_id`"
+                :rules="{
+                  required: true,
+                  message: $t('validation.required', { attribute: $t('route.color') }),
+                  trigger: 'change',
+                }"
                 :error="errors.color_id && errors.color_id[0]"
               >
                 <el-select
@@ -190,7 +200,12 @@
               <el-form-item
                 data-generator="amount"
                 :label="$t('table.product_detail.amount')"
-                prop="amount"
+                :prop="`product_details.${indexDetail}.amount`"
+                :rules="{
+                  required: true,
+                  message: $t('validation.required', { attribute: $t('table.product_detail.amount') }),
+                  trigger: 'change',
+                }"
                 :error="errors.amount && errors.amount[0]"
               >
                 <el-input-number
@@ -205,6 +220,12 @@
               <el-form-item
                 data-generator="price"
                 :label="$t('table.product_detail.price')"
+                :prop="`product_details.${indexDetail}.price`"
+                :rules="{
+                  required: true,
+                  message: $t('validation.required', { attribute: $t('table.product_detail.price') }),
+                  trigger: 'change',
+                }"
                 :error="errors.price && errors.price[0]"
               >
                 <div class="el-input el-input--medium">
@@ -289,7 +310,7 @@ export default {
             size_id: '',
             color_id: '',
             price: '',
-            amount: 0,
+            amount: undefined,
           },
         ],
       }, // {{$$}}
@@ -333,13 +354,13 @@ export default {
             trigger: ['change', 'blur'],
           },
         ],
-        stock_in: [
-          {
-            required: true,
-            message: this.$t('validation.required', { attribute: this.$t('table.product.stock_in') }),
-            trigger: ['change', 'blur'],
-          },
-        ],
+        // stock_in: [
+        //   {
+        //     required: true,
+        //     message: this.$t('validation.required', { attribute: this.$t('table.product.stock_in') }),
+        //     trigger: ['change', 'blur'],
+        //   },
+        // ],
         price: [
           {
             required: true,
@@ -398,7 +419,7 @@ export default {
         size_id: '',
         color_id: '',
         price: '',
-        amount: 0,
+        amount: undefined,
       });
     },
     onUploadImage(file) {

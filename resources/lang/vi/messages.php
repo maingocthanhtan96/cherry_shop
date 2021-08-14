@@ -10,4 +10,5 @@ return [
     'success' => 'Thành công',
     'error' => 'Lỗi',
     'info' => 'Thông báo',
+    'not_found' => 'Không tìm thấy',
 ];

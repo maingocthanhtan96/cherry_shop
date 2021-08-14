@@ -13,6 +13,7 @@ const productDetail = {
     icon: 'menu',
     permissions: ['view menu product_detail'],
   },
+  hidden: true,
   children: [
     {
       path: '/product-details',

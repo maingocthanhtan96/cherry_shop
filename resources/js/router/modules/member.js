@@ -10,7 +10,7 @@ const member = {
   component: () => import('@/layout'),
   meta: {
     title: 'member',
-    icon: 'menu',
+    icon: 'members',
     permissions: ['view menu member'],
   },
   children: [

@@ -10,7 +10,7 @@ const category = {
   component: () => import('@/layout'),
   meta: {
     title: 'category',
-    icon: 'menu',
+    icon: 'category',
     permissions: ['view menu category'],
   },
   children: [

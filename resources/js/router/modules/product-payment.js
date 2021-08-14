@@ -10,7 +10,7 @@ const productPayment = {
   component: () => import('@/layout'),
   meta: {
     title: 'product_payment',
-    icon: 'menu',
+    icon: 'atm',
     permissions: ['view menu product_payment'],
   },
   children: [

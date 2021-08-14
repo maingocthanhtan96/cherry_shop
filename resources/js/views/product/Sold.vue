@@ -62,6 +62,7 @@
                   filterable
                   :placeholder="$t('route.size')"
                   class="tw-w-full"
+                  @change="changeItem('size')"
                 >
                   <el-option
                     v-for="(item, index) in sizeList"
@@ -85,6 +86,7 @@
                   filterable
                   :placeholder="$t('route.color')"
                   class="tw-w-full"
+                  @change="changeItem('color')"
                 >
                   <el-option
                     v-for="(item, index) in colorList"
@@ -195,7 +197,7 @@
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="memberVisible = false">Cancel</el-button>
+        <el-button @click="memberVisible = false">{{ $t('button.cancel') }}</el-button>
         <el-popconfirm
           :title="$t('common.popup.create')"
           :confirm-button-text="$t('button.create')"
@@ -248,8 +250,11 @@ export default {
       },
       colorList: [],
       sizeList: [],
+      colorListClone: [],
+      sizeListClone: [],
       memberList: [],
       memberVisible: false,
+      productDetails: [],
     };
   },
   computed: {
@@ -321,14 +326,37 @@ export default {
         data: { data: productDetails },
       } = await productResource.detail(this.$route.params.id);
       this.colorList = productDetails.colors;
+      this.colorListClone = [...productDetails.colors];
       this.sizeList = productDetails.sizes;
+      this.sizeListClone = [...productDetails.sizes];
       this.memberList = productDetails.members;
+      this.productDetails = productDetails.product_details;
       this.loading.form = false;
     } catch (e) {
       this.loading.form = false;
     }
   },
   methods: {
+    changeItem(type) {
+      const itemIds = this.getProductDetailByItem(type);
+      if (type === 'color') {
+        this.sizeList = this.sizeListClone.filter(item => itemIds.includes(item.id));
+      }
+      if (type === 'size') {
+        this.colorList = this.colorListClone.filter(item => itemIds.includes(item.id));
+      }
+    },
+    getProductDetailByItem(type) {
+      return this.productDetails.reduce((data, item) => {
+        if (type === 'color' && item.color_id === this.form.color_id) {
+          data.push(item.size_id);
+        }
+        if (type === 'size' && item.size_id === this.form.size_id) {
+          data.push(item.color_id);
+        }
+        return data;
+      }, []);
+    },
     async searchMember(query) {
       if (!query) {
         this.memberList = [];

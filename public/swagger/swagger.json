@@ -1716,7 +1716,8 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "product_id"
+                                    "product_id",
+                                    "product_detail_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1738,6 +1739,12 @@
                                         "example": "Recusandae molestiae qui provident nemo enim. Sint sapiente perspiciatis fuga voluptas earum. Laboriosam voluptatibus nam hic est eaque adipisci. Quo enim qui quos aut sunt."
                                     },
                                     "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "product_detail_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -1812,7 +1819,8 @@
                             "schema": {
                                 "required": [
                                     "id",
-                                    "product_id"
+                                    "product_id",
+                                    "product_detail_id"
                                 ],
                                 "properties": {
                                     "total": {
@@ -1834,6 +1842,12 @@
                                         "example": "Recusandae molestiae qui provident nemo enim. Sint sapiente perspiciatis fuga voluptas earum. Laboriosam voluptatibus nam hic est eaque adipisci. Quo enim qui quos aut sunt."
                                     },
                                     "product_id": {
+                                        "description": "hasMany",
+                                        "type": "BIGINT",
+                                        "default": "NONE",
+                                        "example": "1"
+                                    },
+                                    "product_detail_id": {
                                         "description": "hasMany",
                                         "type": "BIGINT",
                                         "default": "NONE",
@@ -2735,7 +2749,8 @@
                 "title": "ProductReject",
                 "required": [
                     "id",
-                    "product_id"
+                    "product_id",
+                    "product_detail_id"
                 ],
                 "properties": {
                     "total": {
@@ -2755,6 +2770,9 @@
                     },
                     "product_id": {
                         "$ref": "#/components/schemas/Product"
+                    },
+                    "product_detail_id": {
+                        "$ref": "#/components/schemas/ProductDetail"
                     },
                     "created_at": {
                         "description": "",

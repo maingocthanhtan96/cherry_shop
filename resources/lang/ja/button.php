@@ -24,4 +24,5 @@ return [
     'no' => 'いいえ',
     'search' => '検索',
     'file_reference' => 'ファイル参照',
+    'add_product_detail' => 'Add product detail',
 ];

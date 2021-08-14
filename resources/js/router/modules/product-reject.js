@@ -10,7 +10,7 @@ const productReject = {
   component: () => import('@/layout'),
   meta: {
     title: 'product_reject',
-    icon: 'menu',
+    icon: 'phone_call_rejected',
     permissions: ['view menu product_reject'],
   },
   children: [

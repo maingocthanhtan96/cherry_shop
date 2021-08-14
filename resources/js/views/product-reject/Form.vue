@@ -62,6 +62,27 @@
               />
             </el-select>
           </el-form-item>
+            <el-form-item
+          data-generator="product_detail_id"
+          :label="$t('route.product_detail')"
+          prop="product_detail_id"
+          :error="errors.product_detail_id && errors.product_detail_id[0]"
+          >
+            <el-select
+              v-model="form.product_detail_id"
+              name="product_detail_id"
+              filterable
+              :placeholder="$t('route.product_detail')"
+              class="tw-w-full"
+            >
+              <el-option
+                v-for="(item, index) in productDetailList"
+                :key="'productDetail_' + index"
+                :label="item.id"
+                :value="item.id"
+              />
+            </el-select>
+          </el-form-item>
             <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'ProductReject' }" custom>
@@ -98,9 +119,11 @@
 import GlobalForm from '@/plugins/mixins/global-form';
 import ProductRejectResource from '@/api/v1/product-reject';
 import ProductResource from '@/api/v1/product';
+import ProductDetailResource from '@/api/v1/product-detail';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productRejectResource = new ProductRejectResource();
+const productDetailResource = new ProductDetailResource();
 const productResource = new ProductResource();
 
 export default {
@@ -116,12 +139,14 @@ export default {
         price: '',
         note: '',
         product_id: '',
+        product_detail_id: '',
  }, // {{$$}}
       loading: {
         form: false,
         button: false,
       },
       productList: [],
+      productDetailList: [],
       // {{$DATA_NOT_DELETE_THIS_LINE$}}
     };
   },
@@ -130,6 +155,9 @@ export default {
     rules() {
       return {
         product_id: [
+          { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_reject') }), trigger: ['change', 'blur'] },
+        ],
+        product_detail_id: [
           { required: true, message: this.$t('validation.required', { attribute: this.$t('route.product_reject') }), trigger: ['change', 'blur'] },
         ],
         // {{$RULES_NOT_DELETE_THIS_LINE$}}
@@ -144,6 +172,10 @@ export default {
         data: { data: product },
       } = await productResource.getProduct();
       this.productList = product;
+const {
+        data: { data: productDetail },
+      } = await productDetailResource.getProductDetail();
+      this.productDetailList = productDetail;
 // {{$CREATED_NOT_DELETE_THIS_LINE$}}
       if (id) {
         const {

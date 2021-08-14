@@ -21,6 +21,7 @@ class ProductReject extends BaseModel
         'price',
         'note',
         'product_id',
+        'product_detail_id',
     ];
 
     
@@ -31,6 +32,14 @@ class ProductReject extends BaseModel
     public function product(): \Illuminate\Database\Eloquent\Relations\belongsTo
     {
         return $this->belongsTo(Product::class, 'product_id', 'id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     **/
+    public function productDetail(): \Illuminate\Database\Eloquent\Relations\belongsTo
+    {
+        return $this->belongsTo(ProductDetail::class, 'product_detail_id', 'id');
     }
 
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}

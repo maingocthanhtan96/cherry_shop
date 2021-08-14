@@ -11,4 +11,5 @@ return [
     'success' => 'Success',
     'error' => 'Error',
     'info' => 'Info',
+    'not_found' => 'Not Found',
 ];

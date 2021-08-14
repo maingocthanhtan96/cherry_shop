@@ -315,6 +315,7 @@ export default {
                 'note': 'Note',
                 'currency': '$',
                 'total_sold': 'Total sold',
+                'reason': 'Reason',
             },
             'product_reject': {
                 'id': 'ID',
@@ -369,6 +370,8 @@ export default {
             'create': 'Create',
             'edit': 'Edit',
             'update': 'Update',
+            'confirm': 'Confirm',
+            'add_product_detail': 'Add product detail',
         },
     },
     'ja': {
@@ -702,6 +705,7 @@ export default {
                 'note': 'Note',
                 'currency': '¥',
                 'total_sold': 'Total sold',
+                'reason': 'Reason',
             },
             'product_reject': {
                 'id': 'ID',
@@ -774,6 +778,7 @@ export default {
             'no': 'いいえ',
             'search': '検索',
             'file_reference': 'ファイル参照',
+            'add_product_detail': 'Add product detail',
         },
     },
     'vi': {
@@ -1081,6 +1086,7 @@ export default {
                 'note': 'Note',
                 'currency': 'VNĐ',
                 'total_sold': 'Tổng tiền',
+                'reason': 'Lý do',
             },
             'product_reject': {
                 'id': 'ID',
@@ -1134,6 +1140,8 @@ export default {
             'create': 'Tạo',
             'edit': 'Sửa',
             'update': 'Cập nhật',
+            'confirm': 'Xác nhận',
+            'add_product_detail': 'Add product detail',
         },
     },
 };

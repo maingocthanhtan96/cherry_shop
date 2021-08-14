@@ -213,6 +213,7 @@ class ProductController extends Controller
                 'sizes' => $sizes,
                 'colors' => $colors,
                 'members' => $members,
+                'product_details' => $productDetails,
             ]);
         } catch (\Exception $e) {
             return $this->jsonError($e);

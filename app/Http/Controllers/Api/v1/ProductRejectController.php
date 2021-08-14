@@ -49,7 +49,7 @@ class ProductRejectController extends Controller
 			$queryService = new QueryService(new ProductReject);
             $queryService->select = [];
             $queryService->columnSearch = [];
-            $queryService->withRelationship = ['product'];
+            $queryService->withRelationship = ['product', 'productDetail.size', 'productDetail.color'];
             $queryService->search = $search;
             $queryService->betweenDate = $betweenDate;
             $queryService->limit = $limit;

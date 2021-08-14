@@ -10,7 +10,7 @@ const size = {
   component: () => import('@/layout'),
   meta: {
     title: 'size',
-    icon: 'menu',
+    icon: 'size',
     permissions: ['view menu size'],
   },
   children: [

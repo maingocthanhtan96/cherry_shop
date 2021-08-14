@@ -164,7 +164,7 @@
                     v-permission="['edit']"
                     icon-class="rollback"
                     class="tw-text-2xl tw-m-auto tw-cursor-pointer"
-                    @click="onRollback(row)"
+                    @click="openDialogReject(row)"
                   />
                 </template>
               </el-table-column>
@@ -180,6 +180,13 @@
         </el-row>
       </el-card>
     </el-col>
+    <el-dialog v-loading="dialogReject.loading" :title="$t('table.product_payment.reason')" :visible.sync="dialogReject.visible" width="50%">
+      <el-input v-model="productPayment.memo" type="textarea" :rows="5" placeholder="Please input"></el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogReject.visible = false">{{ $t('button.cancel') }}</el-button>
+        <el-button type="primary" @click="onRollback">{{ $t('button.confirm') }}</el-button>
+      </span>
+    </el-dialog>
   </el-row>
 </template>
 <script>
@@ -232,6 +239,11 @@ export default {
           value: [],
         },
       },
+      dialogReject: {
+        visible: false,
+        loading: false,
+      },
+      productPayment: {},
     };
   },
   watch: {
@@ -303,7 +315,12 @@ export default {
         })
       );
     },
-    onRollback(productPayment) {
+    openDialogReject(productPayment) {
+      this.dialogReject.visible = true;
+      this.productPayment = productPayment;
+    },
+    onRollback() {
+      const productPayment = this.productPayment;
       this.$confirm(
         this.$t('messages.rollback_confirm', {
           attribute: this.$t('table.product_payment.id') + '#' + productPayment.id,
@@ -317,7 +334,7 @@ export default {
         }
       ).then(async () => {
         try {
-          this.table.loading = true;
+          this.dialogReject.loading = true;
           delete productPayment.size;
           delete productPayment.color;
           delete productPayment.member;
@@ -325,7 +342,8 @@ export default {
           await productPaymentResource.rollback(productPayment);
           const index = this.table.list.findIndex(value => value.id === productPayment.id);
           this.table.list.splice(index, 1);
-          this.table.loading = false;
+          this.dialogReject.loading = false;
+          this.dialogReject.visible = false;
         } catch (e) {
           this.table.loading = false;
         }

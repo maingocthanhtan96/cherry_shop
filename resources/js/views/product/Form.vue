@@ -247,7 +247,7 @@
               @click="onRemoveProductDetail(indexDetail)"
             ></el-button>
           </el-row>
-          <el-button icon="el-icon-plus" type="primary" @click="onAddProductDetail">Add product detail</el-button>
+          <el-button icon="el-icon-plus" type="primary" @click="onAddProductDetail">{{ $t('button.add_product_detail') }}</el-button>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Product' }" custom>
@@ -415,10 +415,11 @@ export default {
       this.form.product_details.splice(index, 1);
     },
     onAddProductDetail() {
+      const lastItem = this.form.product_details[this.form.product_details.length - 1];
       this.form.product_details.push({
         size_id: '',
         color_id: '',
-        price: '',
+        price: lastItem.price || '',
         amount: undefined,
       });
     },

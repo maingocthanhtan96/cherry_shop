@@ -6,4 +6,6 @@ return [
     'create' => 'Tạo',
     'edit' => 'Sửa',
     'update' => 'Cập nhật',
+    'confirm' => 'Xác nhận',
+    'add_product_detail' => 'Add product detail',
 ];

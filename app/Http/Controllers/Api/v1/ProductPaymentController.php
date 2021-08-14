@@ -13,6 +13,7 @@ use App\Models\Member;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\ProductPayment;
+use App\Models\ProductReject;
 use App\Services\QueryService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -80,7 +81,7 @@ class ProductPaymentController extends Controller
     {
         $productDetail = ProductDetail::productDetail($request);
         if (!$productDetail) {
-            return $this->jsonMessage(trans('messages.404'), false, Response::HTTP_NOT_FOUND);
+            return $this->jsonMessage(trans('messages.not_found'), false, Response::HTTP_NOT_FOUND);
         }
         $this->validate($request, [
             'total' => [
@@ -197,6 +198,13 @@ class ProductPaymentController extends Controller
             }
             $member = Member::find($request->get('member_id'));
             $member && $member->amount > ProductDetail::OUT_STOCK && $member->decrement('amount', $total);
+            ProductReject::create([
+                'total' => $total,
+                'price' => $request->get('price'),
+                'note' => $request->get('memo'),
+                'product_id' => $product->id,
+                'product_detail_id' => $productDetail->id,
+            ]);
             $productPayment->delete();
             \DB::commit();
 

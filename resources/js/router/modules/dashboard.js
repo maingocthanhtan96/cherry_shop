@@ -5,6 +5,7 @@ const dashboard = {
     title: 'dashboard',
     icon: 'dashboard',
   },
+  hidden: true,
   children: [
     {
       path: '/dashboard',

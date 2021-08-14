@@ -10,7 +10,7 @@ const color = {
   component: () => import('@/layout'),
   meta: {
     title: 'color',
-    icon: 'menu',
+    icon: 'colors',
     permissions: ['view menu color'],
   },
   children: [

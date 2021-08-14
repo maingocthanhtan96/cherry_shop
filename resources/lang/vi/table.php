@@ -48,6 +48,7 @@ return [
         'note' => 'Note',
         'currency' => 'VNĐ',
         'total_sold' => 'Tổng tiền',
+        'reason' => 'Lý do',
     ],
     'product_reject' => [
         'id' => 'ID',

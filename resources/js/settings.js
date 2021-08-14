@@ -1,11 +1,11 @@
 module.exports = {
-  title: 'LaraJS',
+  title: 'Cherry Shop',
 
   /**
    * @type {string} url pages
    * @description Redirect before login
    */
-  redirect: '/dashboard',
+  redirect: '/product-payments',
 
   /**
    * @type {number} offset time zone
@@ -23,7 +23,7 @@ module.exports = {
    * @type {boolean} true | false
    * @description Show translate
    */
-  showAPI: true,
+  showAPI: false,
 
   /**
    * @type {boolean} true | false

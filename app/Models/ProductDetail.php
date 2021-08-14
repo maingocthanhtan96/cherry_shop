@@ -64,5 +64,13 @@ class ProductDetail extends BaseModel
         return $this->hasMany(ProductPayment::class, 'product_detail_id', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     **/
+    public function productRejects(): \Illuminate\Database\Eloquent\Relations\hasMany
+    {
+        return $this->hasMany(ProductReject::class, 'product_detail_id', 'id');
+    }
+
     //{{RELATIONS_NOT_DELETE_THIS_LINE}}
 }

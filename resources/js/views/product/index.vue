@@ -43,7 +43,7 @@
               <el-table-column type="expand">
                 <template slot-scope="{ row }">
                   <div v-for="detail in row.product_details" :key="detail.id" class="product-detail">
-                    <p><b>{{ $t('route.size') }}</b>: {{ detail.color && detail.color.name }}</p>
+                    <p><b>{{ $t('route.size') }}</b>: {{ detail.color && detail.size.name }}</p>
                     <p><b>{{ $t('route.color') }}</b>: {{ detail.size && detail.color.name }}</p>
                     <p><b>{{ $t('table.product_detail.amount') }}</b>: {{ detail.amount }}</p>
                     <p><b>{{ $t('table.product_detail.price') }}</b>: {{ detail.price | currency }}</p>

@@ -372,7 +372,7 @@ export default {
             'edit': 'Edit',
             'update': 'Update',
             'confirm': 'Confirm',
-            'add_product_detail': 'Add product detail',
+            'add_product_detail': 'Product detail',
         },
     },
     'ja': {
@@ -1144,7 +1144,7 @@ export default {
             'edit': 'Sửa',
             'update': 'Cập nhật',
             'confirm': 'Xác nhận',
-            'add_product_detail': 'Add product detail',
+            'add_product_detail': 'Chi tiết sản phẩm',
         },
     },
 };

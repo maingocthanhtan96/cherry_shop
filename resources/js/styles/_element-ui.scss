@@ -112,3 +112,12 @@
 .v-modal {
   z-index: 2000 !important;
 }
+
+
+@media only screen and(max-width: 768px) {
+  .el-dialog__wrapper {
+    .el-dialog {
+      width: 100%;
+    }
+  }
+}

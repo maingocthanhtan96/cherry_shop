@@ -12,7 +12,7 @@
         </div>
         <el-form ref="product" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
           <el-row :gutter="10">
-            <el-col :span="12">
+            <el-col :xs="24" :span="12">
               <el-form-item
                 data-generator="code"
                 :label="$t('table.product.code')"
@@ -28,7 +28,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="12">
+            <el-col :xs="24" :span="12">
               <el-form-item
                 data-generator="name"
                 :label="$t('table.product.name')"
@@ -79,23 +79,7 @@
             />
           </el-form-item>
           <el-row :gutter="10">
-            <!--            <el-col :span="8">-->
-            <!--              <el-form-item-->
-            <!--                data-generator="stock_in"-->
-            <!--                :label="$t('table.product.stock_in')"-->
-            <!--                prop="stock_in"-->
-            <!--                :error="errors.stock_in && errors.stock_in[0]"-->
-            <!--              >-->
-            <!--                <el-input-number-->
-            <!--                  v-model="form.stock_in"-->
-            <!--                  class="tw-w-full"-->
-            <!--                  value=""-->
-            <!--                  name="stock_in"-->
-            <!--                  :placeholder="$t('table.product.stock_in')"-->
-            <!--                />-->
-            <!--              </el-form-item>-->
-            <!--            </el-col>-->
-            <el-col :span="14">
+            <el-col :xs="24" :span="14">
               <el-form-item
                 data-generator="category_id"
                 :label="$t('route.category')"
@@ -118,7 +102,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="8">
+            <el-col :xs="24" :span="8">
               <el-form-item
                 data-generator="discount"
                 :label="$t('table.product.discount')"
@@ -140,7 +124,7 @@
             class="product-detail__list"
             :gutter="10"
           >
-            <el-col :span="6">
+            <el-col :xs="24" :span="6">
               <el-form-item
                 data-generator="size_id"
                 :label="$t('route.size')"
@@ -168,7 +152,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :xs="24" :span="6">
               <el-form-item
                 data-generator="color_id"
                 :label="$t('route.color')"
@@ -196,7 +180,7 @@
                 </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :xs="24" :span="6">
               <el-form-item
                 data-generator="amount"
                 :label="$t('table.product_detail.amount')"
@@ -216,7 +200,7 @@
                 />
               </el-form-item>
             </el-col>
-            <el-col :span="6">
+            <el-col :xs="24" :span="6">
               <el-form-item
                 data-generator="price"
                 :label="$t('table.product_detail.price')"
@@ -247,7 +231,7 @@
               @click="onRemoveProductDetail(indexDetail)"
             ></el-button>
           </el-row>
-          <el-button icon="el-icon-plus" type="primary" @click="onAddProductDetail">{{ $t('button.add_product_detail') }}</el-button>
+          <el-button icon="el-icon-plus" type="primary" class="tw-mb-6" @click="onAddProductDetail">{{ $t('button.add_product_detail') }}</el-button>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'Product' }" custom>

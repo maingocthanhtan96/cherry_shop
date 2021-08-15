@@ -7,5 +7,5 @@ return [
     'edit' => 'Edit',
     'update' => 'Update',
     'confirm' => 'Confirm',
-    'add_product_detail' => 'Add product detail',
+    'add_product_detail' => 'Product detail',
 ];

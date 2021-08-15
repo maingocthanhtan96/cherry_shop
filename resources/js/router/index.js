@@ -88,13 +88,13 @@ export const constantRouterMap = [
 ];
 
 export const asyncRouterMap = [
-  productPayment,
   product,
+  productPayment,
+  member,
+  productReject,
   category,
   color,
   size,
-  productReject,
-  member,
   productDetail,
   // {{$ROUTE_ASYNC_NOT_DELETE_THIS_LINE$}},
   administrator,

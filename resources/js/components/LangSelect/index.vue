@@ -4,9 +4,9 @@
       <svg-icon class-name="tw-text-4xl" icon-class="language" />
     </div>
     <el-dropdown-menu slot="dropdown">
-      <el-dropdown-item :disabled="language === 'ja'" command="ja" icon="flag-icon flag-icon-jp">
-        日本語
-      </el-dropdown-item>
+<!--      <el-dropdown-item :disabled="language === 'ja'" command="ja" icon="flag-icon flag-icon-jp">-->
+<!--        日本語-->
+<!--      </el-dropdown-item>-->
       <el-dropdown-item :disabled="language === 'en'" command="en" icon="flag-icon flag-icon-um">
         English
       </el-dropdown-item>

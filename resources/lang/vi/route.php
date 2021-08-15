@@ -5,13 +5,13 @@ return [
     'user_create' => 'Tạo Nhân viên',
     'user_edit' => 'Sửa Nhân viên',
     // START - category
-	'category' => 'Category',
+	'category' => 'Thể loại',
 	'category_list' => 'Category',
 	'category_create' => 'Tạo Category',
 	'category_edit' => 'Sửa Category',
 	// END - category
     // START - product
-	'product' => 'Product',
+	'product' => 'Sản phẩm',
 	'product_list' => 'Product',
 	'product_create' => 'Tạo Product',
 	'product_edit' => 'Sửa Product',
@@ -30,19 +30,19 @@ return [
 	'size_edit' => 'Sửa Size',
 	// END - size
     // START - product_payment
-	'product_payment' => 'ProductPayment',
+	'product_payment' => 'Sản phẩm đã bán',
 	'product_payment_list' => 'ProductPayment',
 	'product_payment_create' => 'Tạo ProductPayment',
 	'product_payment_edit' => 'Sửa ProductPayment',
 	// END - product_payment
     // START - product_reject
-	'product_reject' => 'ProductReject',
+	'product_reject' => 'Sản phẩm đổi trả',
 	'product_reject_list' => 'ProductReject',
 	'product_reject_create' => 'Tạo ProductReject',
 	'product_reject_edit' => 'Sửa ProductReject',
 	// END - product_reject
     // START - member
-	'member' => 'Member',
+	'member' => 'Thành viên',
 	'member_list' => 'Member',
 	'member_create' => 'Tạo Member',
 	'member_edit' => 'Sửa Member',

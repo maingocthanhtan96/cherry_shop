@@ -5,7 +5,7 @@ module.exports = {
    * @type {string} url pages
    * @description Redirect before login
    */
-  redirect: '/product-payments',
+  redirect: '/products',
 
   /**
    * @type {number} offset time zone

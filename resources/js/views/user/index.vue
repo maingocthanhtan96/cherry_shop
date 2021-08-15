@@ -69,7 +69,7 @@
               </el-table-column>
               <el-table-column align="center" :label="$t('table.user.role')">
                 <template slot-scope="{ row }">
-                  {{ row.roles[0].name }}
+                  {{ row.roles[0] && row.roles[0].name }}
                 </template>
               </el-table-column>
               <!--{{$TEMPLATES_NOT_DELETE_THIS_LINE$}}-->

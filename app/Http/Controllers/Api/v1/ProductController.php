@@ -92,6 +92,9 @@ class ProductController extends Controller
                 $fileName = $disk->putFile(Product::FOLDER_UPLOAD, $request->file('image'));
                 $product->image = $disk->url($fileName);
             }
+            $product->code = Product::PREFIX_CODE;
+            $product->save();
+            $product->code = Product::PREFIX_CODE . str_pad($product->id, 2, '0', STR_PAD_LEFT);
             $product->save();
             foreach ($productDetails as $key => $detail) {
                 $productDetails[$key]['product_id'] = $product->id;

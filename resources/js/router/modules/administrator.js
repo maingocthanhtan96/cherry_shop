@@ -22,63 +22,63 @@ const administrator = {
         permissions: ['manage permission'],
       },
     },
-    // {
-    //   path: 'generator',
-    //   name: 'Generator',
-    //   component: () => import('@/views/generator'),
-    //   meta: {
-    //     title: 'generator',
-    //     icon: 'tree-table',
-    //     roles: [superAdmin],
-    //   },
-    // },
-    // {
-    //   path: 'generator/create',
-    //   name: 'GeneratorCreate',
-    //   component: () => import('@/views/generator/Form'),
-    //   meta: {
-    //     title: 'generator_create',
-    //     icon: 'tree-table',
-    //     activeMenu: '/administrators/generator',
-    //     roles: [superAdmin],
-    //   },
-    //   hidden: true,
-    // },
-    // {
-    //   path: 'generator/edit/:id(\\d+)',
-    //   name: 'GeneratorEdit',
-    //   hidden: true,
-    //   component: () => import('@/views/generator/Form'),
-    //   meta: {
-    //     title: 'generator_edit',
-    //     icon: 'tree-table',
-    //     activeMenu: '/administrators/generator',
-    //     roles: [superAdmin],
-    //   },
-    //   props: route => {
-    //     return {
-    //       ...route,
-    //       props: true,
-    //     };
-    //   },
-    // },
-    // {
-    //   path: 'generator/relationship/:id(\\d+)?',
-    //   name: 'GeneratorRelationship',
-    //   hidden: true,
-    //   component: () => import('@/views/generator/Relationship'),
-    //   meta: {
-    //     title: 'generator_relationship',
-    //     activeMenu: '/administrators/generator',
-    //     roles: [superAdmin],
-    //   },
-    //   props: route => {
-    //     return {
-    //       ...route,
-    //       props: true,
-    //     };
-    //   },
-    // },
+    {
+      path: 'generator',
+      name: 'Generator',
+      component: () => import('@/views/generator'),
+      meta: {
+        title: 'generator',
+        icon: 'tree-table',
+        roles: [superAdmin],
+      },
+    },
+    {
+      path: 'generator/create',
+      name: 'GeneratorCreate',
+      component: () => import('@/views/generator/Form'),
+      meta: {
+        title: 'generator_create',
+        icon: 'tree-table',
+        activeMenu: '/administrators/generator',
+        roles: [superAdmin],
+      },
+      hidden: true,
+    },
+    {
+      path: 'generator/edit/:id(\\d+)',
+      name: 'GeneratorEdit',
+      hidden: true,
+      component: () => import('@/views/generator/Form'),
+      meta: {
+        title: 'generator_edit',
+        icon: 'tree-table',
+        activeMenu: '/administrators/generator',
+        roles: [superAdmin],
+      },
+      props: route => {
+        return {
+          ...route,
+          props: true,
+        };
+      },
+    },
+    {
+      path: 'generator/relationship/:id(\\d+)?',
+      name: 'GeneratorRelationship',
+      hidden: true,
+      component: () => import('@/views/generator/Relationship'),
+      meta: {
+        title: 'generator_relationship',
+        activeMenu: '/administrators/generator',
+        roles: [superAdmin],
+      },
+      props: route => {
+        return {
+          ...route,
+          props: true,
+        };
+      },
+    },
     {
       path: 'user',
       name: 'User',

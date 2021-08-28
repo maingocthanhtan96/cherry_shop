@@ -71,13 +71,60 @@ class ProductPaymentController extends Controller
         }
     }
 
+    public function store(Request $request): JsonResponse
+    {
+        dd($request->all());
+        $productDetail = ProductDetail::productDetail($request);
+        if (!$productDetail) {
+            return $this->jsonMessage(trans('messages.not_found'), false, Response::HTTP_NOT_FOUND);
+        }
+        $this->validate($request, [
+            'total' => [
+                'nullable',
+                'numeric',
+                function ($attribute, $value, $fail) use ($productDetail) {
+                    if ($productDetail->amount < $value) {
+                        $fail(trans('validation.max.numeric', ['max' => $productDetail->amount]));
+                    }
+                },
+            ],
+            'note' => 'nullable|string',
+        ]);
+        try {
+            \DB::beginTransaction();
+            $requestAll = $request->all();
+            $product = Product::find($request->get('product_id'));
+            $requestAll['product_detail_id'] = $productDetail->id;
+            $totalPrice = $productDetail->price * $requestAll['total'];
+            $requestAll['price'] = $totalPrice - ($totalPrice * $product->discount / 100);
+            $productPayment = new ProductPayment();
+            $productPayment->fill($requestAll);
+            $productPayment->save();
+            $productDetail->amount > ProductDetail::OUT_STOCK && $productDetail->decrement('amount', $requestAll['total']);
+            if ($product) {
+                $product->stock_out += $requestAll['total'];
+                $product->inventory = $product->stock_in - $product->stock_out;
+                $product->save();
+            }
+            $member = Member::find($requestAll['member_id']);
+            $member && $member->increment('amount', $requestAll['total']);
+            \DB::commit();
+            //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
+
+            return $this->jsonData($productPayment, Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return $this->jsonError($e);
+        }
+    }
+
     /**
      * create
      * @param Request $request
      * @return JsonResponse
      * @author tanmnt
      */
-    public function store(Request $request): JsonResponse
+    public function storeBK(Request $request): JsonResponse
     {
         $productDetail = ProductDetail::productDetail($request);
         if (!$productDetail) {

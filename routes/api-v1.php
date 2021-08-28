@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('product-rejects', 'ProductRejectController');
     /*<==> Member Route - 2021-08-02 22:02:10 <==>*/
     Route::get('/members/search', 'MemberController@search');
+    Route::get('/members/product-card', 'MemberController@productCard');
     Route::get('/members/get-members', 'MemberController@getMember');
     Route::apiResource('members', 'MemberController');
     /*<==> ProductDetail Route - 2021-08-05 21:05:22 <==>*/

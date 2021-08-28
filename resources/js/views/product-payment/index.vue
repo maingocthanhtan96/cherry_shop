@@ -344,6 +344,10 @@ export default {
           this.table.list.splice(index, 1);
           this.dialogReject.loading = false;
           this.dialogReject.visible = false;
+          productPaymentResource.totalMoney().then(response => {
+            this.totalSold = response.data.data;
+          });
+          this.getChart();
         } catch (e) {
           this.table.loading = false;
         }

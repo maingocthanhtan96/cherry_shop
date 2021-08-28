@@ -31,13 +31,13 @@ class StoreProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $id = $this->request->get('id', 0);
+//        $id = $this->request->get('id', 0);
         return [
-            'code' => [
-                'required',
-                'max:191',
-                Rule::unique('products', 'code')->ignore($id),
-            ],
+//            'code' => [
+//                'required',
+//                'max:191',
+//                Rule::unique('products', 'code')->ignore($id),
+//            ],
             'name' => 'required|string|max:191',
             'image' => 'nullable|max:191',
             'description' => 'nullable|string',

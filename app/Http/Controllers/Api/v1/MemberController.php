@@ -159,6 +159,20 @@ class MemberController extends Controller
     }
 
     /**
+     * @return JsonResponse
+     */
+    public function productCard(): JsonResponse
+    {
+        try {
+            $members = Member::latest('amount')->limit(Member::ORDER_AMOUNT)->get();
+
+            return $this->jsonData($members);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
+
+    /**
      * @param Request $request
      * @return JsonResponse
      */

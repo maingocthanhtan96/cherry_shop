@@ -29,5 +29,12 @@ export default class MemberResource extends Resource {
       },
     });
   }
+
+  productCard() {
+    return request({
+      url: '/v1/members/product-card',
+      method: 'get',
+    });
+  }
   // {{$API_NOT_DELETE_THIS_LINE$}}
 }

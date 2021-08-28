@@ -12,22 +12,22 @@
         </div>
         <el-form ref="product" v-loading="loading.form" :model="form" :rules="rules" label-position="top">
           <el-row :gutter="10">
-            <el-col :xs="24" :span="12">
-              <el-form-item
-                data-generator="code"
-                :label="$t('table.product.code')"
-                prop="code"
-                :error="errors.code && errors.code[0]"
-              >
-                <el-input
-                  v-model="form.code"
-                  name="code"
-                  :placeholder="$t('table.product.code')"
-                  maxlength="191"
-                  show-word-limit
-                />
-              </el-form-item>
-            </el-col>
+<!--            <el-col :xs="24" :span="12">-->
+<!--              <el-form-item-->
+<!--                data-generator="code"-->
+<!--                :label="$t('table.product.code')"-->
+<!--                prop="code"-->
+<!--                :error="errors.code && errors.code[0]"-->
+<!--              >-->
+<!--                <el-input-->
+<!--                  v-model="form.code"-->
+<!--                  name="code"-->
+<!--                  :placeholder="$t('table.product.code')"-->
+<!--                  maxlength="191"-->
+<!--                  show-word-limit-->
+<!--                />-->
+<!--              </el-form-item>-->
+<!--            </el-col>-->
             <el-col :xs="24" :span="12">
               <el-form-item
                 data-generator="name"
@@ -324,13 +324,13 @@ export default {
     // not rename rules
     rules() {
       return {
-        code: [
-          {
-            required: true,
-            message: this.$t('validation.required', { attribute: this.$t('table.product.code') }),
-            trigger: ['change', 'blur'],
-          },
-        ],
+        // code: [
+        //   {
+        //     required: true,
+        //     message: this.$t('validation.required', { attribute: this.$t('table.product.code') }),
+        //     trigger: ['change', 'blur'],
+        //   },
+        // ],
         name: [
           {
             required: true,

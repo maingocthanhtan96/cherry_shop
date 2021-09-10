@@ -25,6 +25,7 @@ class ProductPayment extends BaseModel
         'color_id',
         'member_id',
         'product_detail_id',
+        'details',
     ];
 
     /**

@@ -141,6 +141,17 @@
               />
             </el-select>
           </el-form-item>
+          <el-form-item
+          data-generator="details"
+          :label="$t('table.product_payment.details')"
+          prop="details"
+          :error="errors.details && errors.details[0]"
+          >
+            <json-editor
+              v-model="form.details"
+              name="details"
+            />
+          </el-form-item>
           <!--{{$FROM_ITEM_NOT_DELETE_THIS_LINE$}}-->
           <el-form-item class="tw-flex tw-justify-end">
             <router-link v-slot="{ href, navigate }" :to="{ name: 'ProductPayment' }" custom>
@@ -181,6 +192,7 @@ import SizeResource from '@/api/v1/size';
 import ColorResource from '@/api/v1/color';
 import MemberResource from '@/api/v1/member';
 import ProductDetailResource from '@/api/v1/product-detail';
+import JsonEditor from '@/components/JsonEditor';
 // {{$IMPORT_COMPONENT_NOT_DELETE_THIS_LINE$}}
 
 const productPaymentResource = new ProductPaymentResource();
@@ -192,13 +204,14 @@ const productResource = new ProductResource();
 
 export default {
   components: {
+    JsonEditor,
     // {{$IMPORT_COMPONENT_NAME_NOT_DELETE_THIS_LINE$}}
   },
   mixins: [GlobalForm],
   data() {
     return {
       form: {
-        id: '',
+          id: '',
         total: 0,
         price: '',
         note: '',
@@ -207,7 +220,8 @@ export default {
         color_id: '',
         member_id: '',
         product_detail_id: '',
-      }, // {{$$}}
+        details: '[]',
+ }, // {{$$}}
       loading: {
         form: false,
         button: false,

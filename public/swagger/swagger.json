@@ -1463,6 +1463,12 @@
                                         "type": "BIGINT",
                                         "default": "NONE",
                                         "example": "1"
+                                    },
+                                    "details": {
+                                        "description": "",
+                                        "type": "JSON",
+                                        "default": "NULL",
+                                        "example": "[{}]"
                                     }
                                 },
                                 "type": "object"
@@ -1587,6 +1593,12 @@
                                         "type": "BIGINT",
                                         "default": "NONE",
                                         "example": "1"
+                                    },
+                                    "details": {
+                                        "description": "",
+                                        "type": "JSON",
+                                        "default": "NULL",
+                                        "example": "[{}]"
                                     }
                                 },
                                 "type": "object"
@@ -2731,6 +2743,11 @@
                     },
                     "product_detail_id": {
                         "$ref": "#/components/schemas/ProductDetail"
+                    },
+                    "details": {
+                        "description": "",
+                        "type": "JSON",
+                        "default": "NULL"
                     },
                     "created_at": {
                         "description": "",

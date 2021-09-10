@@ -20,7 +20,7 @@ class Size extends BaseModel
     	'name',
     ];
 
-    
+
 
 	/**
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany

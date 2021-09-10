@@ -41,7 +41,7 @@ return [
         'id' => 'ID',
         'name' => 'Tên',
     ],
-    'product_payment' => [
+     'product_payment' => [
         'id' => 'ID',
         'total' => 'Số lượng',
         'price' => 'Giá',
@@ -49,7 +49,8 @@ return [
         'currency' => 'VNĐ',
         'total_sold' => 'Tổng tiền',
         'reason' => 'Lý do',
-    ],
+        'details' => 'Details',
+	],
     'product_reject' => [
         'id' => 'ID',
         'total' => 'Số lượng',

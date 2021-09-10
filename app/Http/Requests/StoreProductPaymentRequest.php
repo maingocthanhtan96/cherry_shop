@@ -43,6 +43,7 @@ class StoreProductPaymentRequest extends FormRequest
                 },
             ],
             'note' => 'nullable|string',
+            'details' => 'nullable|json',
             //{{REQUEST_RULES_NOT_DELETE_THIS_LINE}}
         ];
     }

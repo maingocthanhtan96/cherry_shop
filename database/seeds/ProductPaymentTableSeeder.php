@@ -44,6 +44,7 @@ class ProductPaymentTableSeeder extends Seeder
                 'color_id' => $faker->randomElement($colors),
                 'member_id' => $faker->randomElement($members),
                 'product_detail_id' => $faker->randomElement($productDetails),
+                'details' => '[{}]',
                 //{{SEEDER_NOT_DELETE_THIS_LINE}}
             ]);
         }

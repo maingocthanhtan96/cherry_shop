@@ -316,6 +316,7 @@ export default {
                 'currency': '$',
                 'total_sold': 'Total sold',
                 'reason': 'Reason',
+                'details': 'Details',
             },
             'product_reject': {
                 'id': 'ID',
@@ -707,6 +708,7 @@ export default {
                 'currency': '¥',
                 'total_sold': 'Total sold',
                 'reason': 'Reason',
+                'details': 'Details',
             },
             'product_reject': {
                 'id': 'ID',
@@ -1089,6 +1091,7 @@ export default {
                 'currency': 'VNĐ',
                 'total_sold': 'Tổng tiền',
                 'reason': 'Lý do',
+                'details': 'Details',
             },
             'product_reject': {
                 'id': 'ID',

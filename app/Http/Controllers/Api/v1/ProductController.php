@@ -35,22 +35,22 @@ class ProductController extends Controller
         $this->middleware('permission:' . \ACL::PERMISSION_DELETE, ['only' => ['destroy']]);
     }
 
-	/**
-	 * lists
-	 * @param Request $request
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function index(Request $request): JsonResponse
-	{
-		try {
-			$limit = $request->get('limit', 25);
-			$ascending = (int)$request->get('ascending', 0);
-			$orderBy = $request->get('orderBy', '');
-			$search = $request->get('search', '');
-			$betweenDate = $request->get('updated_at', []);
+    /**
+     * lists
+     * @param Request $request
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function index(Request $request): JsonResponse
+    {
+        try {
+            $limit = $request->get('limit', 25);
+            $ascending = (int) $request->get('ascending', 0);
+            $orderBy = $request->get('orderBy', '');
+            $search = $request->get('search', '');
+            $betweenDate = $request->get('updated_at', []);
 
-			$queryService = new QueryService(new Product);
+            $queryService = new QueryService(new Product());
             $queryService->select = [];
             $queryService->columnSearch = ['name', 'code'];
             $queryService->withRelationship = ['category', 'productDetails.size', 'productDetails.color'];
@@ -64,29 +64,29 @@ class ProductController extends Controller
             $query = $query->paginate($limit);
             $product = $query->toArray();
 
-			return $this->jsonTable($product);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonTable($product);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * create
-	 * @param StoreProductRequest $request
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function store(StoreProductRequest $request): JsonResponse
-	{
-		try {
+    /**
+     * create
+     * @param StoreProductRequest $request
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function store(StoreProductRequest $request): JsonResponse
+    {
+        try {
             $requestAll = $request->all();
             $requestAll['stock_out'] = 0;
             $requestAll['inventory'] = 0;
             $productDetails = json_decode($requestAll['product_details'], true) ?? [];
             $stockIn = collect($productDetails)->sum('amount');
             $requestAll['stock_in'] = $stockIn;
-		    $product = new Product();
-		    $product->fill($requestAll);
+            $product = new Product();
+            $product->fill($requestAll);
             if ($request->hasFile('image')) {
                 $disk = \Storage::disk();
                 $fileName = $disk->putFile(Product::FOLDER_UPLOAD, $request->file('image'));
@@ -103,40 +103,40 @@ class ProductController extends Controller
             ProductDetail::upsert($productDetails, ['color_id', 'size_id', 'product_id'], ['amount', 'price']);
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($product, Response::HTTP_CREATED);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($product, Response::HTTP_CREATED);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * get once by id
-	 * @param Product $product
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function show(Product $product): JsonResponse
-	{
-		try {
-		    $product->load('productDetails');
+    /**
+     * get once by id
+     * @param Product $product
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function show(Product $product): JsonResponse
+    {
+        try {
+            $product->load('productDetails');
             //{{CONTROLLER_RELATIONSHIP_MTM_SHOW_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($product);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($product);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * update once by id
-	 * @param StoreProductRequest $request
-	 * @param Product $product
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
-	public function update(StoreProductRequest $request, Product $product): JsonResponse
-	{
-		try {
+    /**
+     * update once by id
+     * @param StoreProductRequest $request
+     * @param Product $product
+     * @return JsonResponse
+     * @author tanmnt
+     */
+    public function update(StoreProductRequest $request, Product $product): JsonResponse
+    {
+        try {
             $product->fill($request->all());
             if ($request->hasFile('image')) {
                 $disk = \Storage::disk();
@@ -151,48 +151,52 @@ class ProductController extends Controller
             $productDetails = json_decode($request->get('product_details'), true) ?? [];
             foreach ($productDetails as $key => $detail) {
                 unset($productDetails[$key]['created_at']);
-                $productDetails[$key]['updated_at'] = now();
+                unset($productDetails[$key]['updated_at']);
+                $productDetails[$key]['product_id'] = $product->id;
+                $productDetails[$key]['id'] = $productDetails[$key]['id'] ?? \Str::uuid();
             }
-            ProductDetail::upsert($productDetails, ['color_id', 'size_id', 'product_id'], ['amount', 'price']);
+            ProductDetail::upsert($productDetails, ['id', 'color_id', 'size_id', 'product_id'], ['price', 'amount']);
+            $idDeletes =  $request->get('id_deletes') ? explode(',', $request->get('id_deletes')) : [];
+            $idDeletes && ProductDetail::whereIn('id', $idDeletes)->delete();
             $colorId = $request->get('color_id', []);
-            if($colorId) {
+            if ($colorId) {
                 $product->colors()->sync($colorId);
             }
             $sizeId = $request->get('size_id', []);
-            if($sizeId) {
+            if ($sizeId) {
                 $product->sizes()->sync($sizeId);
             }
             //{{CONTROLLER_RELATIONSHIP_MTM_UPDATE_NOT_DELETE_THIS_LINE}}
 
-			return $this->jsonData($product);
-		} catch (\Exception $e) {
-			return $this->jsonError($e);
-		}
-	}
+            return $this->jsonData($product);
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
+    }
 
-	/**
-	 * delete once by id
-	 * @param Product $product
-	 * @return JsonResponse
-	 * @author tanmnt
-	 */
+    /**
+     * delete once by id
+     * @param Product $product
+     * @return JsonResponse
+     * @author tanmnt
+     */
     public function destroy(Product $product): JsonResponse
     {
-	    try {
-	        $disk = \Storage::disk();
+        try {
+            $disk = \Storage::disk();
             $urlImage = parse_url($product->image, PHP_URL_PATH);
             if ($disk->exists($urlImage)) {
                 $disk->delete($urlImage);
             }
-	        $product->colors()->detach();
+            $product->colors()->detach();
             $product->sizes()->detach();
             //{{CONTROLLER_RELATIONSHIP_MTM_DELETE_NOT_DELETE_THIS_LINE}}
-			$product->delete();
+            $product->delete();
 
-		    return $this->jsonMessage(trans('messages.delete'));
-	    } catch (\Exception $e) {
-	    	return $this->jsonError($e);
-	    }
+            return $this->jsonMessage(trans('messages.delete'));
+        } catch (\Exception $e) {
+            return $this->jsonError($e);
+        }
     }
 
     /**
@@ -210,7 +214,9 @@ class ProductController extends Controller
             $colorsId = array_unique(\Arr::pluck($productDetails, 'color_id'));
             $sizes = Size::find($sizesId);
             $colors = Color::find($colorsId);
-            $members = Member::latest('amount')->limit(Member::ORDER_AMOUNT)->get();
+            $members = Member::latest('amount')
+                ->limit(Member::ORDER_AMOUNT)
+                ->get();
 
             return $this->jsonData([
                 'sizes' => $sizes,

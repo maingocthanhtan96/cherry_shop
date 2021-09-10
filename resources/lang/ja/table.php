@@ -41,14 +41,15 @@ return [
 		'id' => 'ID',
         'name' => 'Name',
 	],
-    'product_payment' => [
-		'id' => 'ID',
+     'product_payment' => [
+        'id' => 'ID',
         'total' => 'Total',
         'price' => 'Price',
         'note' => 'Note',
         'currency' => '¥',
         'total_sold' => 'Total sold',
         'reason' => 'Reason',
+        'details' => 'Details',
 	],
     'product_reject' => [
 		'id' => 'ID',

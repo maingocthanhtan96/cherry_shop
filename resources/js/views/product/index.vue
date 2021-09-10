@@ -62,19 +62,20 @@
                         <el-checkbox
                           v-model="productCard.value"
                           :label="detail.id"
+                          :disabled="!detail.amount"
                           @change="changeProductCard($event, detail)"
                         >
                           {{ '' }}
                         </el-checkbox>
                       </el-col>
-                      <el-col :span="20">
+                      <el-col :span="20" class="tw-flex tw-justify-between">
                         <p>
                           <b>{{ $t('route.size') }}</b>
-                          : {{ detail.color && detail.size.name }}
+                          : {{ detail.size && detail.size.name }}
                         </p>
                         <p>
                           <b>{{ $t('route.color') }}</b>
-                          : {{ detail.size && detail.color.name }}
+                          : {{ detail.color && detail.color.name }}
                         </p>
                         <p>
                           <b>{{ $t('table.product_detail.amount') }}</b>
@@ -231,6 +232,7 @@
       </el-card>
     </el-col>
     <el-dialog
+      v-loading="loading.payment"
       :title="$t('route.product')"
       :visible.sync="productCard.visible"
       width="80%"
@@ -413,6 +415,7 @@ export default {
       },
       loading: {
         member: false,
+        payment: false,
       },
       memberVisible: false,
       memberList: [],
@@ -457,7 +460,17 @@ export default {
   },
   methods: {
     async storeProductPayment() {
+      this.loading.payment = true;
       await productPaymentResource.store(this.productCard);
+      this.productCard = {
+        value: [],
+        total: 0,
+        list: [],
+        visible: false,
+        member_id: '',
+      };
+      this.productCard.visible = false;
+      this.loading.payment = false;
     },
     storeMember(member) {
       this.$refs[member].validate(async (valid, errors) => {
@@ -497,7 +510,6 @@ export default {
     onDeleteProductCard(id) {
       this.deleteProductCard(id);
       this.productCard.value = this.productCard.value.filter(value => value !== id);
-      console.log(this.productCard.value);
     },
     changeProductCard(value, detail) {
       this.productCard.total = this.productCard.value.length;
@@ -509,6 +521,7 @@ export default {
           category: product.category.name || '',
           total: 1,
           image: product.image,
+          discount: product.discount,
         });
       } else {
         this.deleteProductCard(detail.id);

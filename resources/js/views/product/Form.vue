@@ -228,7 +228,7 @@
               type="danger"
               class="product-detail__delete"
               icon="el-icon-delete"
-              @click="onRemoveProductDetail(indexDetail)"
+              @click="onRemoveProductDetail(indexDetail, detail.id)"
             ></el-button>
           </el-row>
           <el-button icon="el-icon-plus" type="primary" class="tw-mb-6" @click="onAddProductDetail">{{ $t('button.add_product_detail') }}</el-button>
@@ -289,6 +289,7 @@ export default {
         discount: 0,
         status: 1,
         category_id: '',
+        id_deletes: [],
         product_details: [
           {
             size_id: '',
@@ -395,7 +396,13 @@ export default {
     }
   },
   methods: {
-    onRemoveProductDetail(index) {
+    onRemoveProductDetail(index, id) {
+      if (id) {
+        if (!this.form.id_deletes) {
+          this.form.id_deletes = [];
+        }
+        this.form.id_deletes.push(id);
+      }
       this.form.product_details.splice(index, 1);
     },
     onAddProductDetail() {

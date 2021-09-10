@@ -73,41 +73,48 @@ class ProductPaymentController extends Controller
 
     public function store(Request $request): JsonResponse
     {
-        dd($request->all());
-        $productDetail = ProductDetail::productDetail($request);
-        if (!$productDetail) {
-            return $this->jsonMessage(trans('messages.not_found'), false, Response::HTTP_NOT_FOUND);
-        }
-        $this->validate($request, [
-            'total' => [
-                'nullable',
-                'numeric',
-                function ($attribute, $value, $fail) use ($productDetail) {
-                    if ($productDetail->amount < $value) {
-                        $fail(trans('validation.max.numeric', ['max' => $productDetail->amount]));
-                    }
-                },
-            ],
-            'note' => 'nullable|string',
-        ]);
         try {
             \DB::beginTransaction();
-            $requestAll = $request->all();
-            $product = Product::find($request->get('product_id'));
-            $requestAll['product_detail_id'] = $productDetail->id;
-            $totalPrice = $productDetail->price * $requestAll['total'];
-            $requestAll['price'] = $totalPrice - ($totalPrice * $product->discount / 100);
-            $productPayment = new ProductPayment();
-            $productPayment->fill($requestAll);
-            $productPayment->save();
-            $productDetail->amount > ProductDetail::OUT_STOCK && $productDetail->decrement('amount', $requestAll['total']);
-            if ($product) {
-                $product->stock_out += $requestAll['total'];
-                $product->inventory = $product->stock_in - $product->stock_out;
-                $product->save();
+            $productDetails = $request->get('list', []);
+            $memberId = $request->get('member_id');
+            $total = $request->get('total');
+            $details = [];
+            $idProducts = [];
+            $idProductDetails = [];
+            foreach ($productDetails as $detail) {
+                $idProducts[$detail['product_id']] = $detail['total'];
+                $idProductDetails[$detail['id']] = $detail['total'];
+                $details[] = $detail;
+                $totalPrice = $detail['price'] * $detail['total'];
+                $price = $totalPrice - ($totalPrice * $detail['discount'] / 100);
             }
-            $member = Member::find($requestAll['member_id']);
-            $member && $member->increment('amount', $requestAll['total']);
+            $productPayment = new ProductPayment();
+            $productPayment->product_detail_id = NULL;
+            $productPayment->color_id = NULL;
+            $productPayment->size_id = NULL;
+            $productPayment->product_id = NULL;
+            $productPayment->member_id = $memberId;
+            $productPayment->total = $total;
+            $productPayment->price = $price;
+            $productPayment->note = $request->get('note');
+            $productPayment->details = json_encode($details);
+            $productPayment->save();
+            $productDetails = ProductDetail::find(array_keys($idProductDetails));
+            foreach ($productDetails as $detail) {
+                if ($detail->amount > ProductDetail::OUT_STOCK) {
+                    $detail->decrement('amount', $idProductDetails[$detail->id]);
+                }
+            }
+            if ($idProducts) {
+                $products = Product::find(array_keys($idProducts));
+                foreach ($products as $product) {
+                    $product->stock_out += $idProducts[$product->id];
+                    $product->inventory = $product->stock_in - $product->stock_out;
+                    $product->save();
+                }
+            }
+            $member = Member::find($memberId);
+            $member && $member->increment('amount', $total);
             \DB::commit();
             //{{CONTROLLER_RELATIONSHIP_MTM_CREATE_NOT_DELETE_THIS_LINE}}
 

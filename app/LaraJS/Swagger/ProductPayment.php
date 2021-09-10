@@ -62,6 +62,7 @@
  *                  @OA\Property(property="color_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  @OA\Property(property="member_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  @OA\Property(property="product_detail_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
+ *                  @OA\Property(property="details", type="JSON", default="NULL", example="[{}]", description=""),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -101,6 +102,7 @@
  *                  @OA\Property(property="color_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  @OA\Property(property="member_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
  *                  @OA\Property(property="product_detail_id", type="BIGINT", default="NONE", example="1", description="hasMany"),
+ *                  @OA\Property(property="details", type="JSON", default="NULL", example="[{}]", description=""),
  *                  x="{{SWAGGER_PROPERTY_JSON_CONTENT_NOT_DELETE_THIS_LINE}}"
  *              )
  *          )
@@ -165,6 +167,10 @@ class ProductPayment
     /**
      * @OA\Property(property="product_detail_id", default="NONE", description="hasMany")
      * @var ProductDetail
+     */
+
+    /**
+     * <###> @OA\Property(property="details", type="JSON", default="NULL", description="")
      */
 
     //{{SWAGGER_PROPERTY_NOT_DELETE_THIS_LINE}}

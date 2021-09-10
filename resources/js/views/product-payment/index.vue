@@ -56,6 +56,43 @@
               highlight-current-row
               @sort-change="sortChange"
             >
+              <el-table-column type="expand">
+                <template slot-scope="{ row }">
+                  <div v-for="detail in JSON.parse(row.details)" :key="detail.id" class="product-detail">
+                    <el-row :gutter="10" type="flex" align="middle">
+                      <el-col :span="20" class="tw-flex tw-justify-between">
+                        <p>
+                          <b>{{ $t('table.product.id') }}</b>
+                          :
+                          <router-link
+                            v-permission="['edit']"
+                            class="tw-text-blue-500"
+                            :to="{ name: 'ProductEdit', params: { id: detail.product_id } }"
+                          >
+                            {{ detail.product_id }}
+                          </router-link>
+                        </p>
+                        <p>
+                          <b>{{ $t('route.size') }}</b>
+                          : {{ detail.size && detail.size.name }}
+                        </p>
+                        <p>
+                          <b>{{ $t('route.color') }}</b>
+                          : {{ detail.color && detail.color.name }}
+                        </p>
+                        <p>
+                          <b>{{ $t('table.product_detail.amount') }}</b>
+                          : {{ detail.amount }}
+                        </p>
+                        <p>
+                          <b>{{ $t('table.product_detail.price') }}</b>
+                          : {{ detail.price | currency }}
+                        </p>
+                      </el-col>
+                    </el-row>
+                  </div>
+                </template>
+              </el-table-column>
               <el-table-column
                 align="center"
                 sortable="custom"
@@ -99,39 +136,6 @@
               >
                 <template slot-scope="{ row }">
                   {{ row.note }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                data-generator="product_id"
-                prop="product_id"
-                :label="$t('route.product')"
-                align="left"
-                header-align="center"
-              >
-                <template v-if="row.product" slot-scope="{ row }">
-                  {{ row.product.name }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                data-generator="size_id"
-                prop="size_id"
-                :label="$t('route.size')"
-                align="left"
-                header-align="center"
-              >
-                <template v-if="row.size" slot-scope="{ row }">
-                  {{ row.size.name }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                data-generator="color_id"
-                prop="color_id"
-                :label="$t('route.color')"
-                align="left"
-                header-align="center"
-              >
-                <template v-if="row.color" slot-scope="{ row }">
-                  {{ row.color.name }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -180,7 +184,12 @@
         </el-row>
       </el-card>
     </el-col>
-    <el-dialog v-loading="dialogReject.loading" :title="$t('table.product_payment.reason')" :visible.sync="dialogReject.visible" width="50%">
+    <el-dialog
+      v-loading="dialogReject.loading"
+      :title="$t('table.product_payment.reason')"
+      :visible.sync="dialogReject.visible"
+      width="50%"
+    >
       <el-input v-model="productPayment.memo" type="textarea" :rows="5" placeholder="Please input"></el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogReject.visible = false">{{ $t('button.cancel') }}</el-button>
@@ -435,6 +444,11 @@ export default {
 </style>
 
 <style lang="scss" scoped>
+.product-detail:not(:last-child) {
+  border-bottom: 1px solid;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .panel-group {
   margin-top: 18px;
 
